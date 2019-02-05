@@ -1,0 +1,7 @@
+my_apps/*
+__init__.py
+cv_builder/**/*__init__.py
+cv_builder/**/sample_code.py
+cv_builder/**/*.docx
+cv_builder/**/*.csv
+.idea/
