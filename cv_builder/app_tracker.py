@@ -38,11 +38,10 @@ class JobTracker:
             self.document.paragraphs[i].text = self.document.paragraphs[i].text.replace('LOCATION',
                                                                                         self.key_words['Location'])
 
-        file_name = f'Main\\' \
-            f'{self.key_words["Organization"].replace(" ", "-")}' \
-            f'_CV_{self.key_words["Job"].replace(" ", "-")}' \
-            f'_{self.key_words["Location"].replace(" ", "-")}' \
-            f'_USA_{datetime.date.today()}.docx'
+        file_name = f'{self.key_words["Organization"].replace(" ", "-")}' \
+                    f'_CV_{self.key_words["Job"].replace(" ", "-")}' \
+                    f'_{self.key_words["Location"].replace(" ", "-")}' \
+                    f'_USA_{datetime.date.today()}.docx'
 
         self.document.save(file_name)
 
@@ -58,12 +57,12 @@ class JobTracker:
         d['Position'] = self.key_words['Job']
         d['Province/State'] = self.key_words['Location']
         d['Country'] = 'USA'
-        d['Application Date'] = datetime.datetime.now()
+        d['Application Date'] = datetime.date.today()
         d['Test'] = False
         d['Contact'] = False
         d['Interview'] = False
         d['Offer'] = False
-        d['Notes'] = None
+        d['Notes'] = False
 
         self.df = self.df.append(d, ignore_index=True)
         self.df.to_csv(r'Main\app_tracker.csv', index=False)
