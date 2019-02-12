@@ -1,4 +1,3 @@
-import os
 import docx
 import datetime
 import pandas as pd
@@ -15,8 +14,8 @@ class JobTracker:
 
     def load_files(self):
 
-        self.df = pd.read_csv(r'Main\app_tracker.csv')
-        self.document = docx.Document(r'Main\cv_template.docx')
+        self.df = pd.read_csv(r'my_projects\cv_builder\app_tracker.csv')
+        self.document = docx.Document(r'my_projects\cv_builder\cv_template.docx')
 
     def new_entry(self):
 
@@ -65,6 +64,5 @@ class JobTracker:
         d['Notes'] = False
 
         self.df = self.df.append(d, ignore_index=True)
-        self.df.to_csv(r'Main\app_tracker.csv', index=False)
-
+        self.df.to_csv(r'my_projects\cv_builder\app_tracker.csv', index=False)
         d.clear()
