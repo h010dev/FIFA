@@ -9,15 +9,26 @@ class JobTracker:
     key_words = dict()
 
     def __init__(self, df=None, document=None):
+        """
+        :param df: name and path of csv file to be used.
+        :param document: name and path of docx file to be used.
+        """
+
         self.df = df
         self.document = document
 
     def load_files(self):
-
+        """
+        :return: reloads files with new updates/changes.
+        """
         self.df = pd.read_csv(r'my_projects\cv_builder\app_tracker.csv')
         self.document = docx.Document(r'my_projects\cv_builder\cv_template.docx')
 
     def new_entry(self):
+
+        """
+        :return: assigns values to pre-defined variables.
+        """
 
         position = str(input('Enter position name: '))
         organization = str(input('Enter organization name: '))
@@ -29,6 +40,11 @@ class JobTracker:
         self.key_words['Location'] = location
 
     def cover_letter(self):
+
+        """
+        :return: saves a copy of the docx file after searching for and replacing key-words matching pre-defined
+        variables.
+        """
 
         for i in range(len(self.document.paragraphs)):
             self.document.paragraphs[i].text = self.document.paragraphs[i].text.replace('JOB', self.key_words['Job'])
@@ -45,6 +61,10 @@ class JobTracker:
         self.document.save(file_name)
 
     def app_tracker(self):
+
+        """
+        :return: updates csv file with new entries, as determined by JobTracker.new_entry.
+        """
 
         column_names = list(self.df.columns)
         d = defaultdict(object)
