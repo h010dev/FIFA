@@ -1,10 +1,10 @@
 my_apps/*
-__init__.py
+cv_builder/**/data/*
 cv_builder/**/*__init__.py
+cv_builder/**/data_exploration.py
+cv_builder/**/html_scrape.py
 cv_builder/**/sample_code.py
-cv_builder/**/personal_scripts.py
-cv_builder/**/*.docx
-cv_builder/**/*.csv
-cv_builder/**/*.sql
-cv_builder/**/*.db
+cv_builder/**/secret_vars.py
+cv_builder/**/transform_csv.py
 .idea/
+__init__.py
