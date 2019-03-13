@@ -1,5 +1,6 @@
 my_apps/*
 __pycache__/
+*.py[cod]
 cv_builder/**/data/*
 cv_builder/**/*__init__.py
 cv_builder/**/data_exploration.py
