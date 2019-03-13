@@ -9,6 +9,7 @@ class JobTracker:
     key_words = dict()
 
     def __init__(self, df=None, document=None):
+
         """
         :param df: name and path of csv file to be used.
         :param document: name and path of docx file to be used.
@@ -17,10 +18,12 @@ class JobTracker:
         self.df = df
         self.document = document
 
-    def load_files(self):
+    def reload_files(self):
+
         """
         :return: reloads files with new updates/changes.
         """
+
         self.df = pd.read_csv(r'my_projects\cv_builder\app_tracker.csv')
         self.document = docx.Document(r'my_projects\cv_builder\cv_template.docx')
 
