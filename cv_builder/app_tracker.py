@@ -1,3 +1,4 @@
+import os
 import docx
 import datetime
 import pandas as pd
@@ -128,13 +129,14 @@ class JobTracker:
             self.document.paragraphs[i].text = \
                 self.document.paragraphs[i].text.replace('LOCATION', self.key_words['Location'])
 
-        file_name = f'{file_path}' \
-                    f'{self.key_words["Organization"].replace(" ", "-")}' \
+        file_name = f'{self.key_words["Organization"].replace(" ", "-")}' \
                     f'_CV_{self.key_words["Job"].replace(" ", "-")}' \
                     f'_{self.key_words["Location"].replace(" ", "-")}' \
                     f'_USA_{datetime.date.today()}.docx'
 
-        self.document.save(file_name)
+        save_path = os.path.join(file_path, file_name).replace('\\', '/')
+
+        self.document.save(save_path)
 
     def update_csv(self):
 
