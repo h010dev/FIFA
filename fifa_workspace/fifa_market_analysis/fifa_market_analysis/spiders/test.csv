@@ -1,0 +1,306 @@
+name               ,position                    ,age,overall,potential,team                          ,contract                            ,value  ,wage ,total_stats,hits_comments
+L. Messi           ,"CF,RW,ST"                  ,31 ,94     ,94       ,FC Barcelona                  ,2004 ~ 2021                         ,€110.5M,€565K,2217       ,0.1K / 35.4K
+Cristiano Ronaldo  ,"ST,LW"                     ,33 ,94     ,94       ,Juventus                      ,2018 ~ 2022                         ,€77M   ,€405K,2228       ,<100 / 41.7K
+Neymar Jr          ,"LW,CAM"                    ,26 ,92     ,92       ,Paris Saint-Germain           ,2017 ~ 2022                         ,€108M  ,€290K,2150       ,<100 / 22.4K
+De Gea             ,GK                          ,27 ,91     ,93       ,Manchester United             ,2011 ~ 2020                         ,€72M   ,€260K,1478       ,<100 / 8K
+K. De Bruyne       ,"CAM,CM"                    ,27 ,91     ,92       ,Manchester City               ,2015 ~ 2023                         ,€102M  ,€355K,2280       ,<100 / 7.4K
+E. Hazard          ,"LW,CF"                     ,27 ,91     ,91       ,Chelsea                       ,2012 ~ 2020                         ,€93M   ,€340K,2142       ,<100 / 11.9K
+L. Modrić          ,CM                          ,32 ,91     ,91       ,Real Madrid                   ,2012 ~ 2020                         ,€67M   ,€420K,2286       ,<100 / 2.9K
+L. Suárez          ,ST                          ,31 ,91     ,91       ,FC Barcelona                  ,2014 ~ 2021                         ,€80M   ,€455K,2349       ,<100 / 2K
+H. Kane            ,ST                          ,24 ,90     ,92       ,Tottenham Hotspur             ,2010 ~ 2024                         ,€96.5M ,€210K,2177       ,<100 / 16.1K
+J. Oblak           ,GK                          ,25 ,90     ,93       ,Atlético Madrid               ,2014 ~ 2021                         ,€68M   ,€94K ,1328       ,<100 / 1.4K
+R. Lewandowski     ,ST                          ,29 ,90     ,90       ,FC Bayern München             ,2014 ~ 2021                         ,€77M   ,€205K,2151       ,<100 / 4.3K
+D. Godín           ,CB                          ,32 ,90     ,90       ,Atlético Madrid               ,2010 ~ 2019                         ,€44M   ,€125K,1936       ,<100 / 0.8K
+David Silva        ,"CAM,CM"                    ,32 ,90     ,90       ,Manchester City               ,2010 ~ 2020                         ,€60M   ,€285K,2112       ,<100 / 1.7K
+Sergio Ramos       ,CB                          ,32 ,90     ,90       ,Real Madrid                   ,2005 ~ 2020                         ,€44M   ,€310K,2238       ,<100 / 6.6K
+G. Chiellini       ,CB                          ,33 ,90     ,90       ,Juventus                      ,2005 ~ 2020                         ,€31M   ,€225K,1854       ,<100 / 1.2K
+N. Kanté           ,"CDM,CM"                    ,27 ,89     ,90       ,Chelsea                       ,2016 ~ 2023                         ,€63M   ,€225K,2187       ,<100 / 6.1K
+P. Dybala          ,"CAM,RW"                    ,24 ,89     ,94       ,Juventus                      ,2015 ~ 2022                         ,€89M   ,€205K,2092       ,<100 / 14.3K
+M. Salah           ,"RW,ST"                     ,26 ,89     ,90       ,Liverpool                     ,2017 ~ 2023                         ,€78.5M ,€265K,2174       ,<100 / 14.3K
+A. Griezmann       ,"CF,ST"                     ,27 ,89     ,89       ,Atlético Madrid               ,2014 ~ 2023                         ,€71M   ,€145K,2293       ,<100 / 6.2K
+M. ter Stegen      ,GK                          ,26 ,89     ,92       ,FC Barcelona                  ,2014 ~ 2022                         ,€58M   ,€240K,1346       ,<100 / 2.1K
+T. Courtois        ,GK                          ,26 ,89     ,90       ,Real Madrid                   ,2018 ~ 2024                         ,€53.5M ,€240K,1311       ,<100 / 3K
+Sergio Busquets    ,"CDM,CM"                    ,29 ,89     ,89       ,FC Barcelona                  ,2008 ~ 2023                         ,€51.5M ,€315K,2065       ,<100 / 2.7K
+T. Kroos           ,CM                          ,28 ,89     ,89       ,Real Madrid                   ,2014 ~ 2022                         ,€66M   ,€340K,2167       ,<100 / 4.1K
+E. Cavani          ,ST                          ,31 ,89     ,89       ,Paris Saint-Germain           ,2013 ~ 2020                         ,€60M   ,€200K,2161       ,<100 / 0.9K
+S. Agüero          ,ST                          ,30 ,89     ,89       ,Manchester City               ,2011 ~ 2021                         ,€64.5M ,€300K,2105       ,<100 / 3.7K
+K. Mbappé          ,"ST,RW,RM"                  ,19 ,88     ,95       ,Paris Saint-Germain           ,2018 ~ 2022                         ,€82M   ,€100K,2123       ,0.2K / 23.2K
+V. van Dijk        ,CB                          ,26 ,88     ,90       ,Liverpool                     ,2018 ~ 2023                         ,€59.5M ,€215K,2071       ,0.3K / 6.4K
+K. Koulibaly       ,CB                          ,27 ,88     ,91       ,Napoli                        ,2014 ~ 2021                         ,€60M   ,€135K,1692       ,<100 / 2K
+L. Insigne         ,"LW,ST"                     ,27 ,88     ,88       ,Napoli                        ,2010 ~ 2022                         ,€62M   ,€165K,2017       ,<100 / 1.6K
+P. Pogba           ,"CM,CAM"                    ,25 ,88     ,91       ,Manchester United             ,2016 ~ 2021                         ,€73M   ,€255K,2250       ,<100 / 20.1K
+C. Eriksen         ,"CAM,RM,CM"                 ,26 ,88     ,89       ,Tottenham Hotspur             ,2013 ~ 2020                         ,€69.5M ,€205K,2125       ,<100 / 4.3K
+P. Aubameyang      ,"ST,LM"                     ,29 ,88     ,88       ,Arsenal                       ,2018 ~ 2021                         ,€59M   ,€265K,2069       ,<100 / 4.9K
+M. Reus            ,"CAM,LM,ST"                 ,29 ,88     ,88       ,Borussia Dortmund             ,2012 ~ 2023                         ,€58M   ,€130K,2188       ,<100 / 4.8K
+M. Hummels         ,CB                          ,29 ,88     ,88       ,FC Bayern München             ,2016 ~ 2021                         ,€46M   ,€160K,2027       ,<100 / 0.7K
+H. Lloris          ,GK                          ,31 ,88     ,88       ,Tottenham Hotspur             ,2012 ~ 2022                         ,€36M   ,€150K,1335       ,<100 / 1.3K
+M. Neuer           ,GK                          ,32 ,88     ,88       ,FC Bayern München             ,2011 ~ 2021                         ,€34M   ,€125K,1465       ,<100 / 2.5K
+Thiago Silva       ,CB                          ,33 ,88     ,88       ,Paris Saint-Germain           ,2012 ~ 2020                         ,€24M   ,€165K,2072       ,<100 / 1.3K
+S. Handanovič      ,GK                          ,33 ,88     ,88       ,Inter                         ,2012 ~ 2021                         ,€30M   ,€110K,1262       ,<100 / 0.5K
+Piqué              ,CB                          ,31 ,88     ,88       ,FC Barcelona                  ,2008 ~ 2022                         ,€40M   ,€285K,1992       ,<100 / 2.2K
+Alisson            ,GK                          ,25 ,87     ,91       ,Liverpool                     ,2018 ~ 2024                         ,€46M   ,€135K,1330       ,<100 / 3.3K
+S. Umtiti          ,CB                          ,24 ,87     ,92       ,FC Barcelona                  ,2016 ~ 2023                         ,€57M   ,€205K,2147       ,<100 / 2.4K
+R. Sterling        ,"RW,LW"                     ,23 ,87     ,89       ,Manchester City               ,2015 ~ 2023                         ,€62M   ,€210K,2051       ,0.1K / 7.4K
+M. Icardi          ,ST                          ,25 ,87     ,90       ,Inter                         ,2013 ~ 2021                         ,€64.5M ,€130K,1937       ,<100 / 5.8K
+Casemiro           ,CDM                         ,26 ,87     ,89       ,Real Madrid                   ,2013 ~ 2021                         ,€50.5M ,€240K,2191       ,<100 / 2.5K
+J. Rodríguez       ,"CAM,CM,RM"                 ,26 ,87     ,88       ,FC Bayern München             ,"Jun 30, 2019 (Real Madrid)"        ,€59M   ,€260K,2170       ,<100 / 7.4K
+Isco               ,"CAM,CM,LW"                 ,26 ,87     ,90       ,Real Madrid                   ,2013 ~ 2022                         ,€62.5M ,€260K,2127       ,<100 / 4.9K
+K. Navas           ,GK                          ,31 ,87     ,87       ,Real Madrid                   ,2014 ~ 2020                         ,€30.5M ,€195K,1345       ,<100 / 1.4K
+C. Immobile        ,ST                          ,28 ,87     ,87       ,Lazio                         ,2016 ~ 2023                         ,€52M   ,€115K,2009       ,<100 / 1K
+Thiago             ,"CM,CAM,CDM"                ,27 ,87     ,87       ,FC Bayern München             ,2013 ~ 2021                         ,€51.5M ,€140K,2202       ,<100 / 2.5K
+Jordi Alba         ,LB                          ,29 ,87     ,87       ,FC Barcelona                  ,2012 ~ 2024                         ,€38M   ,€250K,2240       ,<100 / 1.1K
+Coutinho           ,"LW,CM"                     ,26 ,87     ,88       ,FC Barcelona                  ,2018 ~ 2023                         ,€59M   ,€285K,2169       ,<100 / 9.4K
+T. Alderweireld    ,CB                          ,29 ,87     ,87       ,Tottenham Hotspur             ,2015 ~ 2020                         ,€39M   ,€165K,2056       ,<100 / 0.5K
+Marcelo            ,LB                          ,30 ,87     ,87       ,Real Madrid                   ,2007 ~ 2022                         ,€36.5M ,€240K,2280       ,<100 / 1.1K
+D. Mertens         ,"CF,ST"                     ,31 ,87     ,87       ,Napoli                        ,2013 ~ 2020                         ,€45M   ,€135K,2043       ,<100 / 0.8K
+G. Bale            ,"RW,LW,ST"                  ,28 ,87     ,87       ,Real Madrid                   ,2013 ~ 2022                         ,€51M   ,€295K,2275       ,<100 / 6.5K
+J. Vertonghen      ,CB                          ,31 ,87     ,87       ,Tottenham Hotspur             ,2012 ~ 2020                         ,€34M   ,€155K,2089       ,<100 / 0.5K
+I. Rakitić         ,"CM,CDM"                    ,30 ,87     ,87       ,FC Barcelona                  ,2014 ~ 2021                         ,€46.5M ,€260K,2202       ,<100 / 1.5K
+G. Higuaín         ,ST                          ,30 ,87     ,87       ,Chelsea                       ,"Jun 30, 2019 (Juventus)"           ,€48.5M ,€205K,1952       ,<100 / 5.7K
+Fernandinho        ,CDM                         ,33 ,87     ,87       ,Manchester City               ,2013 ~ 2020                         ,€20.5M ,€200K,2202       ,<100 / 0.7K
+G. Buffon          ,GK                          ,40 ,87     ,87       ,Paris Saint-Germain           ,2018 ~ 2019                         ,€3.4M  ,€64K ,1320       ,<100 / 2.4K
+M. Škriniar        ,CB                          ,23 ,86     ,93       ,Inter                         ,2017 ~ 2022                         ,€53.5M ,€89K ,1816       ,0.2K / 2.7K
+M. Škriniar        ,CB                          ,23 ,86     ,93       ,Inter                         ,2017 ~ 2022                         ,€53.5M ,€89K ,1816       ,0.2K / 2.7K
+L. Sané            ,LW                          ,22 ,86     ,92       ,Manchester City               ,2016 ~ 2021                         ,€61M   ,€195K,2106       ,0.2K / 4.4K
+Bernardo Silva     ,"CAM,CM,RW,RM"              ,23 ,86     ,91       ,Manchester City               ,2017 ~ 2025                         ,€59.5M ,€180K,2071       ,<100 / 3.3K
+J. Kimmich         ,"RB,CM,CDM"                 ,23 ,86     ,88       ,FC Bayern München             ,2015 ~ 2023                         ,€45M   ,€100K,2212       ,<100 / 2.8K
+Ederson            ,GK                          ,24 ,86     ,90       ,Manchester City               ,2017 ~ 2025                         ,€41.5M ,€125K,1482       ,<100 / 1.8K
+S. Mané            ,"LW,RW,LM"                  ,26 ,86     ,87       ,Liverpool                     ,2016 ~ 2023                         ,€52M   ,€195K,2119       ,<100 / 4K
+Roberto Firmino    ,"CF,ST,CAM"                 ,26 ,86     ,87       ,Liverpool                     ,2015 ~ 2023                         ,€53M   ,€195K,2186       ,<100 / 4.7K
+R. Varane          ,CB                          ,25 ,86     ,91       ,Real Madrid                   ,2011 ~ 2022                         ,€50M   ,€210K,1895       ,<100 / 2.9K
+H. Son             ,"LM,CF"                     ,25 ,86     ,87       ,Tottenham Hotspur             ,2015 ~ 2023                         ,€53M   ,€150K,2115       ,<100 / 4K
+M. Verratti        ,"CM,CDM"                    ,25 ,86     ,89       ,Paris Saint-Germain           ,2012 ~ 2021                         ,€55M   ,€135K,2152       ,<100 / 4.5K
+R. Lukaku          ,ST                          ,25 ,86     ,88       ,Manchester United             ,2017 ~ 2022                         ,€55M   ,€215K,2002       ,<100 / 7.7K
+Alex Sandro        ,"LB,LM"                     ,27 ,86     ,86       ,Juventus                      ,2015 ~ 2020                         ,€36.5M ,€160K,2198       ,<100 / 1.2K
+T. Müller          ,"CAM,RM,RW,CF"              ,28 ,86     ,86       ,FC Bayern München             ,2008 ~ 2021                         ,€45M   ,€135K,2096       ,<100 / 3.7K
+W. Szczęsny        ,GK                          ,28 ,86     ,88       ,Juventus                      ,2017 ~ 2021                         ,€37M   ,€135K,1277       ,<100 / 0.9K
+L. Bonucci         ,CB                          ,31 ,86     ,86       ,Juventus                      ,2018 ~ 2023                         ,€30M   ,€160K,1978       ,<100 / 1.4K
+M. Pjanić          ,"CM,CDM"                    ,28 ,86     ,86       ,Juventus                      ,2016 ~ 2023                         ,€44M   ,€180K,2191       ,<100 / 1.4K
+K. Benzema         ,ST                          ,30 ,86     ,86       ,Real Madrid                   ,2009 ~ 2021                         ,€43M   ,€265K,2049       ,<100 / 2.9K
+S. Milinković-Savić,"CM,CAM"                    ,23 ,85     ,90       ,Lazio                         ,2015 ~ 2023                         ,€50.5M ,€73K ,2206       ,0.1K / 2.8K
+A. Laporte         ,"CB,LB"                     ,24 ,85     ,88       ,Manchester City               ,2018 ~ 2025                         ,€41M   ,€150K,1927       ,<100 / 2.6K
+D. Alli            ,CAM                         ,22 ,85     ,90       ,Tottenham Hotspur             ,2015 ~ 2024                         ,€51.5M ,€125K,2199       ,<100 / 7.2K
+Fabinho            ,CDM                         ,24 ,85     ,89       ,Liverpool                     ,2018 ~ 2023                         ,€42.5M ,€130K,2171       ,<100 / 2.5K
+Saúl               ,"CM,LM,RM"                  ,23 ,85     ,90       ,Atlético Madrid               ,2013 ~ 2026                         ,€50.5M ,€77K ,2197       ,<100 / 2K
+Marquinhos         ,"CB,CDM"                    ,24 ,85     ,90       ,Paris Saint-Germain           ,2013 ~ 2022                         ,€43.5M ,€98K ,1921       ,<100 / 1K
+Carvajal           ,RB                          ,26 ,85     ,86       ,Real Madrid                   ,2013 ~ 2022                         ,€36.5M ,€205K,2091       ,<100 / 1.1K
+R. Mahrez          ,"RW,RM"                     ,27 ,85     ,85       ,Manchester City               ,2018 ~ 2023                         ,€40.5M ,€205K,2020       ,<100 / 7.5K
+A. Lopes           ,GK                          ,27 ,85     ,87       ,Olympique Lyonnais            ,2011 ~ 2020                         ,€31M   ,€78K ,1360       ,<100 / 0.5K
+Koke               ,"LM,CM,RM"                  ,26 ,85     ,85       ,Atlético Madrid               ,2011 ~ 2019                         ,€41.5M ,€88K ,2198       ,<100 / 0.8K
+A. Lacazette       ,ST                          ,27 ,85     ,86       ,Arsenal                       ,2017 ~ 2022                         ,€45M   ,€180K,2063       ,<100 / 5.3K
+K. Manolas         ,CB                          ,27 ,85     ,86       ,Roma                          ,2014 ~ 2022                         ,€36.5M ,€96K ,1642       ,<100 / 1.4K
+Douglas Costa      ,"LM,RW,LW"                  ,27 ,85     ,85       ,Juventus                      ,2018 ~ 2022                         ,€40.5M ,€160K,2105       ,<100 / 3.2K
+Parejo             ,CM                          ,29 ,85     ,85       ,Valencia CF                   ,2011 ~ 2022                         ,€37M   ,€66K ,2130       ,<100 / 0.3K
+Paulinho           ,"CM,CAM,CDM,RM"             ,29 ,85     ,85       ,Guangzhou Evergrande Taobao FC,2019 ~ 2023                         ,€37M   ,€39K ,2256       ,<100 / 2.4K
+Azpilicueta        ,"RB,CB"                     ,28 ,85     ,85       ,Chelsea                       ,2012 ~ 2022                         ,€30.5M ,€160K,2105       ,<100 / 0.5K
+Y. Brahimi         ,LM                          ,28 ,85     ,85       ,FC Porto                      ,2014 ~ 2019                         ,€39M   ,€28K ,2033       ,<100 / 0.3K
+A. Di María        ,"RW,LW"                     ,30 ,85     ,85       ,Paris Saint-Germain           ,2015 ~ 2021                         ,€36.5M ,€140K,2142       ,<100 / 0.6K
+A. Vidal           ,"CM,CDM"                    ,31 ,85     ,85       ,FC Barcelona                  ,2018 ~ 2021                         ,€33M   ,€225K,2255       ,<100 / 2.7K
+M. Mandžukić       ,"ST,LW"                     ,32 ,85     ,85       ,Juventus                      ,2015 ~ 2020                         ,€30.5M ,€175K,2121       ,<100 / 1.1K
+I. Perišić         ,LM                          ,29 ,85     ,85       ,Inter                         ,2015 ~ 2022                         ,€37.5M ,€110K,2199       ,<100 / 1.4K
+E. Džeko           ,ST                          ,32 ,85     ,85       ,Roma                          ,2015 ~ 2020                         ,€30.5M ,€115K,1939       ,<100 / 1K
+R. Nainggolan      ,"CM,CAM"                    ,30 ,85     ,85       ,Inter                         ,2018 ~ 2022                         ,€35.5M ,€105K,2278       ,<100 / 1K
+A. Witsel          ,"CDM,CM"                    ,29 ,85     ,85       ,Borussia Dortmund             ,2018 ~ 2022                         ,€30M   ,€84K ,2221       ,<100 / 0.5K
+M. Özil            ,"CAM,RW"                    ,29 ,85     ,85       ,Arsenal                       ,2013 ~ 2021                         ,€37.5M ,€175K,1899       ,<100 / 2.7K
+B. Matuidi         ,"CDM,CM"                    ,31 ,85     ,85       ,Juventus                      ,2017 ~ 2020                         ,€26M   ,€145K,2196       ,<100 / 0.7K
+Filipe Luís        ,LB                          ,32 ,85     ,85       ,Atlético Madrid               ,2015 ~ 2019                         ,€21.5M ,€81K ,2141       ,<100 / 0.3K
+V. Kompany         ,CB                          ,32 ,85     ,85       ,Manchester City               ,2008 ~ 2019                         ,€22M   ,€170K,1881       ,<100 / 0.9K
+Pepe               ,CB                          ,35 ,85     ,85       ,FC Porto                      ,2019 ~ 2021                         ,€9M    ,€18K ,1830       ,<100 / 1.4K
+Z. Ibrahimović     ,ST                          ,36 ,85     ,85       ,LA Galaxy                     ,2018 ~ 2022                         ,€14M   ,€15K ,2005       ,<100 / 5.5K
+Iniesta            ,"CM,LM"                     ,34 ,85     ,85       ,Vissel Kobe                   ,2018 ~ 2021                         ,€18.5M ,€19K ,2052       ,<100 / 2.3K
+M. de Ligt         ,CB                          ,18 ,84     ,92       ,Ajax                          ,2016 ~ 2021                         ,€35.5M ,€13K ,1961       ,0.4K / 5.5K
+O. Dembélé         ,"RW,LW"                     ,21 ,84     ,92       ,FC Barcelona                  ,2017 ~ 2022                         ,€46M   ,€170K,2023       ,<100 / 9.2K
+Marco Asensio      ,"LM,RW,N/A,LM,LW,RW,LM"     ,22 ,84     ,89       ,Real Madrid                   ,2015 ~ 2023                         ,€41.5M ,€195K,2051       ,<100 / 5.6K
+D. Sánchez         ,CB                          ,22 ,84     ,88       ,Tottenham Hotspur             ,2017 ~ 2024                         ,€34M   ,€105K,1809       ,<100 / 1.3K
+N. Fekir           ,CAM                         ,24 ,84     ,88       ,Olympique Lyonnais            ,2013 ~ 2020                         ,€40.5M ,€84K ,2088       ,<100 / 3.8K
+J. Giménez         ,CB                          ,23 ,84     ,88       ,Atlético Madrid               ,2013 ~ 2023                         ,€34M   ,€63K ,1756       ,<100 / 0.9K
+Alex Telles        ,LB                          ,25 ,84     ,86       ,FC Porto                      ,2016 ~ 2021                         ,€31M   ,€22K ,2267       ,<100 / 1.3K
+Bruno Fernandes    ,"CAM,CM"                    ,23 ,84     ,88       ,Sporting CP                   ,2017 ~ 2023                         ,€40.5M ,€22K ,2246       ,0.1K / 1.3K
+N. Süle            ,CB                          ,22 ,84     ,90       ,FC Bayern München             ,2017 ~ 2022                         ,€36.5M ,€84K ,1649       ,0.1K / 1.5K
+T. Werner          ,ST                          ,22 ,84     ,87       ,RB Leipzig                    ,2016 ~ 2020                         ,€40M   ,€77K ,1984       ,<100 / 2.5K
+A. Martial         ,"LW,ST,LM"                  ,22 ,84     ,90       ,Manchester United             ,2015 ~ 2024                         ,€42.5M ,€165K,2066       ,<100 / 10.3K
+L. Goretzka        ,"CM,CAM,CDM"                ,23 ,84     ,88       ,FC Bayern München             ,2018 ~ 2022                         ,€40M   ,€94K ,2222       ,0.1K / 3.5K
+H. Ziyech          ,"CAM,RW"                    ,25 ,84     ,86       ,Ajax                          ,2016 ~ 2021                         ,€38M   ,€31K ,2103       ,<100 / 1.8K
+H. Ziyech          ,"CAM,RW"                    ,25 ,84     ,86       ,Ajax                          ,2016 ~ 2021                         ,€38M   ,€31K ,2103       ,<100 / 1.8K
+Kepa               ,GK                          ,23 ,84     ,90       ,Chelsea                       ,2018 ~ 2025                         ,€31M   ,€92K ,1229       ,<100 / 2.2K
+S. Gnabry          ,"LM,RM,CAM,LW"              ,22 ,84     ,87       ,FC Bayern München             ,2017 ~ 2023                         ,€39.5M ,€94K ,2046       ,0.8K / 1.5K
+E. Višća           ,"RM,RW"                     ,28 ,84     ,84       ,Medipol Başakşehir FK         ,2011 ~ 2021                         ,€31.5M ,€48K ,2078       ,<100 / 0.2K
+F. Thauvin         ,"RM,RW"                     ,25 ,84     ,85       ,Olympique de Marseille        ,2017 ~ 2021                         ,€37M   ,€72K ,2096       ,<100 / 1K
+M. Depay           ,"CF,LW,CAM"                 ,24 ,84     ,88       ,Olympique Lyonnais            ,2017 ~ 2021                         ,€41M   ,€93K ,2082       ,0.3K / 9.1K
+Felipe Anderson    ,LM                          ,25 ,84     ,86       ,West Ham United               ,2018 ~ 2022                         ,€38M   ,€120K,2064       ,<100 / 1.8K
+Allan              ,CM                          ,27 ,84     ,84       ,Napoli                        ,2015 ~ 2023                         ,€32M   ,€96K ,2179       ,<100 / 0.6K
+S. de Vrij         ,CB                          ,26 ,84     ,86       ,Inter                         ,2018 ~ 2023                         ,€31.5M ,€88K ,1816       ,<100 / 0.9K
+M. Perin           ,GK                          ,25 ,84     ,89       ,Juventus                      ,2018 ~ 2022                         ,€29.5M ,€105K,1254       ,<100 / 0.6K
+D. Alaba           ,"LB,CB"                     ,26 ,84     ,86       ,FC Bayern München             ,2010 ~ 2021                         ,€30.5M ,€98K ,2251       ,<100 / 2K
+J. Cuadrado        ,"RM,RW"                     ,30 ,84     ,84       ,Juventus                      ,2015 ~ 2020                         ,€29.5M ,€150K,2163       ,<100 / 2.1K
+Iago Aspas         ,"ST,RW"                     ,30 ,84     ,84       ,RC Celta                      ,2015 ~ 2022                         ,€30M   ,€45K ,2057       ,<100 / 0.3K
+N. Otamendi        ,CB                          ,30 ,84     ,84       ,Manchester City               ,2015 ~ 2022                         ,€23M   ,€160K,1912       ,<100 / 2K
+N. Matić           ,"CDM,CM"                    ,29 ,84     ,84       ,Manchester United             ,2017 ~ 2020                         ,€24M   ,€165K,2077       ,<100 / 1.9K
+L. Hrádecký        ,GK                          ,28 ,84     ,84       ,Bayer 04 Leverkusen           ,2018 ~ 2023                         ,€22M   ,€74K ,1133       ,<100 / 0.2K
+Illarramendi       ,"CDM,CM"                    ,28 ,84     ,84       ,Real Sociedad                 ,2015 ~ 2023                         ,€25M   ,€47K ,2111       ,<100 / 0.3K
+R. Bürki           ,GK                          ,27 ,84     ,85       ,Borussia Dortmund             ,2015 ~ 2021                         ,€24M   ,€60K ,1256       ,<100 / 0.5K
+K. Walker          ,RB                          ,28 ,84     ,84       ,Manchester City               ,2017 ~ 2022                         ,€24.5M ,€165K,2185       ,<100 / 1.3K
+I. Gündoğan        ,"CM,CDM"                    ,27 ,84     ,84       ,Manchester City               ,2016 ~ 2020                         ,€32M   ,€175K,2139       ,<100 / 1.6K
+José Callejón      ,"RW,RM"                     ,31 ,84     ,84       ,Napoli                        ,2013 ~ 2020                         ,€27.5M ,€105K,2045       ,<100 / 0.2K
+A. Sánchez         ,"LW,LM"                     ,29 ,84     ,84       ,Manchester United             ,2018 ~ 2022                         ,€30.5M ,€195K,2153       ,<100 / 3.5K
+J. Boateng         ,CB                          ,29 ,84     ,84       ,FC Bayern München             ,2011 ~ 2021                         ,€24M   ,€105K,1943       ,<100 / 0.5K
+Willian            ,"RW,LW"                     ,29 ,84     ,84       ,Chelsea                       ,2013 ~ 2020                         ,€30.5M ,€175K,2054       ,<100 / 1.2K
+S. Khedira         ,"CM,CDM"                    ,31 ,84     ,84       ,Juventus                      ,2015 ~ 2021                         ,€26.5M ,€150K,2148       ,<100 / 0.3K
+Diego Costa        ,ST                          ,29 ,84     ,84       ,Atlético Madrid               ,2018 ~ 2021                         ,€31M   ,€92K ,1994       ,<100 / 0.7K
+E. Banega          ,"CAM,CDM,CDM,CAM,CM,CDM,CAM",30 ,84     ,84       ,Sevilla FC                    ,2017 ~ 2020                         ,€29M   ,€31K ,2136       ,<100 / 0.2K
+Y. Sommer          ,GK                          ,29 ,84     ,85       ,Borussia Mönchengladbach      ,2014 ~ 2021                         ,€24M   ,€39K ,1304       ,<100 / 0
+Sokratis           ,CB                          ,30 ,84     ,84       ,Arsenal                       ,2018 ~ 2021                         ,€23M   ,€140K,1816       ,<100 / 0.7K
+Miranda            ,CB                          ,33 ,84     ,84       ,Inter                         ,2017 ~ 2020                         ,€12.5M ,€88K ,1871       ,<100 / 0
+S. Ruffier         ,GK                          ,31 ,84     ,84       ,AS Saint-Étienne              ,2011 ~ 2021                         ,€19M   ,€41K ,1254       ,<100 / 0.1K
+Falcao             ,ST                          ,32 ,84     ,84       ,AS Monaco                     ,2013 ~ 2020                         ,€25M   ,€115K,2020       ,<100 / 2.2K
+Raúl Albiol        ,CB                          ,32 ,84     ,84       ,Napoli                        ,2013 ~ 2021                         ,€18M   ,€88K ,1765       ,<100 / 55
+A. Gómez           ,"CF,LW,ST"                  ,30 ,84     ,84       ,Atalanta                      ,2014 ~ 2022                         ,€30M   ,€53K ,2049       ,<100 / 0.4K
+Rodri              ,"CM,CDM,CDM,CM,CDM,CM"      ,22 ,83     ,88       ,Atlético Madrid               ,2018 ~ 2023                         ,€29.5M ,€58K ,2073       ,<100 / 0.4K
+M. Rashford        ,"ST,LW,RW"                  ,20 ,83     ,90       ,Manchester United             ,2014 ~ 2020                         ,€37.5M ,€130K,2109       ,0.1K / 6.3K
+Gabriel Jesus      ,ST                          ,21 ,83     ,92       ,Manchester City               ,2016 ~ 2023                         ,€41M   ,€130K,2052       ,<100 / 6K
+Arthur             ,CM                          ,21 ,83     ,90       ,FC Barcelona                  ,2018 ~ 2024                         ,€36M   ,€140K,2153       ,100 / 2.2K
+G. Donnarumma      ,GK                          ,19 ,83     ,94       ,Milan                         ,2015 ~ 2021                         ,€33.5M ,€26K ,1282       ,<100 / 3.8K
+Ronaldo Cabrais    ,"RW,CAM"                    ,26 ,83     ,83       ,Grêmio                        ,2018 ~ 2021                         ,€28M   ,€51K ,2095       ,<100 / 0.2K
+Josué Chiamulera   ,CB                          ,26 ,83     ,83       ,Grêmio                        ,2018 ~ 2021                         ,€22.5M ,€43K ,1894       ,<100 / 51
+Louri Beretta      ,"ST,CF"                     ,26 ,83     ,83       ,Atlético Mineiro              ,2018 ~ 2021                         ,€28.5M ,€60K ,1921       ,<100 / 0.2K
+F. de Jong         ,"CM,CDM,CB"                 ,21 ,83     ,90       ,Ajax                          ,2015 ~ 2022                         ,€36M   ,€22K ,2106       ,0.5K / 5.1K
+P. Kimpembe        ,CB                          ,22 ,83     ,89       ,Paris Saint-Germain           ,2015 ~ 2023                         ,€30.5M ,€82K ,1902       ,<100 / 0.9K
+N. Keïta           ,"CM,CDM,CAM"                ,23 ,83     ,88       ,Liverpool                     ,2018 ~ 2023                         ,€34M   ,€120K,2088       ,<100 / 2.8K
+L. Hernández       ,"LB,CB"                     ,22 ,83     ,89       ,Atlético Madrid               ,2015 ~ 2024                         ,€29.5M ,€58K ,2018       ,0.1K / 1.1K
+C. Lenglet         ,CB                          ,23 ,83     ,89       ,FC Barcelona                  ,2018 ~ 2023                         ,€30.5M ,€145K,1921       ,<100 / 1K
+C. Tolisso         ,"CM,CDM"                    ,23 ,83     ,88       ,FC Bayern München             ,2017 ~ 2022                         ,€34M   ,€85K ,2207       ,<100 / 2K
+A. Kramarić        ,"ST,LW,RW,CAM"              ,27 ,83     ,84       ,TSG 1899 Hoffenheim           ,2015 ~ 2022                         ,€30.5M ,€59K ,2036       ,0.2K / 0.4K
+A. Robertson       ,LB                          ,24 ,83     ,88       ,Liverpool                     ,2017 ~ 2024                         ,€29M   ,€110K,2044       ,<100 / 1.7K
+T. Lemar           ,"LM,CAM,RM"                 ,22 ,83     ,89       ,Atlético Madrid               ,2018 ~ 2023                         ,€35.5M ,€64K ,2172       ,<100 / 2.4K
+K. Coman           ,"LM,RM,LW,RW"               ,22 ,83     ,88       ,FC Bayern München             ,2015 ~ 2023                         ,€34.5M ,€85K ,1924       ,<100 / 3.9K
+Anderson Talisca   ,CAM                         ,24 ,83     ,87       ,Guangzhou Evergrande Taobao FC,2019 ~ 2022                         ,€34M   ,€27K ,2142       ,<100 / 1.9K
+João Cancelo       ,RB                          ,24 ,83     ,89       ,Juventus                      ,2018 ~ 2023                         ,€29.5M ,€105K,2180       ,<100 / 1.6K
+A. Romagnoli       ,CB                          ,23 ,83     ,90       ,Milan                         ,2015 ~ 2022                         ,€31M   ,€92K ,1765       ,<100 / 2.1K
+A. Rabiot          ,"CM,CDM"                    ,23 ,83     ,87       ,Paris Saint-Germain           ,2012 ~ 2019                         ,€33M   ,€91K ,2182       ,<100 / 1.8K
+Q. Promes          ,"LM,ST,RM"                  ,26 ,83     ,83       ,Sevilla FC                    ,2018 ~ 2023                         ,€28M   ,€28K ,2076       ,<100 / 0.8K
+Lucas Vázquez      ,"RW,RM"                     ,27 ,83     ,83       ,Real Madrid                   ,2015 ~ 2021                         ,€27M   ,€205K,2128       ,<100 / 0.7K
+Y. Carrasco        ,LM                          ,24 ,83     ,86       ,Dalian YiFang FC              ,2018 ~ 2021                         ,€33M   ,€20K ,2015       ,<100 / 2.7K
+Felipe             ,CB                          ,29 ,83     ,84       ,FC Porto                      ,2016 ~ 2021                         ,€22.5M ,€22K ,1790       ,<100 / 0.1K
+William Carvalho   ,"CDM,CM"                    ,26 ,83     ,86       ,Real Betis                    ,2018 ~ 2023                         ,€27M   ,€35K ,2013       ,<100 / 1.5K
+William Carvalho   ,"CDM,CM"                    ,26 ,83     ,86       ,Real Betis                    ,2018 ~ 2023                         ,€27M   ,€35K ,2013       ,<100 / 1.5K
+M. Kovačić         ,CM                          ,24 ,83     ,89       ,Chelsea                       ,"Jun 30, 2019 (Real Madrid)"        ,€35M   ,€165K,2117       ,<100 / 4.3K
+Jorginho           ,CM                          ,26 ,83     ,84       ,Chelsea                       ,2018 ~ 2023                         ,€30M   ,€140K,2101       ,<100 / 2.2K
+J. Pickford        ,GK                          ,24 ,83     ,88       ,Everton                       ,2017 ~ 2024                         ,€25M   ,€78K ,1436       ,<100 / 0.9K
+S. Savić           ,CB                          ,27 ,83     ,85       ,Atlético Madrid               ,2015 ~ 2020                         ,€25.5M ,€67K ,1695       ,<100 / 0.2K
+J. Stones          ,CB                          ,24 ,83     ,87       ,Manchester City               ,2016 ~ 2022                         ,€28.5M ,€125K,1858       ,<100 / 2.8K
+T. Hazard          ,"RW,LW,CF"                  ,25 ,83     ,84       ,Borussia Mönchengladbach      ,2015 ~ 2020                         ,€31M   ,€47K ,2034       ,<100 / 0.9K
+Suso               ,"RW,CF"                     ,24 ,83     ,85       ,Milan                         ,2015 ~ 2022                         ,€32M   ,€115K,1959       ,<100 / 1.4K
+J. Draxler         ,"CM,LW,LM,CAM"              ,24 ,83     ,86       ,Paris Saint-Germain           ,2017 ~ 2021                         ,€32.5M ,€91K ,2112       ,<100 / 2.2K
+Lucas Moura        ,"RM,LM,ST"                  ,25 ,83     ,84       ,Tottenham Hotspur             ,2018 ~ 2023                         ,€31M   ,€115K,2078       ,<100 / 1.9K
+Danilo Pereira     ,"CDM,CM"                    ,26 ,83     ,85       ,FC Porto                      ,2015 ~ 2022                         ,€26M   ,€21K ,2020       ,<100 / 0.7K
+Nacho Fernández    ,"CB,LB,RB"                  ,28 ,83     ,84       ,Real Madrid                   ,2010 ~ 2021                         ,€23.5M ,€180K,1855       ,<100 / 0.6K
+T. Horn            ,GK                          ,25 ,83     ,86       ,1. FC Köln                    ,2011 ~ 2023                         ,€23M   ,€25K ,1260       ,<100 / 0.7K
+F. Acerbi          ,CB                          ,30 ,83     ,83       ,Lazio                         ,2018 ~ 2023                         ,€19M   ,€64K ,1849       ,<100 / 0.2K
+Sergi Roberto      ,"RB,RM,CM"                  ,26 ,83     ,84       ,FC Barcelona                  ,2013 ~ 2022                         ,€24.5M ,€170K,2112       ,<100 / 1.8K
+Pablo Sarabia      ,"CAM,CM,RM"                 ,26 ,83     ,84       ,Sevilla FC                    ,2016 ~ 2020                         ,€30.5M ,€28K ,2044       ,<100 / 0.2K
+Rodrigo            ,ST                          ,27 ,83     ,83       ,Valencia CF                   ,2014 ~ 2022                         ,€27.5M ,€57K ,2062       ,<100 / 0.5K
+Bartra             ,CB                          ,27 ,83     ,84       ,Real Betis                    ,2018 ~ 2023                         ,€24.5M ,€35K ,2053       ,<100 / 1K
+Pizzi              ,"CM,RM"                     ,28 ,83     ,83       ,SL Benfica                    ,2013 ~ 2022                         ,€25.5M ,€22K ,2151       ,<100 / 0.3K
+K. Kampl           ,"CM,CAM,CDM"                ,27 ,83     ,83       ,RB Leipzig                    ,2017 ~ 2021                         ,€26.5M ,€74K ,2076       ,<100 / 0.5K
+Neto               ,GK                          ,28 ,83     ,84       ,Valencia CF                   ,2017 ~ 2021                         ,€21M   ,€41K ,1297       ,<100 / 0.1K
+O. Baumann         ,GK                          ,28 ,83     ,84       ,TSG 1899 Hoffenheim           ,2014 ~ 2021                         ,€21M   ,€42K ,1220       ,<100 / 51
+I. Gueye           ,"CDM,CM"                    ,28 ,83     ,83       ,Everton                       ,2016 ~ 2022                         ,€21M   ,€125K,2062       ,<100 / 0.4K
+K. Casteels        ,GK                          ,26 ,83     ,85       ,VfL Wolfsburg                 ,2015 ~ 2021                         ,€21.5M ,€50K ,1256       ,<100 / 66
+Marcos Alonso      ,"LB,LWB"                    ,27 ,83     ,83       ,Chelsea                       ,2016 ~ 2023                         ,€21.5M ,€130K,2198       ,<100 / 1.5K
+B. Leno            ,GK                          ,26 ,83     ,86       ,Arsenal                       ,2018 ~ 2023                         ,€22.5M ,€105K,1299       ,<100 / 1.5K
+Canales            ,"CAM,CM,RM,RW"              ,27 ,83     ,83       ,Real Betis                    ,2018 ~ 2022                         ,€27M   ,€38K ,2039       ,<100 / 0.2K
+B. Dost            ,ST                          ,29 ,83     ,83       ,Sporting CP                   ,2016 ~ 2021                         ,€26M   ,€26K ,1793       ,<100 / 1.2K
+Oscar              ,"CAM,CM"                    ,26 ,83     ,84       ,Shanghai SIPG FC              ,2017 ~ 2020                         ,€30.5M ,€29K ,2027       ,<100 / 1.9K
+A. Kolarov         ,LB                          ,32 ,83     ,83       ,Roma                          ,2017 ~ 2020                         ,€14.5M ,€80K ,2266       ,<100 / 0.4K
+G. Wijnaldum       ,"CM,CDM"                    ,27 ,83     ,83       ,Liverpool                     ,2016 ~ 2021                         ,€26.5M ,€140K,2198       ,<100 / 1.4K
+David Luiz         ,CB                          ,31 ,83     ,83       ,Chelsea                       ,2016 ~ 2019                         ,€17.5M ,€130K,2086       ,<100 / 0.5K
+Sergio Asenjo      ,GK                          ,29 ,83     ,84       ,Villarreal CF                 ,2014 ~ 2022                         ,€20M   ,€39K ,1329       ,<100 / 29
+Rui Patrício       ,GK                          ,30 ,83     ,83       ,Wolverhampton Wanderers       ,2018 ~ 2022                         ,€16.5M ,€74K ,1350       ,<100 / 0.3K
+Javi Martínez      ,"CDM,CB"                    ,29 ,83     ,83       ,FC Bayern München             ,2012 ~ 2021                         ,€20M   ,€94K ,1948       ,<100 / 0.2K
+D. Payet           ,"CAM,LM"                    ,31 ,83     ,83       ,Olympique de Marseille        ,2017 ~ 2021                         ,€22.5M ,€69K ,2044       ,<100 / 0.2K
+Jonas              ,ST                          ,34 ,83     ,83       ,SL Benfica                    ,2014 ~ 2020                         ,€13.5M ,€22K ,2011       ,<100 / 0.3K
+Lucas Leiva        ,CDM                         ,31 ,83     ,83       ,Lazio                         ,2017 ~ 2020                         ,€17.5M ,€64K ,2095       ,<100 / 0.2K
+Naldo              ,CB                          ,35 ,83     ,83       ,AS Monaco                     ,2019 ~ 2020                         ,€6M    ,€61K ,1929       ,<100 / 0.4K
+S. Sirigu          ,GK                          ,31 ,83     ,83       ,Torino                        ,2017 ~ 2022                         ,€15.5M ,€49K ,1219       ,<100 / 0.2K
+K. Schmeichel      ,GK                          ,31 ,83     ,83       ,Leicester City                ,2011 ~ 2023                         ,€15.5M ,€71K ,1344       ,<100 / 0.6K
+F. Ribéry          ,"LM,LW"                     ,35 ,83     ,83       ,FC Bayern München             ,2007 ~ 2019                         ,€11.5M ,€72K ,1928       ,<100 / 0.8K
+A. Barzagli        ,CB                          ,37 ,83     ,83       ,Juventus                      ,2011 ~ 2019                         ,€3.5M  ,€86K ,1727       ,<100 / 0.5K
+R. Jarstein        ,GK                          ,33 ,83     ,83       ,Hertha BSC                    ,2014 ~ 2021                         ,€13M   ,€33K ,1191       ,<100 / 71
+D. De Rossi        ,CDM                         ,34 ,83     ,83       ,Roma                          ,2002 ~ 2019                         ,€8M    ,€80K ,2100       ,<100 / 0.4K
+Quaresma           ,"RM,LM"                     ,34 ,83     ,83       ,Beşiktaş JK                   ,2015 ~ 2020                         ,€13M   ,€73K ,1976       ,<100 / 1.5K
+A. Robben          ,"RM,RW"                     ,34 ,83     ,83       ,FC Bayern München             ,2009 ~ 2019                         ,€13M   ,€98K ,2033       ,<100 / 2.4K
+Casillas           ,GK                          ,37 ,83     ,83       ,FC Porto                      ,2015 ~ 2020                         ,€1.7M  ,€11K ,1308       ,<100 / 0.9K
+J. Pavlenka        ,GK                          ,26 ,82     ,85       ,SV Werder Bremen              ,2017 ~ 2021                         ,€19.5M ,€30K ,1060       ,<100 / 0.2K
+K. Havertz         ,"CAM,RM"                    ,19 ,82     ,90       ,Bayer 04 Leverkusen           ,2016 ~ 2022                         ,€32M   ,€38K ,1948       ,0.1K / 1.9K
+Rosberto Dourado   ,"CDM,CM"                    ,30 ,82     ,82       ,Atlético Mineiro              ,2018 ~ 2021                         ,€16.5M ,€46K ,2061       ,<100 / 13
+Juiano Mestres     ,"CB,CDM"                    ,34 ,82     ,82       ,Cruzeiro                      ,2018 ~ 2021                         ,€6.5M  ,€39K ,2003       ,<100 / 10
+Raphaelito Anjos   ,GK                          ,30 ,82     ,82       ,Grêmio                        ,2018 ~ 2021                         ,€14M   ,€32K ,1191       ,<100 / 18
+M. Akanji          ,CB                          ,22 ,82     ,88       ,Borussia Dortmund             ,2018 ~ 2022                         ,€26M   ,€53K ,1877       ,<100 / 0.4K
+Gelson Martins     ,"RM,RW"                     ,23 ,82     ,87       ,AS Monaco                     ,"Jun 30, 2019 (Atlético Madrid)"    ,€29.5M ,€59K ,2017       ,<100 / 1.7K
+Fabián             ,"CM,CDM,CAM"                ,22 ,82     ,90       ,Napoli                        ,2018 ~ 2023                         ,€32M   ,€70K ,2107       ,0.1K / 0.4K
+G. Lo Celso        ,"CM,CAM,CDM"                ,22 ,82     ,88       ,Real Betis                    ,"Jun 30, 2019 (Paris Saint-Germain)",€30M   ,€83K ,2144       ,0.1K / 1.2K
+Gonçalo Guedes     ,"RM,N/A,LW,N/A,LM,ST"       ,21 ,82     ,86       ,Valencia CF                   ,2018 ~ 2024                         ,€29M   ,€36K ,2004       ,<100 / 1.6K
+L. Torreira        ,"CDM,CM"                    ,22 ,82     ,87       ,Arsenal                       ,2018 ~ 2023                         ,€25M   ,€98K ,2122       ,<100 / 2.2K
+Malcom             ,RW                          ,21 ,82     ,89       ,FC Barcelona                  ,2018 ~ 2023                         ,€31.5M ,€140K,1978       ,<100 / 4.2K
+H. Lozano          ,"RW,LW"                     ,22 ,82     ,87       ,PSV                           ,2017 ~ 2023                         ,€29.5M ,€24K ,2013       ,0.2K / 5.4K
+H. Lozano          ,"RW,LW"                     ,22 ,82     ,87       ,PSV                           ,2017 ~ 2023                         ,€29.5M ,€24K ,2013       ,0.2K / 5.4K
+Pau López          ,GK                          ,23 ,82     ,87       ,Real Betis                    ,2018 ~ 2023                         ,€21.5M ,€21K ,1325       ,<100 / 0.2K
+M. Politano        ,"RM,LM,ST"                  ,24 ,82     ,85       ,Inter                         ,"Jun 30, 2019 (Sassuolo)"           ,€28M   ,€61K ,1997       ,<100 / 0.3K
+J. Tah             ,CB                          ,22 ,82     ,87       ,Bayer 04 Leverkusen           ,2015 ~ 2023                         ,€25M   ,€61K ,1671       ,<100 / 0.7K
+F. Bernardeschi    ,"RM,CF"                     ,24 ,82     ,85       ,Juventus                      ,2017 ~ 2022                         ,€28M   ,€110K,2105       ,<100 / 1.5K
+J. Brandt          ,"LM,RM,CAM"                 ,22 ,82     ,88       ,Bayer 04 Leverkusen           ,2014 ~ 2021                         ,€30.5M ,€68K ,1940       ,<100 / 1.2K
+T. Strakosha       ,GK                          ,23 ,82     ,87       ,Lazio                         ,2012 ~ 2019                         ,€21.5M ,€39K ,1176       ,<100 / 0.4K
+K. Demirbay        ,"CAM,CM"                    ,24 ,82     ,85       ,TSG 1899 Hoffenheim           ,2016 ~ 2022                         ,€28M   ,€43K ,2094       ,<100 / 0.3K
+D. Rugani          ,CB                          ,23 ,82     ,86       ,Juventus                      ,2015 ~ 2021                         ,€24.5M ,€95K ,1713       ,<100 / 1.3K
+P. Zieliński       ,"CM,LM"                     ,24 ,82     ,88       ,Napoli                        ,2016 ~ 2021                         ,€30M   ,€70K ,2100       ,<100 / 0.5K
+Grimaldo           ,LB                          ,22 ,82     ,86       ,SL Benfica                    ,2016 ~ 2021                         ,€24M   ,€15K ,2159       ,<100 / 1.1K
+T. Partey          ,"CDM,CM,RM,RB"              ,25 ,82     ,88       ,Atlético Madrid               ,2015 ~ 2023                         ,€25.5M ,€59K ,2095       ,<100 / 0.5K
+J. Vardy           ,ST                          ,31 ,82     ,82       ,Leicester City                ,2012 ~ 2022                         ,€20M   ,€96K ,2075       ,<100 / 4.1K
+A. Belotti         ,ST                          ,24 ,82     ,87       ,Torino                        ,2015 ~ 2021                         ,€30M   ,€58K ,1962       ,<100 / 2.9K
+E. Forsberg        ,"CAM,LM"                    ,26 ,82     ,83       ,RB Leipzig                    ,2015 ~ 2022                         ,€26M   ,€67K ,1934       ,<100 / 0.9K
+J. Martínez        ,ST                          ,25 ,82     ,85       ,Atlanta United                ,2017 ~ 2023                         ,€28.5M ,€15K ,1928       ,<100 / 1.2K
+J. Lingard         ,"RW,CAM,CF"                 ,25 ,82     ,83       ,Manchester United             ,2010 ~ 2021                         ,€26.5M ,€150K,2107       ,<100 / 2.2K
+F. Vázquez         ,"CAM,CM,RW,LW"              ,29 ,82     ,82       ,Sevilla FC                    ,2016 ~ 2021                         ,€21.5M ,€27K ,1976       ,<100 / 0
+S. Haller          ,ST                          ,24 ,82     ,85       ,Eintracht Frankfurt           ,2017 ~ 2021                         ,€28.5M ,€47K ,1918       ,<100 / 0.5K
+A. Rüdiger         ,CB                          ,25 ,82     ,84       ,Chelsea                       ,2017 ~ 2022                         ,€22.5M ,€110K,1863       ,<100 / 1.1K
+A. Milik           ,ST                          ,24 ,82     ,86       ,Napoli                        ,2016 ~ 2021                         ,€29.5M ,€77K ,1955       ,<100 / 1.2K
+A. Florenzi        ,"RB,RW,LW"                  ,27 ,82     ,82       ,Roma                          ,2010 ~ 2023                         ,€18.5M ,€73K ,2254       ,<100 / 0.6K
+H. Maguire         ,CB                          ,25 ,82     ,85       ,Leicester City                ,2017 ~ 2023                         ,€23.5M ,€77K ,1855       ,<100 / 0.9K
+K. Bellarabi       ,RM                          ,28 ,82     ,82       ,Bayer 04 Leverkusen           ,2011 ~ 2021                         ,€22.5M ,€82K ,1983       ,<100 / 0.4K
+T. Meunier         ,"RB,RM"                     ,26 ,82     ,83       ,Paris Saint-Germain           ,2016 ~ 2020                         ,€21M   ,€87K ,2162       ,<100 / 0.9K
+Rafinha            ,"CAM,CM,RW"                 ,25 ,82     ,85       ,FC Barcelona                  ,2013 ~ 2020                         ,€28M   ,€165K,2091       ,<100 / 0.9K
+Gabriel Paulista   ,CB                          ,27 ,82     ,83       ,Valencia CF                   ,2017 ~ 2022                         ,€21M   ,€44K ,1972       ,<100 / 0.9K
+Morata             ,ST                          ,25 ,82     ,84       ,Atlético Madrid               ,"Jun 30, 2020 (Chelsea)"            ,€27.5M ,€135K,1886       ,<100 / 4.8K
+B. Lecomte         ,GK                          ,27 ,82     ,85       ,Montpellier HSC               ,2017 ~ 2023                         ,€18.5M ,€29K ,1117       ,<100 / 55
+J. Iličić          ,"CF,CAM"                    ,30 ,82     ,82       ,Atalanta                      ,2017 ~ 2021                         ,€21.5M ,€44K ,1989       ,<100 / 0.1K
+Paco Alcácer       ,ST                          ,24 ,82     ,85       ,Borussia Dortmund             ,2018 ~ 2023                         ,€28.5M ,€64K ,1962       ,<100 / 2.5K
+J. Cillessen       ,GK                          ,29 ,82     ,84       ,FC Barcelona                  ,2016 ~ 2021                         ,€18M   ,€135K,1299       ,<100 / 0.6K
+W. Ben Yedder      ,ST                          ,27 ,82     ,82       ,Sevilla FC                    ,2016 ~ 2021                         ,€23.5M ,€28K ,2042       ,<100 / 0.6K
+D. Tadić           ,"CAM,LW,ST,RW"              ,29 ,82     ,82       ,Ajax                          ,2018 ~ 2022                         ,€21.5M ,€28K ,2013       ,<100 / 0.7K
+C. Aránguiz        ,"CM,CDM"                    ,29 ,82     ,82       ,Bayer 04 Leverkusen           ,2015 ~ 2020                         ,€21.5M ,€82K ,2152       ,<100 / 0.2K
+C. Bakambu         ,ST                          ,27 ,82     ,83       ,Beijing Sinobo Guoan FC       ,2018 ~ 2021                         ,€26M   ,€33K ,2010       ,<100 / 0.3K
+W. Zaha            ,"CF,LM"                     ,25 ,82     ,85       ,Crystal Palace                ,2015 ~ 2023                         ,€28.5M ,€78K ,1930       ,<100 / 1.4K
+Luis Alberto       ,"CF,CAM,CM"                 ,25 ,82     ,84       ,Lazio                         ,2016 ~ 2022                         ,€27.5M ,€67K ,1982       ,<100 / 0.4K
+Jonathan Viera     ,"CAM,CM"                    ,28 ,82     ,82       ,Beijing Sinobo Guoan FC       ,2018 ~ 2020                         ,€22.5M ,€31K ,2152       ,<100 / 0.2K
+S. Coates          ,CB                          ,27 ,82     ,83       ,Sporting CP                   ,2017 ~ 2022                         ,€21M   ,€19K ,1711       ,<100 / 0.2K
+Willian José       ,ST                          ,26 ,82     ,83       ,Real Sociedad                 ,2016 ~ 2024                         ,€26.5M ,€44K ,1945       ,<100 / 0.2K
+Mário Fernandes    ,"RWB,RM"                    ,27 ,82     ,82       ,PFC CSKA Moscow               ,2012 ~ 2022                         ,€18.5M ,€1K  ,2100       ,<100 / 0.3K
+X. Shaqiri         ,"RW,RM,CAM"                 ,26 ,82     ,82       ,Liverpool                     ,2018 ~ 2023                         ,€24M   ,€140K,2090       ,<100 / 2.9K
+T. Delaney         ,"CDM,CM"                    ,26 ,82     ,83       ,Borussia Dortmund             ,2018 ~ 2022                         ,€21.5M ,€61K ,2218       ,<100 / 0.4K
+H. Mkhitaryan      ,"RM,RW,CAM"                 ,29 ,82     ,82       ,Arsenal                       ,2018 ~ 2021                         ,€21.5M ,€135K,2088       ,<100 / 2.6K
+D. Subašić         ,GK                          ,33 ,82     ,82       ,AS Monaco                     ,2012 ~ 2020                         ,€11M   ,€64K ,1260       ,<100 / 0.2K
+M. Götze           ,"N/A,CM,CF,CAM,CM"          ,26 ,82     ,85       ,Borussia Dortmund             ,2016 ~ 2020                         ,€28M   ,€73K ,2130       ,<100 / 3.3K
+S. Mustafi         ,CB                          ,26 ,82     ,84       ,Arsenal                       ,2016 ~ 2021                         ,€22.5M ,€115K,1915       ,<100 / 1.2K
+Ander Herrera      ,"CM,CDM"                    ,28 ,82     ,82       ,Manchester United             ,2014 ~ 2019                         ,€22M   ,€150K,2190       ,<100 / 2.5K
+K. Glik            ,CB                          ,30 ,82     ,82       ,AS Monaco                     ,2016 ~ 2021                         ,€16.5M ,€79K ,1575       ,<100 / 0.3K
+K. Strootman       ,"CDM,CM"                    ,28 ,82     ,82       ,Olympique de Marseille        ,2018 ~ 2023                         ,€18M   ,€60K ,2126       ,<100 / 0.6K
+Muniain            ,"CAM,LW"                    ,25 ,82     ,83       ,Athletic Club de Bilbao       ,2009 ~ 2024                         ,€26.5M ,€33K ,1993       ,<100 / 0.3K
+Pedro              ,"RW,LW"                     ,30 ,82     ,82       ,Chelsea                       ,2015 ~ 2020                         ,€21M   ,€140K,1968       ,<100 / 1.4K
+G. Bonaventura     ,"CM,LW"                     ,28 ,82     ,82       ,Milan                         ,2014 ~ 2020                         ,€22M   ,€115K,2207       ,<100 / 0.6K
+Taison             ,"LM,CAM"                    ,30 ,82     ,82       ,Shakhtar Donetsk              ,2013 ~ 2021                         ,€21M   ,€1K  ,2055       ,<100 / 0.2K
+Marlos             ,RM                          ,30 ,82     ,82       ,Shakhtar Donetsk              ,2014 ~ 2019                         ,€21M   ,€1K  ,2075       ,<100 / 0.2K
+M. Balotelli       ,ST                          ,27 ,82     ,82       ,Olympique de Marseille        ,2019 ~ 2019                         ,€23.5M ,€68K ,1908       ,<100 / 3.9K
+A. Ramsey          ,"CDM,CAM,CAM,N/A,CM,CAM"    ,27 ,82     ,82       ,Arsenal                       ,2008 ~ 2019                         ,€23M   ,€130K,2119       ,<100 / 2.8K
+Luiz Gustavo       ,"CDM,CB"                    ,30 ,82     ,82       ,Olympique de Marseille        ,2017 ~ 2021                         ,€16.5M ,€57K ,2013       ,<100 / 0.2K
+P. Gulácsi         ,GK                          ,28 ,82     ,83       ,RB Leipzig                    ,2015 ~ 2022                         ,€18M   ,€53K ,1240       ,<100 / 69
+Giuliano           ,"CAM,RW"                    ,28 ,82     ,82       ,Al Nassr                      ,2018 ~ 2021                         ,€22.5M ,€59K ,2069       ,<100 / 0.3K
