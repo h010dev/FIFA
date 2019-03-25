@@ -10,3 +10,11 @@ cv_builder/**/secret_vars.py
 cv_builder/**/transform_csv.py
 .idea/
 __init__.py
+
+fifa_workspace/**/*settings.py
+fifa_workspace/fifa_market_analysis/*.cfg
+fifa_workspace/Include/*
+fifa_workspace/Lib/*
+fifa_workspace/Scripts/*
+fifa_workspace/tcl/*
+fifa_workspace/*.txt
