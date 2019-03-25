@@ -8,7 +8,16 @@
 import scrapy
 
 
-class FifaMarketAnalysisItem(scrapy.Item):
-    # define the fields for your item here like:
-    # name = scrapy.Field()
-    pass
+class SofifaItem(scrapy.Item):
+
+    name = scrapy.Field()
+    position = scrapy.Field()
+    age = scrapy.Field()
+    overall = scrapy.Field()
+    potential = scrapy.Field()
+    team = scrapy.Field()
+    contract = scrapy.Field()
+    value = scrapy.Field()
+    wage = scrapy.Field()
+    total_stats = scrapy.Field()
+    hits_comments = scrapy.Field()
