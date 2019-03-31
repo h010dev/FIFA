@@ -19,6 +19,8 @@ class SofifaDetailedSpider(CrawlSpider):
 
         for stat in response.xpath("//div[@class='teams']/div[@class='columns']/div[@class='column col-4'][1]/ul"):
             yield {
+                'id':
+                    response.xpath("//div[@class='info']/h1/text()").re(r'ID:\ |[0-9]+')[-1],
                 'name_id':
                     response.xpath("//div[@class='info']/h1/text()").get(),
                 'preferred_foot':
