@@ -2,6 +2,7 @@
 import scrapy
 from scrapy.linkextractors import LinkExtractor
 from scrapy.spiders import CrawlSpider, Rule
+from ..items import ImageItem
 
 
 class SofifaDetailedSpider(CrawlSpider):
@@ -16,12 +17,23 @@ class SofifaDetailedSpider(CrawlSpider):
     )
 
     def parse_item(self, response):
+        image = ImageItem()
+        img_urls = []
 
         for img in response.xpath("//div/div/article/div/img"):
-            yield{
-                'name': response.xpath(".//div[@class='info']/h1/text()").get(),
-                'face': img.xpath("./@data-src").get(),
-                'flag': response.xpath(".//div[@class='meta']/a/img/@data-src").get(),
-                'club': response.xpath(".//div/ul/li/figure/img/@data-src").getall()[0],
-                'team': response.xpath(".//div/ul/li/figure/img/@data-src").getall()[-1]
-            }
+            img_urls.append(img.xpath("./@data-src").get())
+        image["image_urls"] = img_urls
+        return image
+
+
+
+
+
+
+            # yield{
+            #     'name': response.xpath(".//div[@class='info']/h1/text()").get(),
+            #     'face': img.xpath("./@data-src").get(),
+            #     'flag': response.xpath(".//div[@class='meta']/a/img/@data-src").get(),
+            #     'club': response.xpath(".//div/ul/li/figure/img/@data-src").getall()[0],
+            #     'team': response.xpath(".//div/ul/li/figure/img/@data-src").getall()[-1]
+            # }

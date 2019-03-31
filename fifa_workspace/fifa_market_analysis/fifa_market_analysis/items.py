@@ -84,3 +84,8 @@ class SofifaItem(scrapy.Item):
         output_processor=TakeFirst()
     )
     hits_comments = scrapy.Field()
+
+
+class ImageItem(scrapy.Item):
+    images = scrapy.Field()
+    image_urls = scrapy.Field()
