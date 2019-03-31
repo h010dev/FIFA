@@ -19,5 +19,9 @@ class SofifaDetailedSpider(CrawlSpider):
 
         for img in response.xpath("//div/div/article/div/img"):
             yield{
-                'img': img.xpath("./@data-src").get()
+                'name': response.xpath(".//div[@class='info']/h1/text()").get(),
+                'face': img.xpath("./@data-src").get(),
+                'flag': response.xpath(".//div[@class='meta']/a/img/@data-src").get(),
+                'club': response.xpath(".//div/ul/li/figure/img/@data-src").getall()[0],
+                'team': response.xpath(".//div/ul/li/figure/img/@data-src").getall()[-1]
             }
