@@ -2,17 +2,21 @@
 import scrapy
 from scrapy.linkextractors import LinkExtractor
 from scrapy.spiders import CrawlSpider, Rule
+from scrapy.loader import ItemLoader
+from fifa_market_analysis.items import SofifaItem
 
 
 class SofifaDetailedSpider(CrawlSpider):
+
     name = 'sofifa_detailed'
+
     allowed_domains = ['sofifa.com']
     start_urls = ['http://sofifa.com/players/']
 
     rules = (
         Rule(LinkExtractor(deny=([r'\?', r'[0-9]+/[0-9]+/', r'/changeLog', r'/live', r'/squads', r'/calculator/']),
                            restrict_xpaths="//a[contains(@href, 'player/')]"), callback='parse_item', follow=True),
-        # Rule(LinkExtractor(restrict_xpaths="//a[text()='Next']"), callback='parse_item', follow=True)
+        Rule(LinkExtractor(restrict_xpaths="//a[text()='Next']"), callback='parse_item', follow=True)
     )
 
     def parse_item(self, response):
@@ -20,9 +24,9 @@ class SofifaDetailedSpider(CrawlSpider):
         for stat in response.xpath("//div[@class='teams']/div[@class='columns']/div[@class='column col-4'][1]/ul"):
             yield {
                 'id':
-                    response.xpath("//div[@class='info']/h1/text()").re(r'ID:\ |[0-9]+')[-1],
+                    response.xpath(".//div[@class='info']/h1/text()").re(r'ID:\ |[0-9]+')[-1],
                 'name_id':
-                    response.xpath("//div[@class='info']/h1/text()").get(),
+                    response.xpath(".//div[@class='info']/h1/text()").get(),
                 'preferred_foot':
                     stat.xpath(".//li/label[text()='Preferred Foot']/following::text()").get(),
                 'international_reputation':
@@ -236,7 +240,9 @@ class SofifaDetailedSpider(CrawlSpider):
                 'RCB':
                     response.xpath(".//div[../div='RCB']/following::text()").get(),
                 'RB':
-                    response.xpath(".//div[../div='RB']/following::text()").get()
+                    response.xpath(".//div[../div='RB']/following::text()").get(),
+                'user-agent':
+                    response.request.headers.get('User-Agent').decode('utf-8')
             }
 
 
