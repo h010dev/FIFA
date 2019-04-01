@@ -18,3 +18,4 @@ fifa_workspace/Lib/*
 fifa_workspace/Scripts/*
 fifa_workspace/tcl/*
 fifa_workspace/*.txt
+fifa_workspace/**/*.scrapy
