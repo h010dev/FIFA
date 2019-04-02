@@ -110,14 +110,27 @@ def get_date(value):
     try:
         date = datetime.strptime(value, '%b %d, %Y')
         return date
+
     except ValueError:
         date = datetime.strptime(value, '%Y')
         return date
 
 
+# def get_pace(value):
+#
+#     points = dict()
+#     points['PAC'] = re.findall(r'pointPAC = ([0-9]+)', value)[0]
+#     points['SHO'] = re.findall(r'pointSHO = ([0-9]+)', value)[0]
+#     points['PAS'] = re.findall(r'pointPAS = ([0-9]+)', value)[0]
+#     points['DRI'] = re.findall(r'pointDRI = ([0-9]+)', value)[0]
+#     points['DEF'] = re.findall(r'pointDEF = ([0-9]+)', value)[0]
+#     points['PHY'] = re.findall(r'pointPHY = ([0-9]+)', value)[0]
+#     return points
+
+
 class SofifaItem(scrapy.Item):
 
-    # GENERAL INFO
+    # GENERAL PLAYER INFORMATION
 
     id = scrapy.Field(
         input_processor=MapCompose(get_id, eval),
@@ -158,7 +171,7 @@ class SofifaItem(scrapy.Item):
         output_processor=TakeFirst()
     )
 
-    # PLAYER STATS
+    # GENERAL PLAYER STATS
 
     preferred_foot = scrapy.Field(
         input_processor=Identity(),
@@ -195,7 +208,7 @@ class SofifaItem(scrapy.Item):
         output_processor=TakeFirst()
     )
 
-    # CLUB/TEAM STATS
+    # CLUB/TEAM INFORMATION
 
     value = scrapy.Field(
         input_processor=MapCompose(convert_currency_format),
@@ -237,11 +250,6 @@ class SofifaItem(scrapy.Item):
         output_processor=TakeFirst()
     )
 
-    # club_contract_end_date = scrapy.Field(
-    #     input_processor=Identity(),
-    #     output_processor=TakeFirst()
-    # )
-
     club_contract_end_date = scrapy.Field(
         input_processor=MapCompose(get_date),
         output_processor=TakeFirst()
@@ -267,7 +275,87 @@ class SofifaItem(scrapy.Item):
         output_processor=TakeFirst()
     )
 
-    # POSITION STATS
+    # PLAYER GAME STATS
+
+    overall_rating = scrapy.Field(
+        input_processor=MapCompose(eval),
+        output_processor=TakeFirst()
+    )
+
+    potential_rating = scrapy.Field(
+        input_processor=MapCompose(eval),
+        output_processor=TakeFirst()
+    )
+
+    positions = scrapy.Field(
+        input_processor=Identity(),
+        output_processor=Identity()
+    )
+
+    unique_attributes = scrapy.Field(
+        input_processor=Identity(),
+        output_processor=Identity()
+    )
+
+    pace = scrapy.Field(
+        input_processor=MapCompose(lambda x: re.findall(r'pointPAC = ([0-9]+)', x)[0], eval),
+        output_processor=TakeFirst()
+    )
+
+    shooting = scrapy.Field(
+        input_processor=MapCompose(lambda x: re.findall(r'pointSHO = ([0-9]+)', x)[0], eval),
+        output_processor=TakeFirst()
+    )
+
+    passing = scrapy.Field(
+        input_processor=MapCompose(lambda x: re.findall(r'pointPAS = ([0-9]+)', x)[0], eval),
+        output_processor=TakeFirst()
+    )
+
+    dribbling = scrapy.Field(
+        input_processor=MapCompose(lambda x: re.findall(r'pointDRI = ([0-9]+)', x)[0], eval),
+        output_processor=TakeFirst()
+    )
+
+    defense = scrapy.Field(
+        input_processor=MapCompose(lambda x: re.findall(r'pointDEF = ([0-9]+)', x)[0], eval),
+        output_processor=TakeFirst()
+    )
+
+    physical = scrapy.Field(
+        input_processor=MapCompose(lambda x: re.findall(r'pointPHY = ([0-9]+)', x)[0], eval),
+        output_processor=TakeFirst()
+    )
+
+    diving = scrapy.Field(
+        input_processor=MapCompose(lambda x: re.findall(r'pointPAC = ([0-9]+)', x)[0], eval),
+        output_processor=TakeFirst()
+    )
+
+    handling = scrapy.Field(
+        input_processor=MapCompose(lambda x: re.findall(r'pointSHO = ([0-9]+)', x)[0], eval),
+        output_processor=TakeFirst()
+    )
+
+    kicking = scrapy.Field(
+        input_processor=MapCompose(lambda x: re.findall(r'pointPAS = ([0-9]+)', x)[0], eval),
+        output_processor=TakeFirst()
+    )
+
+    reflexes = scrapy.Field(
+        input_processor=MapCompose(lambda x: re.findall(r'pointDRI = ([0-9]+)', x)[0], eval),
+        output_processor=TakeFirst()
+    )
+
+    speed = scrapy.Field(
+        input_processor=MapCompose(lambda x: re.findall(r'pointDEF = ([0-9]+)', x)[0], eval),
+        output_processor=TakeFirst()
+    )
+
+    positioning = scrapy.Field(
+        input_processor=MapCompose(lambda x: re.findall(r'pointPHY = ([0-9]+)', x)[0], eval),
+        output_processor=TakeFirst()
+    )
     # SKILLS
     # COMMUNITY INFO
 
