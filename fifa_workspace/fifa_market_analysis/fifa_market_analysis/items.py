@@ -53,8 +53,19 @@ def convert_currency_format(value):
         return float(value)
 
 
+def get_id(value):
+
+    pattern = r'ID:\ |[0-9]+'
+    match = re.findall(pattern, value)[-1]
+    return match
+
+
 class SofifaItem(scrapy.Item):
 
+    id = scrapy.Field(
+        input_processor=MapCompose(get_id, eval),
+        output_processor=TakeFirst()
+    )
     name = scrapy.Field()
     position = scrapy.Field()
     age = scrapy.Field(
