@@ -26,30 +26,47 @@ class SofifaDetailedSpider(CrawlSpider):
             loader = ItemLoader(item=SofifaItem(), response=response)
             loader.add_xpath('id', ".//div[@class='info']/h1/text()")
             loader.add_xpath('name', ".//div[@class='info']/h1/text()")
-            loader.add_xpath('full_name', ".//div[@class='info']/div[@class='meta']/text()")
+            loader.add_xpath('full_name', ".//div[@class='meta']/text()")
             loader.add_xpath('age', ".//div[@class='meta']/text()/following-sibling::text()[last()]")
             loader.add_xpath('dob', ".//div[@class='meta']/text()/following-sibling::text()[last()]")
             loader.add_xpath('height', ".//div[@class='meta']/text()/following-sibling::text()[last()]")
             loader.add_xpath('weight', ".//div[@class='meta']/text()/following-sibling::text()[last()]")
+            loader.add_xpath('nationality', ".//div[@class='meta']/a/@title")
+
+            loader.add_xpath('preferred_foot', "(.//label[text()='Preferred Foot']/following::text())[1]")
+            loader.add_xpath('international_reputation',
+                             "(.//label[text()='International Reputation']/following::text())[1]")
+            loader.add_xpath('weak_foot', "(.//label[text()='Weak Foot']/following::text())[1]")
+            loader.add_xpath('skill_moves', "(.//label[text()='Skill Moves']/following::text())[1]")
+            loader.add_xpath('work_rate', "(.//label[text()='Work Rate']/following::span/text())[1]")
+            loader.add_xpath('body_type', "(.//label[text()='Body Type']/following::span/text())[1]")
+            loader.add_xpath('real_face', "(.//label[text()='Real Face']/following::span/text())[1]")
+
+            loader.add_xpath('value',
+                             ".//div[@class='column col-4 text-center']"
+                             "/following::text()[contains(., 'Value')]/following::span[1]/text()")
+            loader.add_xpath('wage',
+                             ".//div[@class='column col-4 text-center']"
+                             "/following::text()[contains(., 'Wage')]/following::span[1]/text()")
+            loader.add_xpath('release_clause', "(.//label[text()='Release Clause']/following::span/text())[1]")
+            loader.add_xpath('club_name', "(.//ul[@class='pl']//a/text())[1]")
+            loader.add_xpath('club_rating', ".//div[@class='column col-4'][3]/ul/li[2]/span/text()")
+            loader.add_xpath('club_position', ".//div[@class='column col-4'][3]/ul/li[3]/span/text()")
+            loader.add_xpath('club_jersey_number',
+                             "(.//div[@class='column col-4'][3]/ul/li[4]/label/following::text())[1]")
+            loader.add_xpath('club_join_date',
+                             "(.//div[@class='column col-4'][3]/ul/li[5]/label/following::text())[1]")
+            loader.add_xpath('club_contract_end_date',
+                             "(.//div[@class='column col-4'][3]/ul/li[6]/label/following::text())[1]")
+            loader.add_xpath('team_name', "(.//ul[@class='pl']//a/text())[2]")
+            loader.add_xpath('team_rating', ".//div[@class='column col-4'][4]/ul/li[2]/span/text()")
+            loader.add_xpath('team_position', ".//div[@class='column col-4'][4]/ul/li[3]/span/text()")
+            loader.add_xpath('team_jersey_number',
+                             "(.//div[@class='column col-4'][4]/ul/li[4]/label/following::text())[1]")
+
             yield loader.load_item()
 
             # yield {
-            #     'preferred_foot':
-            #         stat.xpath(".//li/label[text()='Preferred Foot']/following::text()").get(),
-            #     'international_reputation':
-            #         stat.xpath(".//li/label[text()='International Reputation']/following::text()").get(),
-            #     'weak_foot':
-            #         stat.xpath(".//li/label[text()='Weak Foot']/following::text()").get(),
-            #     'skill_moves':
-            #         stat.xpath(".//li/label[text()='Skill Moves']/following::text()").get(),
-            #     'work_rate':
-            #         stat.xpath(".//li/label[text()='Work Rate']/following::span/text()").get(),
-            #     'body_type':
-            #         stat.xpath(".//li/label[text()='Body Type']/text()/following::span/text()").get(),
-            #     'real_face':
-            #         stat.xpath(".//li/label[text()='Real Face']/text()/following::span/text()").get(),
-            #     'release_clause':
-            #         stat.xpath(".//li/label[text()='Release Clause']/text()/following::span/text()").get(),
             #     'flag_img':
             #         response.xpath(".//div[@class='meta']/a/img/@data-src").get(),
             #     'player_img':
@@ -64,38 +81,6 @@ class SofifaDetailedSpider(CrawlSpider):
             #         response.xpath(".//div[@class='column col-4 text-center']/span/text()").getall()[0],
             #     'potential':
             #         response.xpath(".//div[@class='column col-4 text-center']/span/text()").getall()[1],
-            #     'value':
-            #         response.xpath(".//div[@class='column col-4 text-center']/span/text()").getall()[2],
-            #     'wage':
-            #         response.xpath(".//div[@class='column col-4 text-center']/span/text()").getall()[3],
-            #     'club_name':
-            #         response.xpath(".//ul[@class='pl']/li/a/text()").getall()[0],
-            #     'national_team':
-            #         response.xpath(".//ul[@class='pl']/li/a/text()").getall()[-1],
-            #     'club_rating':
-            #         response.xpath(".//div[@class='teams']/div[@class='columns']/div[@class='column col-4'][3]"
-            #                        "/ul/li[2]/span/text()").get(),
-            #     'national_team_rating':
-            #         response.xpath(".//div[@class='teams']/div[@class='columns']/div[@class='column col-4'][4]"
-            #                        "/ul/li[2]/span/text()").get(),
-            #     'club_position':
-            #         response.xpath(".//div[@class='teams']/div[@class='columns']/div[@class='column col-4'][3]"
-            #                        "/ul/li[3]/span/text()").get(),
-            #     'national_team_position':
-            #         response.xpath(".//div[@class='teams']/div[@class='columns']/div[@class='column col-4'][4]"
-            #                        "/ul/li[3]/span/text()").get(),
-            #     'club_jersey_no':
-            #         response.xpath(".//div[@class='teams']/div[@class='columns']/div[@class='column col-4'][3]"
-            #                        "/ul/li[4]/label/following::text()").get(),
-            #     'national_team_jersey_no':
-            #         response.xpath(".//div[@class='teams']/div[@class='columns']/div[@class='column col-4'][4]"
-            #                        "/ul/li[4]/label/following::text()").get(),
-            #     'club_join_date':
-            #         response.xpath(".//div[@class='teams']/div[@class='columns']/div[@class='column col-4'][3]"
-            #                        "/ul/li[5]/label/following::text()").get(),
-            #     'club_contract_valid_until':
-            #         response.xpath(".//div[@class='teams']/div[@class='columns']/div[@class='column col-4'][3]"
-            #                        "/ul/li[6]/label/following::text()").get(),
             #     'unique_attributes_tags':
             #         response.xpath(".//div[@class='mt-2']/a/text()").getall(),
             #     'followers':

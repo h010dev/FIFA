@@ -6,7 +6,7 @@
 # https://doc.scrapy.org/en/latest/topics/items.html
 
 import scrapy
-from scrapy.loader.processors import MapCompose, TakeFirst, Join
+from scrapy.loader.processors import MapCompose, TakeFirst, Identity
 import re
 from datetime import datetime
 
@@ -107,6 +107,8 @@ def get_weight(value):
 
 class SofifaItem(scrapy.Item):
 
+    # GENERAL INFO
+
     id = scrapy.Field(
         input_processor=MapCompose(get_id, eval),
         output_processor=TakeFirst()
@@ -141,6 +143,124 @@ class SofifaItem(scrapy.Item):
         output_processor=TakeFirst()
     )
 
+    nationality = scrapy.Field(
+        input_processor=Identity(),
+        output_processor=TakeFirst()
+    )
+
+    # PLAYER STATS
+
+    preferred_foot = scrapy.Field(
+        input_processor=Identity(),
+        output_processor=TakeFirst()
+    )
+
+    international_reputation = scrapy.Field(
+        input_processor=MapCompose(eval),
+        output_processor=TakeFirst()
+    )
+
+    weak_foot = scrapy.Field(
+        input_processor=MapCompose(eval),
+        output_processor=TakeFirst()
+    )
+
+    skill_moves = scrapy.Field(
+        input_processor=MapCompose(eval),
+        output_processor=TakeFirst()
+    )
+
+    work_rate = scrapy.Field(
+        input_processor=Identity(),
+        output_processor=TakeFirst()
+    )
+
+    body_type = scrapy.Field(
+        input_processor=Identity(),
+        output_processor=TakeFirst()
+    )
+
+    real_face = scrapy.Field(
+        input_processor=Identity(),
+        output_processor=TakeFirst()
+    )
+
+    # CLUB/TEAM STATS
+
+    value = scrapy.Field(
+        input_processor=MapCompose(convert_currency_format),
+        output_processor=TakeFirst()
+    )
+
+    wage = scrapy.Field(
+        input_processor=MapCompose(convert_currency_format),
+        output_processor=TakeFirst()
+    )
+
+    release_clause = scrapy.Field(
+        input_processor=MapCompose(convert_currency_format),
+        output_processor=TakeFirst()
+    )
+
+    club_name = scrapy.Field(
+        input_processor=Identity(),
+        output_processor=TakeFirst()
+    )
+
+    club_rating = scrapy.Field(
+        input_processor=MapCompose(eval),
+        output_processor=TakeFirst()
+    )
+
+    club_position = scrapy.Field(
+        input_processor=Identity(),
+        output_processor=TakeFirst()
+    )
+
+    club_jersey_number = scrapy.Field(
+        input_processor=MapCompose(eval),
+        output_processor=TakeFirst()
+    )
+
+    club_join_date = scrapy.Field(
+        input_processor=MapCompose(lambda x: datetime.strptime(x, '%b %d, %Y')),
+        output_processor=TakeFirst()
+    )
+
+    club_contract_end_date = scrapy.Field(
+        input_processor=Identity(),
+        output_processor=TakeFirst()
+    )
+
+    # club_contract_end_date = scrapy.Field(
+    #     input_processor=MapCompose(lambda x: datetime.strptime(x, '%b %d, %Y')),
+    #     output_processor=TakeFirst()
+    # )
+
+    team_name = scrapy.Field(
+        input_processor=Identity(),
+        output_processor=TakeFirst()
+    )
+
+    team_rating = scrapy.Field(
+        input_processor=MapCompose(eval),
+        output_processor=TakeFirst()
+    )
+
+    team_position = scrapy.Field(
+        input_processor=Identity(),
+        output_processor=TakeFirst()
+    )
+
+    team_jersey_number = scrapy.Field(
+        input_processor=MapCompose(eval),
+        output_processor=TakeFirst()
+    )
+
+    # POSITION STATS
+    # SKILLS
+    # COMMUNITY INFO
+
     position = scrapy.Field()
 
     overall = scrapy.Field(
@@ -153,14 +273,8 @@ class SofifaItem(scrapy.Item):
     )
     team = scrapy.Field()
     contract = scrapy.Field()
-    value = scrapy.Field(
-        input_processor=MapCompose(convert_currency_format),
-        output_processor=TakeFirst()
-    )
-    wage = scrapy.Field(
-        input_processor=MapCompose(convert_currency_format),
-        output_processor=TakeFirst()
-    )
+
+
     total_stats = scrapy.Field(
         input_processor=MapCompose(convert_currency_format),
         output_processor=TakeFirst()
