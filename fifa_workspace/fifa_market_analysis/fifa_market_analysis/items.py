@@ -8,6 +8,7 @@
 import scrapy
 from scrapy.loader.processors import MapCompose, TakeFirst, Join
 import re
+from datetime import datetime
 
 
 def convert_currency_format(value):
@@ -60,18 +61,88 @@ def get_id(value):
     return match
 
 
+def get_name(value):
+
+    pattern = r'^[^\(]+'
+    match = re.findall(pattern, value)[0]
+    return match
+
+
+def get_age(value):
+
+    pattern_1 = r'Age\ [0-9]+'
+    match = re.findall(pattern_1, value)[0]
+    pattern_2 = r'[0-9]+'
+    age_in_years = re.findall(pattern_2, match)
+    return age_in_years
+
+
+def get_dob(value):
+
+    pattern = r'[a-zA-Z]+\ [0-9]+,\ [0-9]+'
+    match = re.findall(pattern, value)[0]
+    datetime_dob = datetime.strptime(match, '%b %d, %Y')
+    return datetime_dob
+
+
+def get_height(value):
+
+    pattern_1 = r'[0-9]+\W[0-9]+\W'
+    match = re.findall(pattern_1, value)[0]
+    pattern_2 = r'([0-9]+)'
+    feet = eval(re.findall(pattern_2, match)[0]) * 12
+    inches = eval(re.findall(pattern_2, match)[1])
+    height_in_inches = feet + inches
+    return height_in_inches
+
+
+def get_weight(value):
+
+    pattern_1 = r'[0-9]+lbs'
+    match = re.findall(pattern_1, value)[0]
+    pattern_2 = r'[0-9]+'
+    weight_in_lbs = re.findall(pattern_2, match)
+    return weight_in_lbs
+
+
 class SofifaItem(scrapy.Item):
 
     id = scrapy.Field(
         input_processor=MapCompose(get_id, eval),
         output_processor=TakeFirst()
     )
-    name = scrapy.Field()
-    position = scrapy.Field()
-    age = scrapy.Field(
-        input_processor=MapCompose(eval),
+
+    name = scrapy.Field(
+        input_processor=MapCompose(get_name, str),
         output_processor=TakeFirst()
     )
+
+    full_name = scrapy.Field(
+        input_processor=MapCompose(str.strip),
+        output_processor=TakeFirst()
+    )
+
+    age = scrapy.Field(
+        input_processor=MapCompose(get_age, eval),
+        output_processor=TakeFirst()
+    )
+
+    dob = scrapy.Field(
+        input_processor=MapCompose(get_dob),
+        output_processor=TakeFirst()
+    )
+
+    height = scrapy.Field(
+        input_processor=MapCompose(get_height),
+        output_processor=TakeFirst()
+    )
+    weight = scrapy.Field(
+        input_processor=MapCompose(get_weight, eval),
+        output_processor=TakeFirst()
+    )
+
+    position = scrapy.Field()
+
     overall = scrapy.Field(
         input_processor=MapCompose(eval),
         output_processor=TakeFirst()

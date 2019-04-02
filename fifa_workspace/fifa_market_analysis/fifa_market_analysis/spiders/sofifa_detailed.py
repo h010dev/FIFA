@@ -25,14 +25,15 @@ class SofifaDetailedSpider(CrawlSpider):
 
             loader = ItemLoader(item=SofifaItem(), response=response)
             loader.add_xpath('id', ".//div[@class='info']/h1/text()")
-
+            loader.add_xpath('name', ".//div[@class='info']/h1/text()")
+            loader.add_xpath('full_name', ".//div[@class='info']/div[@class='meta']/text()")
+            loader.add_xpath('age', ".//div[@class='meta']/text()/following-sibling::text()[last()]")
+            loader.add_xpath('dob', ".//div[@class='meta']/text()/following-sibling::text()[last()]")
+            loader.add_xpath('height', ".//div[@class='meta']/text()/following-sibling::text()[last()]")
+            loader.add_xpath('weight', ".//div[@class='meta']/text()/following-sibling::text()[last()]")
             yield loader.load_item()
 
             # yield {
-            #     'id':
-            #         response.xpath(".//div[@class='info']/h1/text()").re(r'ID:\ |[0-9]+')[-1],
-            #     'name_id':
-            #         response.xpath(".//div[@class='info']/h1/text()").get(),
             #     'preferred_foot':
             #         stat.xpath(".//li/label[text()='Preferred Foot']/following::text()").get(),
             #     'international_reputation':
@@ -49,8 +50,6 @@ class SofifaDetailedSpider(CrawlSpider):
             #         stat.xpath(".//li/label[text()='Real Face']/text()/following::span/text()").get(),
             #     'release_clause':
             #         stat.xpath(".//li/label[text()='Release Clause']/text()/following::span/text()").get(),
-            #     'full_name':
-            #         response.xpath(".//div[@class='info']/div[@class='meta']/text()").get(),
             #     'flag_img':
             #         response.xpath(".//div[@class='meta']/a/img/@data-src").get(),
             #     'player_img':
@@ -61,14 +60,6 @@ class SofifaDetailedSpider(CrawlSpider):
             #         response.xpath(".//div/ul/li/figure/img/@data-src").getall()[-1],
             #     'positions':
             #         response.xpath(".//div[@class='meta']/span/text()").getall(),
-            #     'age':
-            #         response.xpath(".//div[@class='meta']/text()").re(r'Age\ [0-9]+')[0],
-            #     'dob':
-            #         response.xpath(".//div[@class='meta']/text()").re(r'[a-zA-Z]+\ [0-9]+,\ [0-9]+')[0],
-            #     'height':
-            #         response.xpath(".//div[@class='meta']/text()").re(r'[0-9]+\W[0-9]+\W')[0],
-            #     'weight':
-            #         response.xpath(".//div[@class='meta']/text()").re(r'[0-9]+lbs')[0],
             #     'overall_rating':
             #         response.xpath(".//div[@class='column col-4 text-center']/span/text()").getall()[0],
             #     'potential':
