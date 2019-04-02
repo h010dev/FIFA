@@ -10,12 +10,20 @@ class FutbinSpider(scrapy.Spider):
 
     def start_requests(self):
         yield scrapy.Request(url="https://www.futbin.com/auctionsGraph?type=live_graph&console=XONE",
-                             callback=self.parse_market)
-
-    def parse_market(self, response):
-        data = json.loads(response.body)
-        with open('fut_market_test.json', 'w') as file:
-            file.write(json.dumps(data))
+                             callback=self.parse)
 
     def parse(self, response):
-        pass
+        data = json.loads(response.body)
+
+        for val in data['XONE']:
+            yield {
+                'time_stamp': val[0],
+                'trades': val[1]
+            }
+
+        for val in data['flag']:
+            yield {
+                'title': val['title'],
+                'description': val['description'],
+                'date': val['flag_date']
+            }
