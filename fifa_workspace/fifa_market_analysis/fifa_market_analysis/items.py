@@ -105,6 +105,16 @@ def get_weight(value):
     return weight_in_lbs
 
 
+def get_date(value):
+
+    try:
+        date = datetime.strptime(value, '%b %d, %Y')
+        return date
+    except ValueError:
+        date = datetime.strptime(value, '%Y')
+        return date
+
+
 class SofifaItem(scrapy.Item):
 
     # GENERAL INFO
@@ -227,15 +237,15 @@ class SofifaItem(scrapy.Item):
         output_processor=TakeFirst()
     )
 
-    club_contract_end_date = scrapy.Field(
-        input_processor=Identity(),
-        output_processor=TakeFirst()
-    )
-
     # club_contract_end_date = scrapy.Field(
-    #     input_processor=MapCompose(lambda x: datetime.strptime(x, '%b %d, %Y')),
+    #     input_processor=Identity(),
     #     output_processor=TakeFirst()
     # )
+
+    club_contract_end_date = scrapy.Field(
+        input_processor=MapCompose(get_date),
+        output_processor=TakeFirst()
+    )
 
     team_name = scrapy.Field(
         input_processor=Identity(),
