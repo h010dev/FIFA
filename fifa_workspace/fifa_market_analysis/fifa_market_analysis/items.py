@@ -722,5 +722,11 @@ class SofifaItem(scrapy.Item):
 
 
 class ImageItem(scrapy.Item):
+
     images = scrapy.Field()
     image_urls = scrapy.Field()
+
+    id = scrapy.Field(
+        input_processor=MapCompose(get_id, eval),
+        output_processor=TakeFirst()
+    )
