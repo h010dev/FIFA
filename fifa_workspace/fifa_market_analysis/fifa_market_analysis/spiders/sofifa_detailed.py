@@ -196,6 +196,14 @@ class SofifaDetailedSpider(CrawlSpider):
         loader.add_xpath('club_logo_img', "(.//div/ul/li/figure/img/@data-src)[1]")
         loader.add_xpath('team_logo_img', "(.//div/ul/li/figure/img/@data-src)[2]")
 
+        # DOWNLOAD MEDIA
+
+        # image = ImageItem()
+        # img_urls = []
+        # for img in response.xpath(".//div/div/article/div/img"):
+        #     img_urls.append(img.xpath("./@data-src").get())
+        # image["image_urls"] = img_urls
+
         yield loader.load_item()
 
 # 'rankings_history': stat.xpath(".//li/label[text()='Release Clause']/text()/following::span/text()").extract_first(),
