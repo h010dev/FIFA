@@ -12,7 +12,7 @@ from scrapy import Request
 
 class MongoDBPipeline(object):
 
-    collection = 'fifa'
+    collection = 'player_stats'
 
     def __init__(self, mongo_uri, mongo_db):
         self.mongo_uri = mongo_uri
@@ -33,11 +33,6 @@ class MongoDBPipeline(object):
         self.client.close()
 
     def process_item(self, item, spider):
-        # self.db[self.collection].find_one_and_update(
-        #     {"id": item["id"]},
-        #     {"$set": dict(item)},
-        #     upsert=True
-        # )
         self.db[self.collection].insert_one(dict(item))
         return item
 
