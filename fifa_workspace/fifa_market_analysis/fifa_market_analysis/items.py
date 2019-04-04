@@ -730,3 +730,13 @@ class ImageItem(scrapy.Item):
         input_processor=MapCompose(get_id, eval),
         output_processor=TakeFirst()
     )
+
+    category = scrapy.Field(
+        input_processor=MapCompose(lambda x: re.findall(r'org/([a-zA-Z]+)', x)[0]),
+        output_processor=TakeFirst()
+    )
+
+    team_or_club = scrapy.Field(
+        input_processor=Identity(),
+        output_processor=TakeFirst()
+    )

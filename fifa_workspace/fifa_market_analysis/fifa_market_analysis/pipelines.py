@@ -6,6 +6,7 @@
 # See: https://doc.scrapy.org/en/latest/topics/item-pipeline.html
 from pymongo import MongoClient
 from scrapy.pipelines.images import ImagesPipeline
+from scrapy.pipelines.media import *
 from scrapy import Request
 
 
@@ -41,13 +42,45 @@ class MongoDBPipeline(object):
         return item
 
 
-class ImagesToDownloadPipeline(ImagesPipeline):
+class ImagesToDownloadPipeline(ImagesPipeline, MediaPipeline):
 
     def get_media_requests(self, item, info):
-        return [Request(x, meta={'id': item.get('id')}) for x in item.get(self.images_urls_field, [])]
+        return [Request(x, meta={'id': item.get('id'),
+                                 'category': item.get('category'),
+                                 'team_or_club': item.get('team_or_club')})
+                for x in item.get(self.images_urls_field, [])]
+
+    def _process_request(self, request, info):
+        fp = request_fingerprint(request)
+        cb = request.callback or (lambda _: _)
+        eb = request.errback
+        request.callback = None
+        request.errback = None
+
+        # Return cached result if request was already seen
+        # if fp in info.downloaded:
+        #     return defer_result(info.downloaded[fp]).addCallbacks(cb, eb)
+
+        # Otherwise, wait for result
+        wad = Deferred().addCallbacks(cb, eb)
+        info.waiting[fp].append(wad)
+
+        # Check if request is downloading right now to avoid doing it twice
+        # if fp in info.downloading:
+        #     return wad
+
+        # Download request checking media_to_download hook output first
+        info.downloading.add(fp)
+        dfd = mustbe_deferred(self.media_to_download, request, info)
+        dfd.addCallback(self._check_media_to_download, request, info)
+        dfd.addBoth(self._cache_result_and_execute_waiters, fp, info)
+        dfd.addErrback(lambda f: logger.error(
+            f.value, exc_info=failure_to_exc_info(f), extra={'spider': info.spider})
+        )
+        return dfd.addBoth(lambda _: wad)  # it must return wad at last
 
     def file_path(self, request, response=None, info=None):
-        ## start of deprecation warning block (can be removed in the future)
+
         def _warn():
             from scrapy.exceptions import ScrapyDeprecationWarning
             import warnings
@@ -55,20 +88,18 @@ class ImagesToDownloadPipeline(ImagesPipeline):
                           'please use file_path(request, response=None, info=None) instead',
                           category=ScrapyDeprecationWarning, stacklevel=1)
 
-        # check if called from image_key or file_key with url as first argument
         if not isinstance(request, Request):
             _warn()
             url = request
         else:
             url = request.url
 
-        # detect if file_key() or image_key() methods have been overridden
         if not hasattr(self.file_key, '_base'):
             _warn()
             return self.file_key(url)
         elif not hasattr(self.image_key, '_base'):
             _warn()
             return self.image_key(url)
-        ## end of deprecation warning block
 
-        return 'full/%s.jpg' % (request.meta['id'])
+        return 'full/%s.jpg' % (str(request.meta['id']) + '_' + str(request.meta['category']) + '_' +
+                                str(request.meta['team_or_club']))
