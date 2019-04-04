@@ -27,6 +27,7 @@ class PlayerImagesSpider(CrawlSpider):
             loader.add_value('image_urls', img_url)
             loader.add_xpath('id', ".//div[@class='info']/h1/text()")
             loader.add_xpath('category', "./img/@data-src")
+            loader.add_value('team_or_club', '00')
             yield loader.load_item()
 
 
@@ -42,6 +43,7 @@ class FlagImagesSpider(PlayerImagesSpider):
             loader.add_value('image_urls', img_url)
             loader.add_xpath('id', ".//div[@class='info']/h1/text()")
             loader.add_xpath('category', ".//a/img/@data-src")
+            loader.add_value('team_or_club', '00')
             yield loader.load_item()
 
 
