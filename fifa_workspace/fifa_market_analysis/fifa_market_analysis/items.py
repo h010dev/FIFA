@@ -688,11 +688,6 @@ class SofifaItem(scrapy.Item):
         output_processor=TakeFirst()
     )
 
-    hits = scrapy.Field(
-        input_processor=Identity(),
-        output_processor=TakeFirst()
-    )
-
     comments = scrapy.Field(
         input_processor=Identity(),
         output_processor=TakeFirst()
@@ -738,5 +733,28 @@ class ImageItem(scrapy.Item):
 
     team_or_club = scrapy.Field(
         input_processor=Identity(),
+        output_processor=TakeFirst()
+    )
+
+
+class MainPageItem(scrapy.Item):
+
+    id = scrapy.Field(
+        input_processor=MapCompose(lambda x: re.findall(r'/([0-9]+)/', x), eval),
+        output_processor=TakeFirst()
+    )
+
+    total_stats = scrapy.Field(
+        input_processor=MapCompose(eval),
+        output_processor=TakeFirst()
+    )
+
+    hits = scrapy.Field(
+        input_processor=MapCompose(lambda x: re.findall(r'<?[0-9.K]+', x)[0]),
+        output_processor=TakeFirst()
+    )
+
+    comments = scrapy.Field(
+        input_processor=MapCompose(lambda x: re.findall(r'<?[0-9.K]+', x)[1]),
         output_processor=TakeFirst()
     )

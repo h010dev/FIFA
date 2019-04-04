@@ -3,7 +3,7 @@ import scrapy
 from scrapy.linkextractors import LinkExtractor
 from scrapy.spiders import CrawlSpider, Rule
 from scrapy.loader import ItemLoader
-from fifa_market_analysis.items import SofifaItem
+from fifa_market_analysis.items import SofifaItem, MainPageItem
 
 
 class SofifaDetailedSpider(CrawlSpider):
@@ -14,10 +14,25 @@ class SofifaDetailedSpider(CrawlSpider):
     start_urls = ['http://sofifa.com/players/']
 
     rules = (
+        Rule(LinkExtractor(deny=([r'\?', r'[0-9]+/[0-9]+/', r'/changeLog', r'/live', r'/squads', r'/calculator/',
+                                  r'/team/', r'[0-9]+', r'/[a-zA-Z0-9]+$'])),
+             callback='parse_start_url', follow=True),
         Rule(LinkExtractor(deny=([r'\?', r'[0-9]+/[0-9]+/', r'/changeLog', r'/live', r'/squads', r'/calculator/']),
                            restrict_xpaths="//a[contains(@href, 'player/')]"), callback='parse_item', follow=True),
         # Rule(LinkExtractor(restrict_xpaths="//a[text()='Next']"), callback='parse_item', follow=True)
     )
+
+    def parse_start_url(self, response):
+        for row in response.xpath("//table[@class='table table-hover persist-area']/tbody/tr"):
+
+            loader = ItemLoader(item=MainPageItem(), selector=row, response=response)
+
+            loader.add_xpath('id', ".//a[contains(@href, 'player/')]/@href")
+            loader.add_xpath('total_stats', ".//div[@class='col-digit col-tt']/text()")
+            loader.add_xpath('hits', ".//div[@class='col-comments text-right text-ellipsis rtl']/text()")
+            loader.add_xpath('comments', ".//div[@class='col-comments text-right text-ellipsis rtl']/text()")
+
+            yield loader.load_item()
 
     def parse_item(self, response):
 
@@ -186,8 +201,6 @@ class SofifaDetailedSpider(CrawlSpider):
                                   "/following::span)[1]/text()")
         loader.add_xpath('dislikes', "(.//div[@class='operation mt-2']/a/text()[contains(.,'Dislike')]"
                                      "/following::span)[1]/text()")
-        # loader.add_xpath('hits', "")
-        # loader.add_xpath('comments', "")
 
         # MEDIA
 
