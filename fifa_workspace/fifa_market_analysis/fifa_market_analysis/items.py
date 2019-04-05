@@ -116,16 +116,15 @@ def get_date(value):
         return date
 
 
-# def get_pace(value):
-#
-#     points = dict()
-#     points['PAC'] = re.findall(r'pointPAC = ([0-9]+)', value)[0]
-#     points['SHO'] = re.findall(r'pointSHO = ([0-9]+)', value)[0]
-#     points['PAS'] = re.findall(r'pointPAS = ([0-9]+)', value)[0]
-#     points['DRI'] = re.findall(r'pointDRI = ([0-9]+)', value)[0]
-#     points['DEF'] = re.findall(r'pointDEF = ([0-9]+)', value)[0]
-#     points['PHY'] = re.findall(r'pointPHY = ([0-9]+)', value)[0]
-#     return points
+def player_id_list(value):
+
+    player_list = list()
+    pattern = r'[0-9]+'
+
+    for player in value:
+        player_list.append(re.findall(pattern, player))
+
+    return player_list
 
 
 class SofifaItem(scrapy.Item):
@@ -789,5 +788,272 @@ class TeamStatItem(scrapy.Item):
 
     comments = scrapy.Field(
         input_processor=MapCompose(lambda x: re.findall(r'<?[0-9.K]+', x)[1]),
+        output_processor=TakeFirst()
+    )
+
+
+class DetailedTeamStatItem(scrapy.Item):
+
+    # GENERAL CLUB INFORMATION
+
+    id = scrapy.Field(
+        input_processor=MapCompose(lambda x: re.findall(r'/([0-9]+)/', x), eval),
+        output_processor=TakeFirst()
+    )
+
+    club_name = scrapy.Field(
+        input_processor=Identity(),
+        output_processor=TakeFirst()
+    )
+
+    division = scrapy.Field(
+        input_processor=Identity(),
+        output_processor=TakeFirst()
+    )
+
+    club_logo = scrapy.Field(
+        input_processor=Identity(),
+        output_processor=TakeFirst()
+    )
+
+    flag = scrapy.Field(
+        input_processor=Identity(),
+        output_processor=TakeFirst()
+    )
+
+    # GENERAL TEAM STATS
+
+    overall = scrapy.Field(
+        input_processor=MapCompose(eval),
+        output_processor=TakeFirst()
+    )
+
+    attack = scrapy.Field(
+        input_processor=MapCompose(eval),
+        output_processor=TakeFirst()
+    )
+
+    midfield = scrapy.Field(
+        input_processor=MapCompose(eval),
+        output_processor=TakeFirst()
+    )
+
+    defence = scrapy.Field(
+        input_processor=MapCompose(eval),
+        output_processor=TakeFirst()
+    )
+
+    # DETAILED TEAM STATS
+
+    home_stadium = scrapy.Field(
+        input_processor=Identity(),
+        output_processor=TakeFirst()
+    )
+
+    rival_team = scrapy.Field(
+        input_processor=Identity(),
+        output_processor=TakeFirst()
+    )
+
+    international_prestige = scrapy.Field(
+        input_processor=MapCompose(eval),
+        output_processor=TakeFirst()
+    )
+
+    domestic_prestige = scrapy.Field(
+        input_processor=MapCompose(eval),
+        output_processor=TakeFirst()
+    )
+
+    transfer_budget = scrapy.Field(
+        input_processor=MapCompose(convert_currency_format),
+        output_processor=TakeFirst()
+    )
+
+    starting_xi_average_age = scrapy.Field(
+        input_processor=MapCompose(eval),
+        output_processor=TakeFirst()
+    )
+
+    whole_team_average_age = scrapy.Field(
+        input_processor=MapCompose(eval),
+        output_processor=TakeFirst()
+    )
+
+    captain = scrapy.Field(
+        input_processor=MapCompose(lambda x: re.findall(r'([0-9]+)', x)[0], eval),
+        output_processor=TakeFirst()
+    )
+
+    short_free_kick = scrapy.Field(
+        input_processor=MapCompose(lambda x: re.findall(r'([0-9]+)', x)[0], eval),
+        output_processor=TakeFirst()
+    )
+
+    long_free_kick = scrapy.Field(
+        input_processor=MapCompose(lambda x: re.findall(r'([0-9]+)', x)[0], eval),
+        output_processor=TakeFirst()
+    )
+
+    left_short_free_kick = scrapy.Field(
+        input_processor=MapCompose(lambda x: re.findall(r'([0-9]+)', x)[0], eval),
+        output_processor=TakeFirst()
+    )
+
+    right_short_free_kick = scrapy.Field(
+        input_processor=MapCompose(lambda x: re.findall(r'([0-9]+)', x)[0], eval),
+        output_processor=TakeFirst()
+    )
+
+    penalties = scrapy.Field(
+        input_processor=MapCompose(lambda x: re.findall(r'([0-9]+)', x)[0], eval),
+        output_processor=TakeFirst()
+    )
+
+    left_corner = scrapy.Field(
+        input_processor=MapCompose(lambda x: re.findall(r'([0-9]+)', x)[0], eval),
+        output_processor=TakeFirst()
+    )
+
+    right_corner = scrapy.Field(
+        input_processor=MapCompose(lambda x: re.findall(r'([0-9]+)', x)[0], eval),
+        output_processor=TakeFirst()
+    )
+
+    starting_xi = scrapy.Field(
+        input_processor=MapCompose(player_id_list, eval),
+        output_processor=Identity()
+    )
+
+    # TACTICS
+
+    defence_defensive_style = scrapy.Field(
+        input_processor=Identity(),
+        output_processor=TakeFirst()
+    )
+
+    defence_team_width = scrapy.Field(
+        input_processor=MapCompose(eval),
+        output_processor=TakeFirst()
+    )
+
+    defence_depth = scrapy.Field(
+        input_processor=MapCompose(eval),
+        output_processor=TakeFirst()
+    )
+
+    offense_offensive_style = scrapy.Field(
+        input_processor=Identity(),
+        output_processor=TakeFirst()
+    )
+
+    offense_width = scrapy.Field(
+        input_processor=MapCompose(eval),
+        output_processor=TakeFirst()
+    )
+
+    offense_players_in_box = scrapy.Field(
+        input_processor=MapCompose(eval),
+        output_processor=TakeFirst()
+    )
+
+    offense_corners = scrapy.Field(
+        input_processor=MapCompose(eval),
+        output_processor=TakeFirst()
+    )
+
+    offense_free_kicks = scrapy.Field(
+        input_processor=MapCompose(eval),
+        output_processor=TakeFirst()
+    )
+
+    build_up_play_speed = scrapy.Field(
+        input_processor=MapCompose(eval),
+        output_processor=TakeFirst()
+    )
+
+    build_up_play_dribbling = scrapy.Field(
+        input_processor=MapCompose(eval),
+        output_processor=TakeFirst()
+    )
+
+    build_up_play_passing = scrapy.Field(
+        input_processor=MapCompose(eval),
+        output_processor=TakeFirst()
+    )
+
+    build_up_play_positioning = scrapy.Field(
+        input_processor=Identity(),
+        output_processor=TakeFirst()
+    )
+
+    chance_creation_passing = scrapy.Field(
+        input_processor=MapCompose(eval),
+        output_processor=TakeFirst()
+    )
+
+    chance_creation_crossing = scrapy.Field(
+        input_processor=MapCompose(eval),
+        output_processor=TakeFirst()
+    )
+
+    chance_creation_shooting = scrapy.Field(
+        input_processor=MapCompose(eval),
+        output_processor=TakeFirst()
+    )
+
+    chance_creation_positioning = scrapy.Field(
+        input_processor=Identity(),
+        output_processor=TakeFirst()
+    )
+
+    defence_extra_pressure = scrapy.Field(
+        input_processor=MapCompose(eval),
+        output_processor=TakeFirst()
+    )
+
+    defence_extra_aggression = scrapy.Field(
+        input_processor=MapCompose(eval),
+        output_processor=TakeFirst()
+    )
+
+    defence_extra_team_width = scrapy.Field(
+        input_processor=MapCompose(eval),
+        output_processor=TakeFirst()
+    )
+
+    defence_extra_defender_line = scrapy.Field(
+        input_processor=Identity(),
+        output_processor=TakeFirst()
+    )
+
+    # PLAYERS
+
+    squad = scrapy.Field(
+        input_processor=MapCompose(player_id_list, eval),
+        output_processor=Identity()
+    )
+
+    on_loan = scrapy.Field(
+        input_processor=MapCompose(player_id_list, eval),
+        output_processor=Identity()
+    )
+
+    # MEDIA
+
+    kits = scrapy.Field(
+        input_processor=Identity(),
+        output_processor=Identity()
+    )
+
+    # COMMUNITY
+
+    likes = scrapy.Field(
+        input_processor=MapCompose(eval),
+        output_processor=TakeFirst()
+    )
+
+    dislikes = scrapy.Field(
+        input_processor=MapCompose(eval),
         output_processor=TakeFirst()
     )
