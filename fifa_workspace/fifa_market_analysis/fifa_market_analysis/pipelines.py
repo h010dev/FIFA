@@ -35,7 +35,7 @@ class MongoDBPipeline(object):
 
     def process_item(self, item, spider):
         if self.db[self.collection].count_documents({'id': item.get('id')}) == 1:
-            raise DropItem('Item dropeed')
+            raise DropItem('Item dropped')
         else:
             self.db[self.collection].insert_one(dict(item))
             return item
