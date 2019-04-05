@@ -758,3 +758,36 @@ class MainPageItem(scrapy.Item):
         input_processor=MapCompose(lambda x: re.findall(r'<?[0-9.K]+', x)[1]),
         output_processor=TakeFirst()
     )
+
+
+class TeamStatItem(scrapy.Item):
+
+    id = scrapy.Field(
+        input_processor=MapCompose(lambda x: re.findall(r'/([0-9]+)/', x), eval),
+        output_processor=TakeFirst()
+    )
+
+    nationality = scrapy.Field(
+        input_processor=Identity(),
+        output_processor=TakeFirst()
+    )
+
+    region = scrapy.Field(
+        input_processor=Identity(),
+        output_processor=TakeFirst()
+    )
+
+    num_players = scrapy.Field(
+        input_processor=MapCompose(eval),
+        output_processor=TakeFirst()
+    )
+
+    hits = scrapy.Field(
+        input_processor=MapCompose(lambda x: re.findall(r'<?[0-9.K]+', x)[0]),
+        output_processor=TakeFirst()
+    )
+
+    comments = scrapy.Field(
+        input_processor=MapCompose(lambda x: re.findall(r'<?[0-9.K]+', x)[1]),
+        output_processor=TakeFirst()
+    )
