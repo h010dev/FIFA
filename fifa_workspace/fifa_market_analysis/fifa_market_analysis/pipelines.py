@@ -8,6 +8,7 @@ from pymongo import MongoClient
 from scrapy.pipelines.images import ImagesPipeline
 from scrapy.pipelines.media import *
 from scrapy import Request
+from scrapy.exceptions import DropItem
 
 
 class MongoDBPipeline(object):
@@ -33,8 +34,11 @@ class MongoDBPipeline(object):
         self.client.close()
 
     def process_item(self, item, spider):
-        self.db[self.collection].insert_one(dict(item))
-        return item
+        if self.db[self.collection].count_documents({'id': item.get('id')}) == 1:
+            raise DropItem('Item dropeed')
+        else:
+            self.db[self.collection].insert_one(dict(item))
+            return item
 
 
 class ImagesToDownloadPipeline(ImagesPipeline, MediaPipeline):
