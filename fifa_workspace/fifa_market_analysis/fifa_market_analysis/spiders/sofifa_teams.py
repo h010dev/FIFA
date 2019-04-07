@@ -6,6 +6,7 @@ from scrapy.loader import ItemLoader
 from fifa_market_analysis.items import TeamStatItem, DetailedTeamStatItem, NationalTeamDetailedStats
 import logging
 from scrapy.utils.log import configure_logging
+import datetime
 
 
 class SofifaClubsSpider(CrawlSpider):
@@ -46,7 +47,7 @@ class SofifaClubsSpider(CrawlSpider):
 
     configure_logging(install_root_handler=False)
     logging.basicConfig(
-        filename='log.txt',
+        filename=f'{name}_{datetime.date.today()}_log.txt',
         format='%(levelname)s: %(message)s',
         level=logging.INFO
     )
