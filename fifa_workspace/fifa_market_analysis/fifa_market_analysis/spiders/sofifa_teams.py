@@ -26,16 +26,16 @@ class SofifaTeamsSpider(CrawlSpider):
             callback='parse_start_url',
             follow=True
         ),
-        # Rule(
-        #     LinkExtractor(
-        #         deny=(
-        #             [r'\?', r'/player/']
-        #         ),
-        #         restrict_xpaths="//a[contains(@href, '/team/')]"
-        #     ),
-        #     callback='parse_item',
-        #     follow=True
-        # ),
+        Rule(
+            LinkExtractor(
+                deny=(
+                    [r'\?', r'/player/', r'/squads', r'/live', r'/formerPlayers']
+                ),
+                restrict_xpaths="//a[contains(@href, '/team/')]"
+            ),
+            callback='parse_item',
+            follow=True
+        ),
         # Rule(
         #     LinkExtractor(
         #         restrict_xpaths="//a[text()='Next']"
