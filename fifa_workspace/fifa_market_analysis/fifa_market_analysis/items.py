@@ -797,12 +797,12 @@ class DetailedTeamStatItem(scrapy.Item):
     # GENERAL CLUB INFORMATION
 
     id = scrapy.Field(
-        input_processor=MapCompose(lambda x: re.findall(r'/([0-9]+)/', x), eval),
+        input_processor=MapCompose(get_id, eval),
         output_processor=TakeFirst()
     )
 
     club_name = scrapy.Field(
-        input_processor=Identity(),
+        input_processor=MapCompose(lambda x: re.findall(r'^[^\(]+', x), str.strip),
         output_processor=TakeFirst()
     )
 
@@ -1055,5 +1055,18 @@ class DetailedTeamStatItem(scrapy.Item):
 
     dislikes = scrapy.Field(
         input_processor=MapCompose(eval),
+        output_processor=TakeFirst()
+    )
+
+
+class NationalTeamDetailedStats(DetailedTeamStatItem):
+
+    team_name = scrapy.Field(
+        input_processor=Identity(),
+        output_processor=TakeFirst()
+    )
+
+    team_logo = scrapy.Field(
+        input_processor=Identity(),
         output_processor=TakeFirst()
     )
