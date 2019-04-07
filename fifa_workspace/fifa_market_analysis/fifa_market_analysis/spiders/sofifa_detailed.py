@@ -23,13 +23,24 @@ class SofifaDetailedSpider(CrawlSpider):
         # Rule(LinkExtractor(restrict_xpaths="//a[text()='Next']"), callback='parse_item', follow=True)
     )
 
+    custom_settings = {
+        'MONGO_DB': 'sofifa',
+        'DEPTH_LIMIT': 2,
+        'HTTPCACHE_ENABLED': True,
+        'ITEM_PIPELINES': {
+            'fifa_market_analysis.pipelines.MongoDBPipeline': 300,
+        },
+        'ROBOTSTXT_OBEY': True,
+        'COLLECTION_NAME': 'player_stats'
+    }
+
     def parse_start_url(self, response):
 
         for row in response.xpath("//table[@class='table table-hover persist-area']/tbody/tr"):
 
             loader = ItemLoader(item=MainPageItem(), selector=row, response=response)
 
-            loader.add_xpath('id', ".//a[contains(@href, 'player/')]/@href")
+            loader.add_xpath('id_player_main', ".//a[contains(@href, 'player/')]/@href")
             loader.add_xpath('total_stats', ".//div[@class='col-digit col-tt']/text()")
             loader.add_xpath('hits', ".//div[@class='col-comments text-right text-ellipsis rtl']/text()")
             loader.add_xpath('comments', ".//div[@class='col-comments text-right text-ellipsis rtl']/text()")
@@ -42,7 +53,7 @@ class SofifaDetailedSpider(CrawlSpider):
 
         # GENERAL PLAYER INFORMATION
 
-        loader.add_xpath('id', ".//div[@class='info']/h1/text()")
+        loader.add_xpath('id_player_secondary', ".//div[@class='info']/h1/text()")
         loader.add_xpath('name', ".//div[@class='info']/h1/text()")
         loader.add_xpath('full_name', ".//div[@class='meta']/text()")
         loader.add_xpath('age', ".//div[@class='meta']/text()/following-sibling::text()[last()]")

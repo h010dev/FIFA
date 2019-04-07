@@ -13,7 +13,7 @@ from scrapy.exceptions import DropItem
 
 class MongoDBPipeline(object):
 
-    collection = 'player_stats'
+    # collection = 'player_stats'
 
     def __init__(self, mongo_uri, mongo_db):
         self.mongo_uri = mongo_uri
@@ -34,10 +34,10 @@ class MongoDBPipeline(object):
         self.client.close()
 
     def process_item(self, item, spider):
-        if self.db[self.collection].count_documents({'id': item.get('id')}) == 1:
+        if self.db[spider.settings.get('COLLECTION_NAME')].count_documents({'id': item.get('id_player_main')}) == 1:
             raise DropItem('Item dropped')
         else:
-            self.db[self.collection].insert_one(dict(item))
+            self.db[spider.settings.get('COLLECTION_NAME')].insert_one(dict(item))
             return item
 
 

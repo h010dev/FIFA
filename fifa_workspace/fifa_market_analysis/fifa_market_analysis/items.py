@@ -135,7 +135,7 @@ class SofifaItem(scrapy.Item):
 
     # GENERAL PLAYER INFORMATION
 
-    id = scrapy.Field(
+    id_player_secondary = scrapy.Field(
         input_processor=MapCompose(get_id, eval),
         output_processor=TakeFirst()
     )
@@ -742,7 +742,7 @@ class ImageItem(scrapy.Item):
 
 class MainPageItem(scrapy.Item):
 
-    id = scrapy.Field(
+    id_player_main = scrapy.Field(
         input_processor=MapCompose(lambda x: re.findall(r'/([0-9]+)/', x), eval),
         output_processor=TakeFirst()
     )
@@ -765,7 +765,7 @@ class MainPageItem(scrapy.Item):
 
 class TeamStatItem(scrapy.Item):
 
-    id = scrapy.Field(
+    id_club_main = scrapy.Field(
         input_processor=MapCompose(lambda x: re.findall(r'/([0-9]+)/', x), eval),
         output_processor=TakeFirst()
     )
@@ -800,7 +800,7 @@ class DetailedTeamStatItem(scrapy.Item):
 
     # GENERAL CLUB INFORMATION
 
-    id = scrapy.Field(
+    id_club_secondary = scrapy.Field(
         input_processor=MapCompose(get_id, eval),
         output_processor=TakeFirst()
     )
@@ -971,6 +971,7 @@ class DetailedTeamStatItem(scrapy.Item):
         output_processor=TakeFirst()
     )
 
+    # TODO: some values are int, others str. Create a fix for this later.
     build_up_play_speed = scrapy.Field(
         input_processor=Identity(),
         output_processor=TakeFirst()
@@ -1063,7 +1064,20 @@ class DetailedTeamStatItem(scrapy.Item):
     )
 
 
+class NationalTeamStats(TeamStatItem):
+
+    id_team_main = scrapy.Field(
+        input_processor=MapCompose(lambda x: re.findall(r'/([0-9]+)/', x), eval),
+        output_processor=TakeFirst()
+    )
+
+
 class NationalTeamDetailedStats(DetailedTeamStatItem):
+
+    id_team_secondary = scrapy.Field(
+        input_processor=MapCompose(lambda x: re.findall(r'/([0-9]+)/', x), eval),
+        output_processor=TakeFirst()
+    )
 
     team_name = scrapy.Field(
         input_processor=Identity(),

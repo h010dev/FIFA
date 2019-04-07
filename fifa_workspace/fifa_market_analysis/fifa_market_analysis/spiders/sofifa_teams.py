@@ -3,7 +3,7 @@ import scrapy
 from scrapy.linkextractors import LinkExtractor
 from scrapy.spiders import CrawlSpider, Rule
 from scrapy.loader import ItemLoader
-from fifa_market_analysis.items import TeamStatItem, DetailedTeamStatItem, NationalTeamDetailedStats
+from fifa_market_analysis.items import TeamStatItem, DetailedTeamStatItem, NationalTeamDetailedStats, NationalTeamStats
 import logging
 from scrapy.utils.log import configure_logging
 import datetime
@@ -45,20 +45,35 @@ class SofifaClubsSpider(CrawlSpider):
         # )
     )
 
+    custom_settings = {
+        'MONGO_DB': 'sofifa',
+        'DEPTH_LIMIT': 2,
+        'HTTPCACHE_ENABLED': True,
+        'ITEM_PIPELINES': {
+            'fifa_market_analysis.pipelines.MongoDBPipeline': 300,
+        },
+        'ROBOTSTXT_OBEY': True,
+        'COLLECTION_NAME': 'club_stats'
+    }
+
     configure_logging(install_root_handler=False)
     logging.basicConfig(
-        filename=f'{name}_{datetime.date.today()}_log.txt',
+        filename=f'log_{name}_{datetime.date.today()}.txt',
         format='%(levelname)s: %(message)s',
         level=logging.INFO
     )
 
     def parse_start_url(self, response):
 
+        """
+        Parse main page for data that is not available in extracted links.
+        """
+
         for row in response.xpath("//table[@class='table table-hover persist-area']/tbody/tr"):
 
             loader = ItemLoader(item=TeamStatItem(), selector=row, response=response)
 
-            loader.add_xpath('id', ".//a[contains(@href, 'team/')]/@href")
+            loader.add_xpath('id_club_main', ".//a[contains(@href, 'team/')]/@href")
             loader.add_xpath('nationality', ".//a[contains(@href, 'teams?na')]/text()")
             loader.add_xpath('region', ".//a[contains(@href, 'teams?ct')]/text()")
             loader.add_xpath('num_players', ".//td[@class='col text-center'][last()]/div/text()")
@@ -73,7 +88,7 @@ class SofifaClubsSpider(CrawlSpider):
 
         # GENERAL CLUB INFORMATION
 
-        loader.add_xpath('id', ".//div[@class='info']/h1/text()")
+        loader.add_xpath('id_club_secondary', ".//div[@class='info']/h1/text()")
         loader.add_xpath('club_name', ".//div[@class='info']/h1/text()")
         loader.add_xpath('division', ".//div[@class='meta']//a[last()]/text()")
         loader.add_xpath('club_logo', ".//div[@class='card card-border player fixed-width']/img/@data-src")
@@ -197,13 +212,43 @@ class SofifaTeamsSpider(SofifaClubsSpider):
 
     start_urls = ['https://sofifa.com/teams/national']
 
+    custom_settings = {
+        'MONGO_DB': 'sofifa',
+        'DEPTH_LIMIT': 2,
+        'HTTPCACHE_ENABLED': True,
+        'ITEM_PIPELINES': {
+            'fifa_market_analysis.pipelines.MongoDBPipeline': 300,
+        },
+        'ROBOTSTXT_OBEY': True,
+        'COLLECTION_NAME': 'team_stats'
+    }
+
+    def parse_start_url(self, response):
+
+        """
+        Parse main page for data that is not available in extracted links.
+        """
+
+        for row in response.xpath("//table[@class='table table-hover persist-area']/tbody/tr"):
+
+            loader = ItemLoader(item=NationalTeamStats(), selector=row, response=response)
+
+            loader.add_xpath('id_team_main', ".//a[contains(@href, 'team/')]/@href")
+            loader.add_xpath('nationality', ".//a[contains(@href, 'teams?na')]/text()")
+            loader.add_xpath('region', ".//a[contains(@href, 'teams?ct')]/text()")
+            loader.add_xpath('num_players', ".//td[@class='col text-center'][last()]/div/text()")
+            loader.add_xpath('hits', ".//div[@class='col-comments text-right text-ellipsis rtl']/text()")
+            loader.add_xpath('comments', ".//div[@class='col-comments text-right text-ellipsis rtl']/text()")
+
+            yield loader.load_item()
+
     def parse_item(self, response):
 
         loader = ItemLoader(NationalTeamDetailedStats(), response=response)
 
         # GENERAL CLUB INFORMATION
 
-        loader.add_xpath('id', ".//div[@class='info']/h1/text()")
+        loader.add_xpath('id_team_secondary', ".//div[@class='info']/h1/text()")
         loader.add_xpath('team_name', ".//div[@class='info']/h1/text()")
         loader.add_xpath('team_logo', ".//div[@class='card card-border player fixed-width']/img/@data-src")
         loader.add_xpath('flag', ".//div[@class='meta']//a[last()-1]//img/@data-src")
