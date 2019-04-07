@@ -20,22 +20,22 @@ class SofifaTeamsSpider(CrawlSpider):
                   r'^https://sofifa.com/teams/club'
                 ),
                 deny=(
-                    [r'\?']
+                    [r'\?', r'/[0-9]+']
                 )
             ),
             callback='parse_start_url',
             follow=True
         ),
-        Rule(
-            LinkExtractor(
-                deny=(
-                    [r'\?', r'/player/']
-                ),
-                restrict_xpaths="//a[contains(@href, '/team/')]"
-            ),
-            callback='parse_item',
-            follow=True
-        ),
+        # Rule(
+        #     LinkExtractor(
+        #         deny=(
+        #             [r'\?', r'/player/']
+        #         ),
+        #         restrict_xpaths="//a[contains(@href, '/team/')]"
+        #     ),
+        #     callback='parse_item',
+        #     follow=True
+        # ),
         # Rule(
         #     LinkExtractor(
         #         restrict_xpaths="//a[text()='Next']"
@@ -51,8 +51,8 @@ class SofifaTeamsSpider(CrawlSpider):
             loader = ItemLoader(item=TeamStatItem(), selector=row, response=response)
 
             loader.add_xpath('id', ".//a[contains(@href, 'team/')]/@href")
-            loader.add_xpath('nationality', "(.//div[@class='col-name text-ellipsis rtl'])[2]/a/text()")
-            loader.add_xpath('region', "(.//div[@class='col-name text-ellipsis rtl'])[2]/div/a/text()")
+            loader.add_xpath('nationality', ".//a[contains(@href, 'teams?na')]/text()")
+            loader.add_xpath('region', ".//a[contains(@href, 'teams?ct')]/text()")
             loader.add_xpath('num_players', ".//td[@class='col text-center'][last()]/div/text()")
             loader.add_xpath('hits', ".//div[@class='col-comments text-right text-ellipsis rtl']/text()")
             loader.add_xpath('comments', ".//div[@class='col-comments text-right text-ellipsis rtl']/text()")

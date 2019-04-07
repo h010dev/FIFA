@@ -102,3 +102,16 @@ class ImagesToDownloadPipeline(ImagesPipeline, MediaPipeline):
 
         return 'full/%s.jpg' % (str(request.meta['id']) + '_' + str(request.meta['category']) + '_' +
                                 str(request.meta['team_or_club']))
+
+
+class DuplicatesPipeline(object):
+
+    def __init__(self):
+        self.ids_seen = set()
+
+    def process_item(self, item, spider):
+        if item['id'] in self.ids_seen:
+            raise DropItem(f'Duplicate item found: {item}')
+        else:
+            self.ids_seen.add(item['id'])
+            return item
