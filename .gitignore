@@ -22,3 +22,4 @@ fifa_workspace/**/*.scrapy
 fifa_workspace/**/*.md
 fifa_workspace/**/full/*
 *.json
+*.txt
