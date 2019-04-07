@@ -6,7 +6,7 @@
 # https://doc.scrapy.org/en/latest/topics/items.html
 
 import scrapy
-from scrapy.loader.processors import MapCompose, TakeFirst, Identity
+from scrapy.loader.processors import MapCompose, TakeFirst, Identity, Compose
 import re
 from datetime import datetime
 
@@ -119,12 +119,16 @@ def get_date(value):
 def player_id_list(value):
 
     player_list = list()
+    eval_list = list()
     pattern = r'[0-9]+'
 
     for player in value:
         player_list.append(re.findall(pattern, player))
 
-    return player_list
+    for i in range(len(player_list)):
+        eval_list.append(eval(player_list[i][0]))
+
+    return eval_list
 
 
 class SofifaItem(scrapy.Item):
@@ -921,7 +925,7 @@ class DetailedTeamStatItem(scrapy.Item):
     )
 
     starting_xi = scrapy.Field(
-        input_processor=MapCompose(player_id_list, eval),
+        input_processor=Compose(player_id_list),
         output_processor=Identity()
     )
 
@@ -968,7 +972,7 @@ class DetailedTeamStatItem(scrapy.Item):
     )
 
     build_up_play_speed = scrapy.Field(
-        input_processor=MapCompose(eval),
+        input_processor=Identity(),
         output_processor=TakeFirst()
     )
 
@@ -1030,12 +1034,12 @@ class DetailedTeamStatItem(scrapy.Item):
     # PLAYERS
 
     squad = scrapy.Field(
-        input_processor=MapCompose(player_id_list, eval),
+        input_processor=Compose(player_id_list),
         output_processor=Identity()
     )
 
     on_loan = scrapy.Field(
-        input_processor=MapCompose(player_id_list, eval),
+        input_processor=Compose(player_id_list),
         output_processor=Identity()
     )
 

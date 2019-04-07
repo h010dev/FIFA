@@ -129,7 +129,7 @@ class SofifaClubsSpider(CrawlSpider):
                                         "/following::a[1]/@href")
         loader.add_xpath('right_corner', ".//div[@class='column col-6']//following::label[text()='Right Corner']"
                                          "/following::a[1]/@href")
-        # loader.add_xpath('starting_xi', ".//div[@class='field-player']/a/@href")
+        loader.add_xpath('starting_xi', ".//div[@class='field-player']/a/@href")
 
         # TACTICS
 
@@ -149,7 +149,7 @@ class SofifaClubsSpider(CrawlSpider):
                                             "/following::div/meter)[1]/@value")
         loader.add_xpath('offense_free_kicks', "(.//dl//span/preceding::span[text()='Free Kicks']"
                                                "/following::div/meter)[1]/@value")
-        # loader.add_xpath('build_up_play_speed', ".//dl//span/preceding::span[text()='Speed']/following::span/text()")
+        loader.add_xpath('build_up_play_speed', ".//dl//span/preceding::span[text()='Speed']/following::span/text()")
         loader.add_xpath('build_up_play_dribbling', "(.//dl//span/preceding::dd[text()='Dribbling']//span)[1]"
                                                     "/span/text()")
         loader.add_xpath('build_up_play_passing', "(.//dl//span/preceding::span[text()='Passing']/following::span)[1]"
@@ -173,8 +173,8 @@ class SofifaClubsSpider(CrawlSpider):
 
         # PLAYERS
 
-        # loader.add_xpath('squad', "(.//table)[1]/tbody/tr//a[contains(@href, '/player/')]/@href")
-        # loader.add_xpath('on_loan', "(.//table)[2]/tbody/tr//a[contains(@href, '/player/')]/@href")
+        loader.add_xpath('squad', "(.//table)[1]/tbody/tr//a[contains(@href, '/player/')]/@href")
+        loader.add_xpath('on_loan', "(.//table)[2]/tbody/tr//a[contains(@href, '/player/')]/@href")
 
         # MEDIA
 
@@ -252,7 +252,7 @@ class SofifaTeamsSpider(SofifaClubsSpider):
                                         "/following::a[1]/@href")
         loader.add_xpath('right_corner', ".//div[@class='column col-6']//following::label[text()='Right Corner']"
                                          "/following::a[1]/@href")
-        # loader.add_xpath('starting_xi', ".//div[@class='field-player']/a/@href")
+        loader.add_xpath('starting_xi', ".//div[@class='field-player']/a/@href")
 
         # TACTICS
 
@@ -272,7 +272,7 @@ class SofifaTeamsSpider(SofifaClubsSpider):
                                             "/following::div/meter)[1]/@value")
         loader.add_xpath('offense_free_kicks', "(.//dl//span/preceding::span[text()='Free Kicks']"
                                                "/following::div/meter)[1]/@value")
-        # loader.add_xpath('build_up_play_speed', ".//dl//span/preceding::span[text()='Speed']/following::span/text()")
+        loader.add_xpath('build_up_play_speed', ".//dl//span/preceding::span[text()='Speed']/following::span/text()")
         loader.add_xpath('build_up_play_dribbling', "(.//dl//span/preceding::dd[text()='Dribbling']//span)[1]"
                                                     "/span/text()")
         loader.add_xpath('build_up_play_passing', "(.//dl//span/preceding::span[text()='Passing']/following::span)[1]"
@@ -296,8 +296,8 @@ class SofifaTeamsSpider(SofifaClubsSpider):
 
         # PLAYERS
 
-        # loader.add_xpath('squad', "(.//table)[1]/tbody/tr//a[contains(@href, '/player/')]/@href")
-        # loader.add_xpath('on_loan', "(.//table)[2]/tbody/tr//a[contains(@href, '/player/')]/@href")
+        loader.add_xpath('squad', "(.//table)[1]/tbody/tr//a[contains(@href, '/player/')]/@href")
+        loader.add_xpath('on_loan', "(.//table)[2]/tbody/tr//a[contains(@href, '/player/')]/@href")
 
         # MEDIA
 
