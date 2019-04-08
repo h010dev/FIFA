@@ -25,7 +25,6 @@ class SofifaDetailedSpider(CrawlSpider):
 
     custom_settings = {
         'MONGO_DB': 'sofifa',
-        'DEPTH_LIMIT': 2,
         'HTTPCACHE_ENABLED': True,
         'ITEM_PIPELINES': {
             'fifa_market_analysis.pipelines.MongoDBPipeline': 300,
@@ -42,7 +41,8 @@ class SofifaDetailedSpider(CrawlSpider):
         ),
         'SPIDERMON_VALIDATION_MODELS': (
             'fifa_market_analysis.validators.PlayerItem',
-        )
+        ),
+        'JOBDIR': 'pause_resume/player_dir'
     }
 
     def parse_start_url(self, response):

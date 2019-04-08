@@ -47,7 +47,7 @@ class SofifaClubsSpider(CrawlSpider):
 
     custom_settings = {
         'MONGO_DB': 'sofifa',
-        'DEPTH_LIMIT': 1,
+        'DEPTH_LIMIT': 2,
         'HTTPCACHE_ENABLED': True,
         'ITEM_PIPELINES': {
             'fifa_market_analysis.pipelines.MongoDBPipeline': 300,
@@ -63,7 +63,8 @@ class SofifaClubsSpider(CrawlSpider):
         ),
         'SPIDERMON_VALIDATION_MODELS': (
             'fifa_market_analysis.validators.ClubItem',
-        )
+        ),
+        'JOBDIR': 'pause_resume/club_dir'
     }
 
     configure_logging(install_root_handler=False)
@@ -240,7 +241,8 @@ class SofifaTeamsSpider(SofifaClubsSpider):
         ),
         'SPIDERMON_VALIDATION_MODELS': (
             'fifa_market_analysis.validators.TeamItem',
-        )
+        ),
+        'JOBDIR': 'pause_resume/team_dir'
     }
 
     def parse_start_url(self, response):
