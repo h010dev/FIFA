@@ -34,7 +34,17 @@ class MongoDBPipeline(object):
         self.client.close()
 
     def process_item(self, item, spider):
-        if self.db[spider.settings.get('COLLECTION_NAME')].count_documents({'id': item.get('id_player_main')}) == 1:
+        # if (self.db[spider.settings.get('COLLECTION_NAME')].count_documents(
+        #         {'id': item.get('id_club_main')}) == 1
+        #         and
+        #         self.db[spider.settings.get('COLLECTION_NAME')].count_documents(
+        #         {'id': item.get('id_club_secondary')}) == 1):
+        #     raise DropItem('Item dropped')
+        if (self.db[spider.settings.get('COLLECTION_NAME')].count_documents(
+                {'id': item.get('id_team_main')}) == 1
+                and
+                self.db[spider.settings.get('COLLECTION_NAME')].count_documents(
+                {'id': item.get('id_team_secondary')}) == 1):
             raise DropItem('Item dropped')
         else:
             self.db[spider.settings.get('COLLECTION_NAME')].insert_one(dict(item))

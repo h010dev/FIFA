@@ -1075,7 +1075,7 @@ class NationalTeamStats(TeamStatItem):
 class NationalTeamDetailedStats(DetailedTeamStatItem):
 
     id_team_secondary = scrapy.Field(
-        input_processor=MapCompose(lambda x: re.findall(r'/([0-9]+)/', x), eval),
+        input_processor=MapCompose(get_id, eval),
         output_processor=TakeFirst()
     )
 

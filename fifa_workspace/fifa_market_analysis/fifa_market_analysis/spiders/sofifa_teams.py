@@ -30,7 +30,7 @@ class SofifaClubsSpider(CrawlSpider):
         Rule(
             LinkExtractor(
                 deny=(
-                    [r'\?', r'/player/', r'/squads', r'/live', r'/formerPlayers']
+                    [r'\?', r'/player/', r'/squads', r'/live', r'/formerPlayers', r'/\#comments']
                 ),
                 restrict_xpaths="//a[contains(@href, '/team/')]"
             ),
