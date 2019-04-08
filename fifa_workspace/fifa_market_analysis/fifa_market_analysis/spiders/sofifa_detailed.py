@@ -29,6 +29,7 @@ class SofifaDetailedSpider(CrawlSpider):
         'HTTPCACHE_ENABLED': True,
         'ITEM_PIPELINES': {
             'fifa_market_analysis.pipelines.MongoDBPipeline': 300,
+            'spidermon.contrib.scrapy.pipelines.ItemValidationPipeline': 800,
         },
         'ROBOTSTXT_OBEY': True,
         'COLLECTION_NAME': 'player_stats',
@@ -38,6 +39,9 @@ class SofifaDetailedSpider(CrawlSpider):
         },
         'SPIDERMON_SPIDER_CLOSE_MONITORS': (
             'fifa_market_analysis.monitors.SpiderCloseMonitorSuite',
+        ),
+        'SPIDERMON_VALIDATION_MODELS': (
+            'fifa_market_analysis.validators.PlayerItem',
         )
     }
 
