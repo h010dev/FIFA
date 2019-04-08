@@ -31,7 +31,14 @@ class SofifaDetailedSpider(CrawlSpider):
             'fifa_market_analysis.pipelines.MongoDBPipeline': 300,
         },
         'ROBOTSTXT_OBEY': True,
-        'COLLECTION_NAME': 'player_stats'
+        'COLLECTION_NAME': 'player_stats',
+        'SPIDERMON_ENABLED': True,
+        'EXTENSIONS': {
+            'spidermon.contrib.scrapy.extensions.Spidermon': 500,
+        },
+        'SPIDERMON_SPIDER_CLOSE_MONITORS': (
+            'fifa_market_analysis.monitors.SpiderCloseMonitorSuite',
+        )
     }
 
     def parse_start_url(self, response):
