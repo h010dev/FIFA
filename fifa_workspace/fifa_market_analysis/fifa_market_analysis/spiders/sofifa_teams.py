@@ -47,13 +47,23 @@ class SofifaClubsSpider(CrawlSpider):
 
     custom_settings = {
         'MONGO_DB': 'sofifa',
-        'DEPTH_LIMIT': 2,
+        'DEPTH_LIMIT': 1,
         'HTTPCACHE_ENABLED': True,
         'ITEM_PIPELINES': {
             'fifa_market_analysis.pipelines.MongoDBPipeline': 300,
         },
         'ROBOTSTXT_OBEY': True,
-        'COLLECTION_NAME': 'club_stats'
+        'COLLECTION_NAME': 'club_stats',
+        'SPIDERMON_ENABLED': True,
+        'EXTENSIONS': {
+            'spidermon.contrib.scrapy.extensions.Spidermon': 500,
+        },
+        'SPIDERMON_SPIDER_CLOSE_MONITORS': (
+            'fifa_market_analysis.monitors.SpiderCloseMonitorSuite',
+        ),
+        'SPIDERMON_VALIDATION_MODELS': (
+            'fifa_market_analysis.validators.ClubItem',
+        )
     }
 
     configure_logging(install_root_handler=False)
@@ -214,13 +224,23 @@ class SofifaTeamsSpider(SofifaClubsSpider):
 
     custom_settings = {
         'MONGO_DB': 'sofifa',
-        'DEPTH_LIMIT': 2,
+        'DEPTH_LIMIT': 1,
         'HTTPCACHE_ENABLED': True,
         'ITEM_PIPELINES': {
             'fifa_market_analysis.pipelines.MongoDBPipeline': 300,
         },
         'ROBOTSTXT_OBEY': True,
-        'COLLECTION_NAME': 'team_stats'
+        'COLLECTION_NAME': 'team_stats',
+        'SPIDERMON_ENABLED': True,
+        'EXTENSIONS': {
+            'spidermon.contrib.scrapy.extensions.Spidermon': 500,
+        },
+        'SPIDERMON_SPIDER_CLOSE_MONITORS': (
+            'fifa_market_analysis.monitors.SpiderCloseMonitorSuite',
+        ),
+        'SPIDERMON_VALIDATION_MODELS': (
+            'fifa_market_analysis.validators.TeamItem',
+        )
     }
 
     def parse_start_url(self, response):
