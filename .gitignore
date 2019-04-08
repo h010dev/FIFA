@@ -21,5 +21,6 @@ fifa_workspace/*.txt
 fifa_workspace/**/*.scrapy
 fifa_workspace/**/*.md
 fifa_workspace/**/full/*
+fifa_workspace/fifa_market_analysis/pause_resume/*
 *.json
 *.txt
