@@ -4,7 +4,6 @@ from scrapy.linkextractors import LinkExtractor
 from scrapy.spiders import CrawlSpider, Rule
 from scrapy.loader import ItemLoader
 from fifa_market_analysis.items import SofifaItem, MainPageItem
-from urllib.parse import urljoin
 
 
 class SofifaDetailedSpider(CrawlSpider):
