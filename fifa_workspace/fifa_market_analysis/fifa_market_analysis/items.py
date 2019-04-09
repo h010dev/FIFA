@@ -1088,3 +1088,31 @@ class NationalTeamDetailedStats(DetailedTeamStatItem):
         input_processor=Identity(),
         output_processor=TakeFirst()
     )
+
+
+class UserAgentScraperItem(scrapy.Item):
+
+    user_agent = scrapy.Field(
+        input_processor=Identity(),
+        output_processor=TakeFirst()
+    )
+
+    version = scrapy.Field(
+        input_processor=Identity(),
+        output_processor=TakeFirst()
+    )
+
+    OS = scrapy.Field(
+        input_processor=Identity(),
+        output_processor=TakeFirst()
+    )
+
+    hardware_type = scrapy.Field(
+        input_processor=Identity(),
+        output_processor=TakeFirst()
+    )
+
+    popularity = scrapy.Field(
+        input_processor=Identity(),
+        output_processor=TakeFirst()
+    )

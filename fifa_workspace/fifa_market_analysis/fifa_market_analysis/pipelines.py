@@ -89,6 +89,20 @@ class MongoDBPipeline(object):
                     upsert=True)
                 return item
 
+        elif spider.settings.get('COLLECTION_NAME') == 'user_agents':
+
+            if self.db[spider.settings.get('COLLECTION_NAME')].count_documents(
+                    {'id': item.get('user_agent')}) == 1:
+                raise DropItem('Item dropped')
+            else:
+                self.db[spider.settings.get('COLLECTION_NAME')].update(
+                    {
+                        'user_agent': item.get('user_agent'),
+                    },
+                    dict(item),
+                    upsert=True)
+                return item
+
 
 class ImagesToDownloadPipeline(ImagesPipeline, MediaPipeline):
 
