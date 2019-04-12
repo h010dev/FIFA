@@ -19,86 +19,47 @@ class UserAgentScraperSpider(CrawlSpider):
     start_urls = ['https://developers.whatismybrowser.com/useragents/explore/']
 
     rules = (
-        Rule(
-            LinkExtractor(
-                allow=(
-                    r"^https://developers.whatismybrowser.com/useragents/explore/"
-                ),
-                deny=(
-                    [
-                        r'order_by', r'\/operating_platform\/', r'\/parse\/', r'\/legal\/'
-                    ]
-                )
-            ),
-            callback='parse_item',
-            follow=True
-        ),
-        Rule(
-            LinkExtractor(
-                deny=(
-                    [
-                        r'order_by', r'\/operating_platform\/', r'\/parse\/', r'\/legal\/'
-                    ]
-                ),
-                restrict_xpaths="//p[@class='browse-all']/a"
-            ),
-            callback='parse_item',
-            follow=True
-        ),
-        Rule(
-            LinkExtractor(
-                deny=(
-                    [
-                        r'order_by', r'\/operating_platform\/', r'\/parse\/', r'\/legal\/'
-                    ]
-                ),
-                restrict_xpaths=(
-                    [
-                        "//a[@class='maybe-long'][contains(text(), 'Computer')]",
-                        "//a[@class='maybe-long'][contains(text(), 'Server')]",
-                        "//a[@class='maybe-long'][contains(text(), 'Chrome')]",
-                        "//a[@class='maybe-long'][contains(text(), 'Opera')]",
-                        "//a[@class='maybe-long'][contains(text(), 'Server')]",
-                        "//a[@class='maybe-long'][contains(text(), 'Tableau')]",
-                        "//a[@class='maybe-long'][contains(text(), 'Internet Explorer')]",
-                        "//a[@class='maybe-long'][contains(text(), 'Googlebot')]",
-                        "//a[@class='maybe-long'][contains(text(), 'Firefox')]",
-                        "//a[@class='maybe-long'][contains(text(), 'Edge')]",
-                        "//a[@class='maybe-long'][contains(text(), 'Comodo')]",
-                        "//a[@class='maybe-long'][contains(text(), 'Chromium')]",
-                        "//a[@class='maybe-long'][contains(text(), 'Bingbot')]",
-                        "//a[@class='maybe-long'][contains(text(), 'Avant')]",
-                        "//a[@class='maybe-long'][contains(text(), 'Unix')]",
-                        "//a[@class='maybe-long'][contains(text(), 'ChromeOS')]",
-                        "//a[@class='maybe-long'][contains(text(), 'bsd')]",
-                        "//a[@class='maybe-long'][contains(text(), 'Mac')]",
-                        "//a[@class='maybe-long'][contains(text(), 'Crawler')]",
-                        "//a[@class='maybe-long'][contains(text(), 'Web Browser')]",
-                        "//a[@class='maybe-long'][contains(text(), 'Trident')]",
-                        "//a[@class='maybe-long'][contains(text(), 'Presto')]",
-                        "//a[@class='maybe-long'][contains(text(), 'Goanna')]",
-                        "//a[@class='maybe-long'][contains(text(), 'Gecko')]",
-                        "//a[@class='maybe-long'][contains(text(), 'Blink')]"
-                        "//a[@class='maybe-long'][text()='Windows']"
-                    ]
-                )
-            ),
-            callback='parse_item',
-            follow=True
-        ),
-        Rule(
-            LinkExtractor(
-                deny=(
-                    [
-                        r'order_by', r'\/operating_platform\/', r'\/parse\/', r'\/legal\/'
-                    ]
-                ),
-                restrict_xpaths="//div[@id='pagination']/a[text()='>']"
-            ),
-            callback='parse_item',
-            follow=True
-        )
-
+        Rule(LinkExtractor(allow=([r"^https://developers.whatismybrowser.com/useragents/explore/"]),
+                           deny=([r'order_by', r'\/operating_platform\/', r'\/parse\/', r'\/legal\/'])),
+             callback='parse_item',
+             follow=True),
+        Rule(LinkExtractor(deny=([r'order_by', r'\/operating_platform\/', r'\/parse\/', r'\/legal\/']),
+                           restrict_xpaths="//p[@class='browse-all']/a"),
+             callback='parse_item',
+             follow=True),
+        Rule(LinkExtractor(deny=([r'order_by', r'\/operating_platform\/', r'\/parse\/', r'\/legal\/']),
+                           restrict_xpaths=(["//a[@class='maybe-long'][contains(text(), 'Computer')]",
+                                             "//a[@class='maybe-long'][contains(text(), 'Server')]",
+                                             "//a[@class='maybe-long'][contains(text(), 'Chrome')]",
+                                             "//a[@class='maybe-long'][contains(text(), 'Opera')]",
+                                             "//a[@class='maybe-long'][contains(text(), 'Server')]",
+                                             "//a[@class='maybe-long'][contains(text(), 'Tableau')]",
+                                             "//a[@class='maybe-long'][contains(text(), 'Internet Explorer')]",
+                                             "//a[@class='maybe-long'][contains(text(), 'Googlebot')]",
+                                             "//a[@class='maybe-long'][contains(text(), 'Firefox')]",
+                                             "//a[@class='maybe-long'][contains(text(), 'Edge')]",
+                                             "//a[@class='maybe-long'][contains(text(), 'Comodo')]",
+                                             "//a[@class='maybe-long'][contains(text(), 'Chromium')]",
+                                             "//a[@class='maybe-long'][contains(text(), 'Bingbot')]",
+                                             "//a[@class='maybe-long'][contains(text(), 'Avant')]",
+                                             "//a[@class='maybe-long'][contains(text(), 'Unix')]",
+                                             "//a[@class='maybe-long'][contains(text(), 'ChromeOS')]",
+                                             "//a[@class='maybe-long'][contains(text(), 'bsd')]",
+                                             "//a[@class='maybe-long'][contains(text(), 'Mac')]",
+                                             "//a[@class='maybe-long'][contains(text(), 'Crawler')]",
+                                             "//a[@class='maybe-long'][contains(text(), 'Web Browser')]",
+                                             "//a[@class='maybe-long'][contains(text(), 'Trident')]",
+                                             "//a[@class='maybe-long'][contains(text(), 'Presto')]",
+                                             "//a[@class='maybe-long'][contains(text(), 'Goanna')]",
+                                             "//a[@class='maybe-long'][contains(text(), 'Gecko')]",
+                                             "//a[@class='maybe-long'][contains(text(), 'Blink')]"
+                                             "//a[@class='maybe-long'][text()='Windows']"])),
+             callback='parse_item',
+             follow=True),
+        Rule(LinkExtractor(deny=([r'order_by', r'\/operating_platform\/', r'\/parse\/', r'\/legal\/']),
+                           restrict_xpaths="//div[@id='pagination']/a[text()='>']"),
+             callback='parse_item',
+             follow=True)
     )
 
     # configure_logging(install_root_handler=False)
