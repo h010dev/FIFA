@@ -4,6 +4,8 @@ from scrapy.linkextractors import LinkExtractor
 from scrapy.spiders import CrawlSpider, Rule
 from scrapy.loader import ItemLoader
 from fifa_market_analysis.items import SofifaItem, MainPageItem
+from fifa_market_analysis.proxy_generator import proxies
+from fifa_market_analysis.user_agent_generator import user_agent
 
 
 class SofifaDetailedSpider(CrawlSpider):
@@ -11,26 +13,26 @@ class SofifaDetailedSpider(CrawlSpider):
     name = 'sofifa_detailed'
 
     allowed_domains = ['sofifa.com']
-    start_urls = ['http://sofifa.com/players/']
+    start_urls = ['https://sofifa.com/players/']
 
     rules = (
         Rule(LinkExtractor(deny=([r'\?', r'[0-9]+/[0-9]+/', r'/changeLog', r'/live', r'/squads', r'/calculator/',
                                   r'/team/', r'[0-9]+', r'/[a-zA-Z0-9]+$'])),
              callback='parse_start_url', follow=True),
-        Rule(LinkExtractor(deny=([r'\?', r'[0-9]+/[0-9]+/', r'/changeLog', r'/live', r'/squads', r'/calculator/']),
-                           restrict_xpaths="//a[contains(@href, 'player/')]"), callback='parse_item', follow=True),
+        # Rule(LinkExtractor(deny=([r'\?', r'[0-9]+/[0-9]+/', r'/changeLog', r'/live', r'/squads', r'/calculator/']),
+        #                    restrict_xpaths="//a[contains(@href, 'player/')]"), callback='parse_item', follow=True),
         # Rule(LinkExtractor(restrict_xpaths="//a[text()='Next']"), callback='parse_item', follow=True)
     )
 
     custom_settings = {
-        # 'MONGO_DB': 'sofifa',
-        'HTTPCACHE_ENABLED': True,
+        'MONGO_DB': 'sofifa',
+        'HTTPCACHE_ENABLED': False,
         'ITEM_PIPELINES': {
-            # 'fifa_market_analysis.pipelines.MongoDBPipeline': 300,
+            'fifa_market_analysis.pipelines.MongoDBPipeline': 300,
             'spidermon.contrib.scrapy.pipelines.ItemValidationPipeline': 800,
         },
         'ROBOTSTXT_OBEY': True,
-        # 'COLLECTION_NAME': 'player_stats',
+        'COLLECTION_NAME': 'player_stats',
         'SPIDERMON_ENABLED': True,
         'EXTENSIONS': {
             'spidermon.contrib.scrapy.extensions.Spidermon': 500,
@@ -41,7 +43,11 @@ class SofifaDetailedSpider(CrawlSpider):
         'SPIDERMON_VALIDATION_MODELS': (
             'fifa_market_analysis.validators.PlayerItem',
         ),
-        # 'JOBDIR': 'pause_resume/player_dir'
+        # 'JOBDIR': 'pause_resume/player_dir',
+        'DOWNLOADER_MIDDLEWARES': {
+            'scrapy_useragents.downloadermiddlewares.useragents.UserAgentsMiddleware': 500,
+        },
+        'USER_AGENTS': user_agent
     }
 
     def parse_start_url(self, response):

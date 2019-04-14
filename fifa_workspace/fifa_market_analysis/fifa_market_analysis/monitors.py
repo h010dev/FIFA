@@ -9,7 +9,7 @@ class ItemCountMonitor(Monitor):
     def test_minimum_number_of_items(self):
         item_extracted = getattr(
             self.data.stats, 'item_scraped_count', 0)
-        minimum_threshold = 122
+        minimum_threshold = 61
 
         msg = f'Extracted less than {minimum_threshold} items.'
         self.assertTrue(

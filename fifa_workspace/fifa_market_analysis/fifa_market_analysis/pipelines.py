@@ -103,6 +103,34 @@ class MongoDBPipeline(object):
                     upsert=True)
                 return item
 
+        elif spider.settings.get('COLLECTION_NAME') == 'player_urls':
+
+            if self.db[spider.settings.get('COLLECTION_NAME')].count_documents(
+                    {'id': item.get('id_player_main')}) == 1:
+                raise DropItem('Item dropped')
+            else:
+                self.db[spider.settings.get('COLLECTION_NAME')].update(
+                    {
+                        'id_player_main': item.get('id_player_main'),
+                    },
+                    dict(item),
+                    upsert=True)
+                return item
+
+        elif spider.settings.get('COLLECTION_NAME') == 'player_details':
+
+            if self.db[spider.settings.get('COLLECTION_NAME')].count_documents(
+                    {'id': item.get('id_player_secondary')}) == 1:
+                raise DropItem('Item dropped')
+            else:
+                self.db[spider.settings.get('COLLECTION_NAME')].update(
+                    {
+                        'id_player_secondary': item.get('id_player_secondary'),
+                    },
+                    dict(item),
+                    upsert=True)
+                return item
+
 
 class ImagesToDownloadPipeline(ImagesPipeline, MediaPipeline):
 

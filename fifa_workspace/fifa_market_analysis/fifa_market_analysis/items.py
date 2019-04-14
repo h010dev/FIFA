@@ -764,7 +764,7 @@ class MainPageItem(scrapy.Item):
 
     player_page = scrapy.Field(
         input_processor=Identity(),
-        output_processor=Identity()
+        output_processor=TakeFirst()
     )
 
 

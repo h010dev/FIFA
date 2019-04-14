@@ -9,7 +9,6 @@ from scrapy.utils.log import configure_logging
 import datetime
 from fifa_market_analysis.proxy_generator import proxies
 from fifa_market_analysis.user_agent_generator import user_agent
-import logging
 
 
 class UserAgentScraperSpider(CrawlSpider):
