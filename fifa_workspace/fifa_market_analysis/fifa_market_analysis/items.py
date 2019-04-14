@@ -762,6 +762,11 @@ class MainPageItem(scrapy.Item):
         output_processor=TakeFirst()
     )
 
+    player_page = scrapy.Field(
+        input_processor=Identity(),
+        output_processor=Identity()
+    )
+
 
 class TeamStatItem(scrapy.Item):
 

@@ -23,14 +23,14 @@ class SofifaDetailedSpider(CrawlSpider):
     )
 
     custom_settings = {
-        'MONGO_DB': 'sofifa',
+        # 'MONGO_DB': 'sofifa',
         'HTTPCACHE_ENABLED': True,
         'ITEM_PIPELINES': {
-            'fifa_market_analysis.pipelines.MongoDBPipeline': 300,
+            # 'fifa_market_analysis.pipelines.MongoDBPipeline': 300,
             'spidermon.contrib.scrapy.pipelines.ItemValidationPipeline': 800,
         },
         'ROBOTSTXT_OBEY': True,
-        'COLLECTION_NAME': 'player_stats',
+        # 'COLLECTION_NAME': 'player_stats',
         'SPIDERMON_ENABLED': True,
         'EXTENSIONS': {
             'spidermon.contrib.scrapy.extensions.Spidermon': 500,
@@ -41,10 +41,17 @@ class SofifaDetailedSpider(CrawlSpider):
         'SPIDERMON_VALIDATION_MODELS': (
             'fifa_market_analysis.validators.PlayerItem',
         ),
-        'JOBDIR': 'pause_resume/player_dir'
+        # 'JOBDIR': 'pause_resume/player_dir'
     }
 
     def parse_start_url(self, response):
+
+        """
+        @url http://sofifa.com/players/
+        @returns items 1 61
+        @returns requests 0 0
+        @scrapes id_player_main total_stats hits comments
+        """
 
         for row in response.xpath("//table[@class='table table-hover persist-area']/tbody/tr"):
 
@@ -54,10 +61,18 @@ class SofifaDetailedSpider(CrawlSpider):
             loader.add_xpath('total_stats', ".//div[@class='col-digit col-tt']/text()")
             loader.add_xpath('hits', ".//div[@class='col-comments text-right text-ellipsis rtl']/text()")
             loader.add_xpath('comments', ".//div[@class='col-comments text-right text-ellipsis rtl']/text()")
+            loader.add_xpath('player_page', ".//a[contains(@href, 'player/')]/@href")
 
             yield loader.load_item()
 
     def parse_item(self, response):
+
+        """
+        @url https://sofifa.com/player/158023/lionel-messi/
+        @returns items 1 1
+        @returns requests 0 0
+        @scrapes id_player_secondary name full_name age dob height weight nationality
+        """
 
         loader = ItemLoader(item=SofifaItem(), response=response)
 
