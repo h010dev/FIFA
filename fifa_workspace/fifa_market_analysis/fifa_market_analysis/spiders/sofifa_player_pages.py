@@ -12,7 +12,7 @@ import random
 
 class PlayerSpider(scrapy.Spider):
 
-    name = 'my_spider'
+    name = 'player_details'
 
     custom_settings = {
         'MONGO_DB': 'sofifa',
