@@ -9,6 +9,7 @@ from scrapy.utils.log import configure_logging
 import datetime
 from fifa_market_analysis.proxy_generator import proxies
 from fifa_market_analysis.user_agent_generator import user_agent
+import logging
 
 
 class UserAgentScraperSpider(CrawlSpider):
@@ -90,11 +91,23 @@ class UserAgentScraperSpider(CrawlSpider):
         'ROTATING_PROXY_LIST': proxies,
         'USER_AGENTS': user_agent,
         'DOWNLOAD_TIMEOUT': 30,
-        # 'LOG_LEVEL': 'WARNING',
-        # 'LOG_ENABLED': True
+        'LOG_LEVEL': 'DEBUG',
+        'LOG_ENABLED': True,
+        'LOG_FILE': 'user_agent_log.txt',
+        'CONCURRENT_REQUESTS_PER_IP': 10,
+        'DEPTH_STATS_VERBOSE': True,
+        'DUPEFILTER_CLASS': 'scrapy.dupefilters.RFPDupeFilter',
+        # 'SPIDER_CONTRACTS': {},
     }
 
     def parse_item(self, response):
+
+        """
+        @url https://developers.whatismybrowser.com/useragents/explore/software_name/chrome/
+        @returns items 1 10
+        @returns requests 0 0
+        @scrapes user_agent
+        """
 
         for row in response.xpath("//div[@class='content-base']//tbody/tr"):
 
@@ -108,6 +121,6 @@ class UserAgentScraperSpider(CrawlSpider):
 
             # print(response.request.headers['proxy'])
             print(response.request.headers['User-Agent'])
+            self.logger.info(f'Parse function called on {response.url}')
 
             yield loader.load_item()
-
