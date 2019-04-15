@@ -9,6 +9,7 @@ import scrapy
 from scrapy.loader.processors import MapCompose, TakeFirst, Identity, Compose
 import re
 from datetime import datetime
+from urllib.parse import urljoin
 
 
 def convert_currency_format(value):
@@ -763,7 +764,7 @@ class MainPageItem(scrapy.Item):
     )
 
     player_page = scrapy.Field(
-        input_processor=Identity(),
+        input_processor=MapCompose(lambda x: f'{urljoin("https://sofifa.com", x)}'),
         output_processor=TakeFirst()
     )
 

@@ -3,7 +3,6 @@ from scrapy.linkextractors import LinkExtractor
 from scrapy.spiders import CrawlSpider, Rule
 from scrapy.loader import ItemLoader
 from fifa_market_analysis.items import SofifaItem, MainPageItem
-from urllib.parse import urljoin
 from pymongo import MongoClient
 from fifa_market_analysis.proxy_generator import proxies
 from fifa_market_analysis.user_agent_generator import user_agent
@@ -42,8 +41,7 @@ class SofifaPlayerPagesSpider(scrapy.Spider):
         db = client.sofifa
         collection = db.player_urls
 
-        urls = [f'{urljoin("https://sofifa.com", x["player_page"])}' for x in
-                collection.find({'player_page': {'$exists': 'true'}})]
+        urls = [x["player_page"] for x in collection.find({'player_page': {'$exists': 'true'}})]
 
         for url in urls:
             yield scrapy.Request(url=url, callback=self.parse)

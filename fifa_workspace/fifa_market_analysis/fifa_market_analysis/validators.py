@@ -9,7 +9,7 @@ class PlayerItem(Model):
     total_stats = IntType()
     hits = StringType()
     comments = StringType()
-    player_page = StringType(required=True)
+    player_page = URLType(required=True)
 
     name = StringType()
     full_name = StringType()
