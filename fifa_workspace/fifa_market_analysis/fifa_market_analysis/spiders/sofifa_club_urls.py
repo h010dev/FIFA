@@ -2,9 +2,10 @@ import scrapy
 from scrapy.linkextractors import LinkExtractor
 from scrapy.spiders import CrawlSpider, Rule
 from scrapy.loader import ItemLoader
-from fifa_market_analysis.items import TeamStatItem, DetailedTeamStatItem, NationalTeamDetailedStats, NationalTeamStats
+from fifa_market_analysis.items import TeamStatItem
 from fifa_market_analysis.proxy_generator import proxies
 from fifa_market_analysis.user_agent_generator import user_agent
+from fifa_market_analysis.sofifa_settings import sofifa_settings
 
 
 class SofifaClubUrlsSpider(CrawlSpider):
@@ -22,30 +23,8 @@ class SofifaClubUrlsSpider(CrawlSpider):
         # Rule(LinkExtractor(restrict_xpaths="//a[text()='Next']"), callback='parse_item', follow=True)
     )
 
-    custom_settings = {
-        'MONGO_DB': 'sofifa',
-        'HTTPCACHE_ENABLED': False,
-        'ITEM_PIPELINES': {
-            'fifa_market_analysis.pipelines.MongoDBPipeline': 300,
-            'spidermon.contrib.scrapy.pipelines.ItemValidationPipeline': 800,
-        },
-        'ROBOTSTXT_OBEY': True,
-        'COLLECTION_NAME': 'club_urls',
-        'SPIDERMON_ENABLED': True,
-        'EXTENSIONS': {
-            'spidermon.contrib.scrapy.extensions.Spidermon': 500,
-        },
-        'SPIDERMON_SPIDER_CLOSE_MONITORS': (
-            'fifa_market_analysis.monitors.SpiderCloseMonitorSuite',
-        ),
-        'SPIDERMON_VALIDATION_MODELS': (
-            'fifa_market_analysis.validators.ClubItem',
-        ),
-        'DOWNLOADER_MIDDLEWARES': {
-            'scrapy_useragents.downloadermiddlewares.useragents.UserAgentsMiddleware': 500,
-        },
-        'USER_AGENTS': user_agent
-    }
+    custom_settings = sofifa_settings(name=name, proxies=proxies, user_agent=user_agent, collection='club_urls',
+                                      validator='ClubItem')
 
     def parse_start_url(self, response):
 

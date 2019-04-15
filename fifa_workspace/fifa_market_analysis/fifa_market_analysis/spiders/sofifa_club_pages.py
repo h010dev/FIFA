@@ -1,48 +1,18 @@
-# -*- coding: utf-8 -*-
 import scrapy
-from scrapy.linkextractors import LinkExtractor
-from scrapy.spiders import CrawlSpider, Rule
 from scrapy.loader import ItemLoader
-from fifa_market_analysis.items import SofifaItem, MainPageItem
-from urllib.parse import urljoin
 from pymongo import MongoClient
 from fifa_market_analysis.proxy_generator import proxies
 from fifa_market_analysis.user_agent_generator import user_agent
-from scrapy.linkextractors import LinkExtractor
-from scrapy.spiders import CrawlSpider, Rule
-from scrapy.loader import ItemLoader
-from fifa_market_analysis.items import TeamStatItem, DetailedTeamStatItem, NationalTeamDetailedStats, NationalTeamStats
-import logging
-from scrapy.utils.log import configure_logging
-import datetime
+from fifa_market_analysis.items import DetailedTeamStatItem
+from fifa_market_analysis.sofifa_settings import sofifa_settings
 
 
 class SofifaClubPagesSpider(scrapy.Spider):
 
     name = 'club_details'
 
-    custom_settings = {
-        'MONGO_DB': 'sofifa',
-        'HTTPCACHE_ENABLED': False,
-        'ITEM_PIPELINES': {
-            'fifa_market_analysis.pipelines.MongoDBPipeline': 300,
-        },
-        'ROBOTSTXT_OBEY': True,
-        'COLLECTION_NAME': 'club_details',
-        'PROXY_POOL_ENABLED': True,
-        'ROTATING_PROXY_LIST': proxies,
-        'USER_AGENTS': user_agent,
-        'DOWNLOAD_TIMEOUT': 30,
-        'DOWNLOADER_MIDDLEWARES': {
-            'scrapy.downloadermiddlewares.useragent.UserAgentMiddleware': None,
-            'scrapy_useragents.downloadermiddlewares.useragents.UserAgentsMiddleware': 500,
-            'scrapy_splash.SplashCookiesMiddleware': 723,
-            'scrapy_splash.SplashMiddleware': 725,
-            'scrapy.downloadermiddlewares.httpcompression.HttpCompressionMiddleware': 810,
-            'rotating_proxies.middlewares.RotatingProxyMiddleware': 610,
-            'rotating_proxies.middlewares.BanDetectionMiddleware': 620
-        }
-    }
+    custom_settings = sofifa_settings(name=name, proxies=proxies, user_agent=user_agent, collection='club_details',
+                                      validator='ClubItem')
 
     def start_requests(self):
 
@@ -50,8 +20,7 @@ class SofifaClubPagesSpider(scrapy.Spider):
         db = client.sofifa
         collection = db.club_urls
 
-        urls = [f'{urljoin("https://sofifa.com", x["club_page"])}' for x in
-                collection.find({'club_page': {'$exists': 'true'}})]
+        urls = [x["club_page"] for x in collection.find({'club_page': {'$exists': 'true'}})]
 
         for url in urls:
             yield scrapy.Request(url=url, callback=self.parse)

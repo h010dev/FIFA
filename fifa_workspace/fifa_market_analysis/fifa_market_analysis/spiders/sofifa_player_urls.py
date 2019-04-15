@@ -22,7 +22,8 @@ class SofifaPlayerURLsSpider(CrawlSpider):
         # Rule(LinkExtractor(restrict_xpaths="//a[text()='Next']"), callback='parse_item', follow=True)
     )
 
-    custom_settings = sofifa_settings(name=name, proxies=proxies, user_agent=user_agent)
+    custom_settings = sofifa_settings(name=name, proxies=proxies, user_agent=user_agent, collection='player_urls',
+                                      validator='PlayerItem')
 
     def parse_start_url(self, response):
 

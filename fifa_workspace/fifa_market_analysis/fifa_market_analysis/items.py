@@ -802,7 +802,7 @@ class TeamStatItem(scrapy.Item):
     )
 
     club_page = scrapy.Field(
-        input_processor=Identity(),
+        input_processor=MapCompose(lambda x: f'{urljoin("https://sofifa.com", x)}'),
         output_processor=TakeFirst()
     )
 
@@ -1083,7 +1083,7 @@ class NationalTeamStats(TeamStatItem):
     )
 
     team_page = scrapy.Field(
-        input_processor=Identity(),
+        input_processor=MapCompose(lambda x: f'{urljoin("https://sofifa.com", x)}'),
         output_processor=TakeFirst()
     )
 

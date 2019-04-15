@@ -4,34 +4,15 @@ from fifa_market_analysis.items import SofifaItem
 from pymongo import MongoClient
 from fifa_market_analysis.proxy_generator import proxies
 from fifa_market_analysis.user_agent_generator import user_agent
+from fifa_market_analysis.sofifa_settings import sofifa_settings
 
 
 class SofifaPlayerPagesSpider(scrapy.Spider):
 
     name = 'player_details'
 
-    custom_settings = {
-        'MONGO_DB': 'sofifa',
-        'HTTPCACHE_ENABLED': False,
-        'ITEM_PIPELINES': {
-            'fifa_market_analysis.pipelines.MongoDBPipeline': 300,
-        },
-        'ROBOTSTXT_OBEY': True,
-        'COLLECTION_NAME': 'player_details',
-        'PROXY_POOL_ENABLED': True,
-        'ROTATING_PROXY_LIST': proxies,
-        'USER_AGENTS': user_agent,
-        'DOWNLOAD_TIMEOUT': 30,
-        'DOWNLOADER_MIDDLEWARES': {
-            'scrapy.downloadermiddlewares.useragent.UserAgentMiddleware': None,
-            'scrapy_useragents.downloadermiddlewares.useragents.UserAgentsMiddleware': 500,
-            'scrapy_splash.SplashCookiesMiddleware': 723,
-            'scrapy_splash.SplashMiddleware': 725,
-            'scrapy.downloadermiddlewares.httpcompression.HttpCompressionMiddleware': 810,
-            'rotating_proxies.middlewares.RotatingProxyMiddleware': 610,
-            'rotating_proxies.middlewares.BanDetectionMiddleware': 620
-        }
-    }
+    custom_settings = sofifa_settings(name=name, proxies=proxies, user_agent=user_agent, collection='player_details',
+                                      validator='PlayerItem')
 
     def start_requests(self):
 
