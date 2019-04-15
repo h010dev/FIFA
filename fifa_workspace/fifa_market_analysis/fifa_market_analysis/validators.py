@@ -9,7 +9,7 @@ class PlayerItem(Model):
     total_stats = IntType()
     hits = StringType()
     comments = StringType()
-    player_page = URLType()
+    player_page = StringType()
 
     name = StringType()
     full_name = StringType()
@@ -141,7 +141,7 @@ class ClubItem(Model):
     num_players = IntType()
     hits = StringType()
     comments = StringType()
-    club_page = URLType()
+    club_page = StringType()
 
     club_name = StringType()
     division = StringType()
@@ -198,7 +198,7 @@ class ClubItem(Model):
 
 
 class TeamItem(ClubItem):
-    team_page = URLType()
+    team_page = StringType()
 
     team_name = StringType()
     team_logo = URLType()

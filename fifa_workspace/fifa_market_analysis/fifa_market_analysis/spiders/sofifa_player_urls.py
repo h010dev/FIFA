@@ -68,7 +68,10 @@ class SofifaPlayerURLsSpider(CrawlSpider):
         ),
         'SPIDERMON_VALIDATION_MODELS': (
             'fifa_market_analysis.validators.PlayerItem',
-        )
+        ),
+        'SPIDERMON_PERIODIC_MONITORS': {
+            'fifa_market_analysis.monitors.PeriodicMonitorSuite': 60,
+        }
     }
 
     def parse_start_url(self, response):

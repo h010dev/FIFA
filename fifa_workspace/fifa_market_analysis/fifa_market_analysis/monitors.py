@@ -1,5 +1,6 @@
 from spidermon import Monitor, MonitorSuite, monitors
 from spidermon.contrib.monitors.mixins import StatsMonitorMixin
+from fifa_market_analysis.actions import CloseSpiderAction
 
 
 @monitors.name('Item count')
@@ -30,6 +31,23 @@ class ItemValidationMonitor(Monitor, StatsMonitorMixin):
             0,
             msg=f'Found validation errors in {validation_errors} fields.'
         )
+
+
+@monitors.name('Periodic job stats monitor')
+class PeriodicJobStatsMonitor(Monitor, StatsMonitorMixin):
+
+    @monitors.name('Maximum number of errors reached')
+    def test_number_of_errors(self):
+        accepted_num_errors = 6
+        num_errors = self.data.stats.get('log_count/ERROR', 0)
+
+        msg = 'The job has exceeded the maximum number of errors'
+        self.assertLessEqual(num_errors, accepted_num_errors, msg=msg)
+
+
+class PeriodicMonitorSuite(MonitorSuite):
+    monitors = [PeriodicJobStatsMonitor]
+    monitors_failed_actions = [CloseSpiderAction]
 
 
 class SpiderCloseMonitorSuite(MonitorSuite):
