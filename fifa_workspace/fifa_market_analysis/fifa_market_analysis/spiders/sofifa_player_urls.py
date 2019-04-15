@@ -2,9 +2,10 @@ import scrapy
 from scrapy.linkextractors import LinkExtractor
 from scrapy.spiders import CrawlSpider, Rule
 from scrapy.loader import ItemLoader
-from fifa_market_analysis.items import SofifaItem, MainPageItem
+from fifa_market_analysis.items import MainPageItem
 from fifa_market_analysis.proxy_generator import proxies
 from fifa_market_analysis.user_agent_generator import user_agent
+import datetime
 
 
 class SofifaPlayerURLsSpider(CrawlSpider):
@@ -22,15 +23,43 @@ class SofifaPlayerURLsSpider(CrawlSpider):
     )
 
     custom_settings = {
+
+        # DATABASE SETTINGS
         'MONGO_DB': 'sofifa',
+        'COLLECTION_NAME': 'player_urls',
+
+        # SPIDER CHECKPOINTS
+        'JOBDIR': f'pause_resume/{name}',
+
+        # SPIDER LOGGING
+        'LOG_ENABLED': True,
+        'LOG_LEVEL': 'DEBUG',
+        'LOG_FILE': f'{name}_log_{datetime.date.today()}.txt',
+
+        # EXTENSION ACTIVATION
+        'SPIDERMON_ENABLED': True,
+        'PROXY_POOL_ENABLED': True,
+
+        # BAN PREVENTION
+        'ROTATING_PROXY_LIST': proxies,
+        'USER_AGENTS': user_agent,
+
+        # MISC. SETTINGS
         'HTTPCACHE_ENABLED': False,
+        'ROBOTSTXT_OBEY': True,
+        'DOWNLOAD_TIMEOUT': 30,
+
+        # PIPELINES, MIDDLEWARES, AND EXTENSIONS
         'ITEM_PIPELINES': {
             'fifa_market_analysis.pipelines.MongoDBPipeline': 300,
             'spidermon.contrib.scrapy.pipelines.ItemValidationPipeline': 800,
         },
-        'ROBOTSTXT_OBEY': True,
-        'COLLECTION_NAME': 'player_urls',
-        'SPIDERMON_ENABLED': True,
+        'DOWNLOADER_MIDDLEWARES': {
+            'scrapy.downloadermiddlewares.useragent.UserAgentMiddleware': None,
+            'scrapy_useragents.downloadermiddlewares.useragents.UserAgentsMiddleware': 500,
+            'rotating_proxies.middlewares.RotatingProxyMiddleware': 610,
+            'rotating_proxies.middlewares.BanDetectionMiddleware': 620
+        },
         'EXTENSIONS': {
             'spidermon.contrib.scrapy.extensions.Spidermon': 500,
         },
@@ -39,11 +68,7 @@ class SofifaPlayerURLsSpider(CrawlSpider):
         ),
         'SPIDERMON_VALIDATION_MODELS': (
             'fifa_market_analysis.validators.PlayerItem',
-        ),
-        'DOWNLOADER_MIDDLEWARES': {
-            'scrapy_useragents.downloadermiddlewares.useragents.UserAgentsMiddleware': 500,
-        },
-        'USER_AGENTS': user_agent
+        )
     }
 
     def parse_start_url(self, response):
@@ -63,5 +88,8 @@ class SofifaPlayerURLsSpider(CrawlSpider):
             loader.add_xpath('hits', ".//div[@class='col-comments text-right text-ellipsis rtl']/text()")
             loader.add_xpath('comments', ".//div[@class='col-comments text-right text-ellipsis rtl']/text()")
             loader.add_xpath('player_page', ".//a[contains(@href, 'player/')]/@href")
+
+            print(response.request.headers['User-Agent'])
+            self.logger.info(f'Parse function called on {response.url}')
 
             yield loader.load_item()
