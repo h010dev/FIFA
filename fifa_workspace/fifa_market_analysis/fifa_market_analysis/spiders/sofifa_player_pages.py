@@ -7,10 +7,9 @@ from urllib.parse import urljoin
 from pymongo import MongoClient
 from fifa_market_analysis.proxy_generator import proxies
 from fifa_market_analysis.user_agent_generator import user_agent
-import random
 
 
-class PlayerSpider(scrapy.Spider):
+class SofifaPlayerPagesSpider(scrapy.Spider):
 
     name = 'player_details'
 
@@ -32,8 +31,8 @@ class PlayerSpider(scrapy.Spider):
             'scrapy_splash.SplashCookiesMiddleware': 723,
             'scrapy_splash.SplashMiddleware': 725,
             'scrapy.downloadermiddlewares.httpcompression.HttpCompressionMiddleware': 810,
-            # 'rotating_proxies.middlewares.RotatingProxyMiddleware': 610,
-            # 'rotating_proxies.middlewares.BanDetectionMiddleware': 620
+            'rotating_proxies.middlewares.RotatingProxyMiddleware': 610,
+            'rotating_proxies.middlewares.BanDetectionMiddleware': 620
         }
     }
 
@@ -56,7 +55,7 @@ class PlayerSpider(scrapy.Spider):
 
         # GENERAL PLAYER INFORMATION
 
-        loader.add_xpath('id_player_secondary', ".//div[@class='info']/h1/text()")
+        loader.add_xpath('id', ".//div[@class='info']/h1/text()")
         loader.add_xpath('name', ".//div[@class='info']/h1/text()")
         loader.add_xpath('full_name', ".//div[@class='meta']/text()")
         loader.add_xpath('age', ".//div[@class='meta']/text()/following-sibling::text()[last()]")

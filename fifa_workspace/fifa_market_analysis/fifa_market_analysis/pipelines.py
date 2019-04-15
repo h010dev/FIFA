@@ -38,16 +38,15 @@ class MongoDBPipeline(object):
         if spider.settings.get('COLLECTION_NAME') == 'player_stats':
 
             if (self.db[spider.settings.get('COLLECTION_NAME')].count_documents(
-                    {'id': item.get('id_player_main')}) == 1
+                    {'id': item.get('id')}) == 1
                     and
                     self.db[spider.settings.get('COLLECTION_NAME')].count_documents(
-                    {'id': item.get('id_player_secondary')}) == 1):
+                    {'id': item.get('id')}) == 1):
                 raise DropItem('Item dropped')
             else:
                 self.db[spider.settings.get('COLLECTION_NAME')].update(
                     {
-                        'id_player_main': item.get('id_player_main'),
-                        'id_player_secondary': item.get('id_player_secondary')
+                        'id': item.get('id')
                     },
                     dict(item),
                     upsert=True)
@@ -56,16 +55,15 @@ class MongoDBPipeline(object):
         elif spider.settings.get('COLLECTION_NAME') == 'club_stats':
 
             if (self.db[spider.settings.get('COLLECTION_NAME')].count_documents(
-                    {'id': item.get('id_club_main')}) == 1
+                    {'id': item.get('id')}) == 1
                     and
                     self.db[spider.settings.get('COLLECTION_NAME')].count_documents(
-                    {'id': item.get('id_club_secondary')}) == 1):
+                    {'id': item.get('id')}) == 1):
                 raise DropItem('Item dropped')
             else:
                 self.db[spider.settings.get('COLLECTION_NAME')].update(
                     {
-                        'id_player_main': item.get('id_club_main'),
-                        'id_player_secondary': item.get('id_club_secondary')
+                        'id': item.get('id'),
                     },
                     dict(item),
                     upsert=True)
@@ -74,16 +72,15 @@ class MongoDBPipeline(object):
         elif spider.settings.get('COLLECTION_NAME') == 'team_stats':
 
             if (self.db[spider.settings.get('COLLECTION_NAME')].count_documents(
-                    {'id': item.get('id_team_main')}) == 1
+                    {'id': item.get('id')}) == 1
                     and
                     self.db[spider.settings.get('COLLECTION_NAME')].count_documents(
-                    {'id': item.get('id_team_secondary')}) == 1):
+                    {'id': item.get('id')}) == 1):
                 raise DropItem('Item dropped')
             else:
                 self.db[spider.settings.get('COLLECTION_NAME')].update(
                     {
-                        'id_player_main': item.get('id_team_main'),
-                        'id_player_secondary': item.get('id_team_secondary')
+                        'id': item.get('id'),
                     },
                     dict(item),
                     upsert=True)
@@ -106,12 +103,12 @@ class MongoDBPipeline(object):
         elif spider.settings.get('COLLECTION_NAME') == 'player_urls':
 
             if self.db[spider.settings.get('COLLECTION_NAME')].count_documents(
-                    {'id': item.get('id_player_main')}) == 1:
+                    {'id': item.get('id')}) == 1:
                 raise DropItem('Item dropped')
             else:
                 self.db[spider.settings.get('COLLECTION_NAME')].update(
                     {
-                        'id_player_main': item.get('id_player_main'),
+                        'id': item.get('id'),
                     },
                     dict(item),
                     upsert=True)
@@ -120,12 +117,68 @@ class MongoDBPipeline(object):
         elif spider.settings.get('COLLECTION_NAME') == 'player_details':
 
             if self.db[spider.settings.get('COLLECTION_NAME')].count_documents(
-                    {'id': item.get('id_player_secondary')}) == 1:
+                    {'id': item.get('id')}) == 1:
                 raise DropItem('Item dropped')
             else:
                 self.db[spider.settings.get('COLLECTION_NAME')].update(
                     {
-                        'id_player_secondary': item.get('id_player_secondary'),
+                        'id': item.get('id'),
+                    },
+                    dict(item),
+                    upsert=True)
+                return item
+
+        elif spider.settings.get('COLLECTION_NAME') == 'club_urls':
+
+            if self.db[spider.settings.get('COLLECTION_NAME')].count_documents(
+                    {'id': item.get('id')}) == 1:
+                raise DropItem('Item dropped')
+            else:
+                self.db[spider.settings.get('COLLECTION_NAME')].update(
+                    {
+                        'id': item.get('id'),
+                    },
+                    dict(item),
+                    upsert=True)
+                return item
+
+        elif spider.settings.get('COLLECTION_NAME') == 'club_details':
+
+            if self.db[spider.settings.get('COLLECTION_NAME')].count_documents(
+                    {'id': item.get('id')}) == 1:
+                raise DropItem('Item dropped')
+            else:
+                self.db[spider.settings.get('COLLECTION_NAME')].update(
+                    {
+                        'id': item.get('id'),
+                    },
+                    dict(item),
+                    upsert=True)
+                return item
+
+        elif spider.settings.get('COLLECTION_NAME') == 'team_urls':
+
+            if self.db[spider.settings.get('COLLECTION_NAME')].count_documents(
+                    {'id': item.get('id')}) == 1:
+                raise DropItem('Item dropped')
+            else:
+                self.db[spider.settings.get('COLLECTION_NAME')].update(
+                    {
+                        'id': item.get('id'),
+                    },
+                    dict(item),
+                    upsert=True)
+                return item
+
+        elif spider.settings.get('COLLECTION_NAME') == 'team_details':
+
+            if self.db[spider.settings.get('COLLECTION_NAME')].count_documents(
+                    {'id': item.get('id')}) == 1:
+                raise DropItem('Item dropped')
+            else:
+                self.db[spider.settings.get('COLLECTION_NAME')].update(
+                    {
+                        'id': item.get('id'),
                     },
                     dict(item),
                     upsert=True)

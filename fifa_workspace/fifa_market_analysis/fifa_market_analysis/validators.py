@@ -5,13 +5,12 @@ import datetime
 
 class PlayerItem(Model):
 
-    id_player_main = IntType(required=True)
+    id = IntType(required=True)
     total_stats = IntType()
     hits = StringType()
     comments = StringType()
     player_page = URLType()
 
-    id_player_secondary = IntType(required=True)
     name = StringType()
     full_name = StringType()
     age = IntType()
@@ -136,14 +135,14 @@ class PlayerItem(Model):
 
 
 class ClubItem(Model):
-    id_club_main = IntType(required=True)
+    id = IntType(required=True)
     nationality = StringType()
     region = StringType()
     num_players = IntType()
     hits = StringType()
     comments = StringType()
+    club_page = URLType()
 
-    id_club_secondary = IntType(required=True)
     club_name = StringType()
     division = StringType()
     club_logo = URLType()
@@ -199,9 +198,7 @@ class ClubItem(Model):
 
 
 class TeamItem(ClubItem):
+    team_page = URLType()
 
-    id_team_main = IntType(required=True)
-
-    id_team_secondary = IntType(required=True)
     team_name = StringType()
     team_logo = URLType()
