@@ -11,7 +11,7 @@ class ItemCountMonitor(Monitor):
             self.data.stats, 'item_scraped_count', 0)
         minimum_threshold = 61
 
-        msg = f'Extracted less than {minimum_threshold} items.'
+        msg = f'Extracted only {item_extracted} out of {minimum_threshold} items.'
         self.assertTrue(
             item_extracted >= minimum_threshold, msg=msg
         )
