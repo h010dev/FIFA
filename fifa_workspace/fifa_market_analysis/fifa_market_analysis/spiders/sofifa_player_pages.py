@@ -1,8 +1,6 @@
 import scrapy
-from scrapy.linkextractors import LinkExtractor
-from scrapy.spiders import CrawlSpider, Rule
 from scrapy.loader import ItemLoader
-from fifa_market_analysis.items import SofifaItem, MainPageItem
+from fifa_market_analysis.items import SofifaItem
 from pymongo import MongoClient
 from fifa_market_analysis.proxy_generator import proxies
 from fifa_market_analysis.user_agent_generator import user_agent
