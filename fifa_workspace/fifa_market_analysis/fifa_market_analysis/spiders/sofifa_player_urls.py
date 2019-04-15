@@ -5,7 +5,7 @@ from scrapy.loader import ItemLoader
 from fifa_market_analysis.items import MainPageItem
 from fifa_market_analysis.proxy_generator import proxies
 from fifa_market_analysis.user_agent_generator import user_agent
-import datetime
+from fifa_market_analysis.sofifa_settings import player_url_settings
 
 
 class SofifaPlayerURLsSpider(CrawlSpider):
@@ -22,57 +22,7 @@ class SofifaPlayerURLsSpider(CrawlSpider):
         # Rule(LinkExtractor(restrict_xpaths="//a[text()='Next']"), callback='parse_item', follow=True)
     )
 
-    custom_settings = {
-
-        # DATABASE SETTINGS
-        'MONGO_DB': 'sofifa',
-        'COLLECTION_NAME': 'player_urls',
-
-        # SPIDER CHECKPOINTS
-        'JOBDIR': f'pause_resume/{name}',
-
-        # SPIDER LOGGING
-        'LOG_ENABLED': True,
-        'LOG_LEVEL': 'DEBUG',
-        'LOG_FILE': f'{name}_log_{datetime.date.today()}.txt',
-
-        # EXTENSION ACTIVATION
-        'SPIDERMON_ENABLED': True,
-        'PROXY_POOL_ENABLED': True,
-
-        # BAN PREVENTION
-        'ROTATING_PROXY_LIST': proxies,
-        'USER_AGENTS': user_agent,
-
-        # MISC. SETTINGS
-        'HTTPCACHE_ENABLED': False,
-        'ROBOTSTXT_OBEY': True,
-        'DOWNLOAD_TIMEOUT': 30,
-
-        # PIPELINES, MIDDLEWARES, AND EXTENSIONS
-        'ITEM_PIPELINES': {
-            'fifa_market_analysis.pipelines.MongoDBPipeline': 300,
-            'spidermon.contrib.scrapy.pipelines.ItemValidationPipeline': 800,
-        },
-        'DOWNLOADER_MIDDLEWARES': {
-            'scrapy.downloadermiddlewares.useragent.UserAgentMiddleware': None,
-            'scrapy_useragents.downloadermiddlewares.useragents.UserAgentsMiddleware': 500,
-            'rotating_proxies.middlewares.RotatingProxyMiddleware': 610,
-            'rotating_proxies.middlewares.BanDetectionMiddleware': 620
-        },
-        'EXTENSIONS': {
-            'spidermon.contrib.scrapy.extensions.Spidermon': 500,
-        },
-        'SPIDERMON_SPIDER_CLOSE_MONITORS': (
-            'fifa_market_analysis.monitors.SpiderCloseMonitorSuite',
-        ),
-        'SPIDERMON_VALIDATION_MODELS': (
-            'fifa_market_analysis.validators.PlayerItem',
-        ),
-        'SPIDERMON_PERIODIC_MONITORS': {
-            'fifa_market_analysis.monitors.PeriodicMonitorSuite': 60,
-        }
-    }
+    custom_settings = player_url_settings(name=name, proxies=proxies, user_agent=user_agent)
 
     def parse_start_url(self, response):
 
@@ -80,7 +30,7 @@ class SofifaPlayerURLsSpider(CrawlSpider):
         @url http://sofifa.com/players/
         @returns items 1 61
         @returns requests 0 0
-        @scrapes id_player_main total_stats hits comments
+        @scrapes id_player_main total_stats hits comments player_page
         """
 
         for row in response.xpath("//table[@class='table table-hover persist-area']/tbody/tr"):
