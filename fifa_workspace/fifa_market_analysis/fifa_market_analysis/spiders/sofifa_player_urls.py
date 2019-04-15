@@ -5,7 +5,7 @@ from scrapy.loader import ItemLoader
 from fifa_market_analysis.items import MainPageItem
 from fifa_market_analysis.proxy_generator import proxies
 from fifa_market_analysis.user_agent_generator import user_agent
-from fifa_market_analysis.sofifa_settings import player_url_settings
+from fifa_market_analysis.sofifa_settings import sofifa_settings
 
 
 class SofifaPlayerURLsSpider(CrawlSpider):
@@ -22,7 +22,7 @@ class SofifaPlayerURLsSpider(CrawlSpider):
         # Rule(LinkExtractor(restrict_xpaths="//a[text()='Next']"), callback='parse_item', follow=True)
     )
 
-    custom_settings = player_url_settings(name=name, proxies=proxies, user_agent=user_agent)
+    custom_settings = sofifa_settings(name=name, proxies=proxies, user_agent=user_agent)
 
     def parse_start_url(self, response):
 
