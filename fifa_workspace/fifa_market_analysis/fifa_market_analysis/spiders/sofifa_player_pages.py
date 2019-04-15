@@ -22,8 +22,8 @@ class PlayerSpider(scrapy.Spider):
         },
         'ROBOTSTXT_OBEY': True,
         'COLLECTION_NAME': 'player_details',
-        # 'PROXY_POOL_ENABLED': True,
-        # 'ROTATING_PROXY_LIST': proxies,
+        'PROXY_POOL_ENABLED': True,
+        'ROTATING_PROXY_LIST': proxies,
         'USER_AGENTS': user_agent,
         'DOWNLOAD_TIMEOUT': 30,
         'DOWNLOADER_MIDDLEWARES': {
@@ -36,13 +36,6 @@ class PlayerSpider(scrapy.Spider):
             # 'rotating_proxies.middlewares.BanDetectionMiddleware': 620
         }
     }
-    # client = MongoClient('localhost', 27017)
-    # db = client.sofifa
-    # collection = db.player_urls
-    # start_urls = ['https://sofifa.com/player/158023']
-
-    # start_urls = [f'{urljoin("https://sofifa.com", x["player_page"])}' for x in
-    #             collection.find({'player_page': {'$exists': 'true'}})]
 
     def start_requests(self):
 
@@ -59,6 +52,7 @@ class PlayerSpider(scrapy.Spider):
     def parse(self, response):
 
         loader = ItemLoader(item=SofifaItem(), response=response)
+        col_4_loader = loader.nested_xpath(".//div[@class='column col-4 text-center']")
 
         # GENERAL PLAYER INFORMATION
 
@@ -84,12 +78,8 @@ class PlayerSpider(scrapy.Spider):
 
         # CLUB/TEAM INFORMATION
 
-        loader.add_xpath('value',
-                         ".//div[@class='column col-4 text-center']"
-                         "/following::text()[contains(., 'Value')]/following::span[1]/text()")
-        loader.add_xpath('wage',
-                         ".//div[@class='column col-4 text-center']"
-                         "/following::text()[contains(., 'Wage')]/following::span[1]/text()")
+        col_4_loader.add_xpath('value', "following::text()[contains(., 'Value')]/following::span[1]/text()")
+        col_4_loader.add_xpath('wage', "following::text()[contains(., 'Wage')]/following::span[1]/text()")
         loader.add_xpath('release_clause', "(.//label[text()='Release Clause']/following::span/text())[1]")
         loader.add_xpath('club_name', "(.//ul[@class='pl']//a/text())[1]")
         loader.add_xpath('club_rating', ".//div[@class='column col-4'][3]/ul/li[2]/span/text()")
@@ -112,9 +102,8 @@ class PlayerSpider(scrapy.Spider):
         loader.add_xpath('overall_rating',
                          "(.//div[@class='column col-4 text-center']"
                          "/preceding::text()[contains(.,'Overall Rating')])[2]/following::span[1]/text()")
-        loader.add_xpath('potential_rating',
-                         ".//div[@class='column col-4 text-center']"
-                         "/following::text()[contains(., 'Potential')]/following::span[1]/text()")
+        col_4_loader.add_xpath('potential_rating', "following::text()[contains(., 'Potential')]/following::span[1]"
+                                                   "/text()")
         loader.add_xpath('positions', ".//div[@class='meta']/span/text()")
         loader.add_xpath('unique_attributes', ".//div[@class='mt-2']/a/text()")
 
