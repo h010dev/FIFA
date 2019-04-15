@@ -21,8 +21,28 @@ class PlayerSpider(scrapy.Spider):
             'fifa_market_analysis.pipelines.MongoDBPipeline': 300,
         },
         'ROBOTSTXT_OBEY': True,
-        'COLLECTION_NAME': 'player_details'
+        'COLLECTION_NAME': 'player_details',
+        # 'PROXY_POOL_ENABLED': True,
+        # 'ROTATING_PROXY_LIST': proxies,
+        'USER_AGENTS': user_agent,
+        'DOWNLOAD_TIMEOUT': 30,
+        'DOWNLOADER_MIDDLEWARES': {
+            'scrapy.downloadermiddlewares.useragent.UserAgentMiddleware': None,
+            'scrapy_useragents.downloadermiddlewares.useragents.UserAgentsMiddleware': 500,
+            'scrapy_splash.SplashCookiesMiddleware': 723,
+            'scrapy_splash.SplashMiddleware': 725,
+            'scrapy.downloadermiddlewares.httpcompression.HttpCompressionMiddleware': 810,
+            # 'rotating_proxies.middlewares.RotatingProxyMiddleware': 610,
+            # 'rotating_proxies.middlewares.BanDetectionMiddleware': 620
+        }
     }
+    # client = MongoClient('localhost', 27017)
+    # db = client.sofifa
+    # collection = db.player_urls
+    # start_urls = ['https://sofifa.com/player/158023']
+
+    # start_urls = [f'{urljoin("https://sofifa.com", x["player_page"])}' for x in
+    #             collection.find({'player_page': {'$exists': 'true'}})]
 
     def start_requests(self):
 
@@ -33,14 +53,8 @@ class PlayerSpider(scrapy.Spider):
         urls = [f'{urljoin("https://sofifa.com", x["player_page"])}' for x in
                 collection.find({'player_page': {'$exists': 'true'}})]
 
-        user_agents = user_agent
-
         for url in urls:
-
-            headers = dict()
-            headers['User-Agent'] = random.choice(user_agents)
-
-            yield scrapy.Request(url=url, callback=self.parse, headers=headers)
+            yield scrapy.Request(url=url, callback=self.parse)
 
     def parse(self, response):
 
@@ -104,7 +118,7 @@ class PlayerSpider(scrapy.Spider):
         loader.add_xpath('positions', ".//div[@class='meta']/span/text()")
         loader.add_xpath('unique_attributes', ".//div[@class='mt-2']/a/text()")
 
-        if 'GK' in response.xpath(".//div[@class='meta']/span/text()").get():
+        if 'GK' in response.xpath(".//div[@class='meta']/span/text()").getall():
 
             loader.add_xpath('DIV',
                              ".//div[@class='wrapper']//script[contains(text(), 'var overallRating')]/text()")
@@ -216,5 +230,8 @@ class PlayerSpider(scrapy.Spider):
         loader.add_xpath('flag_img', ".//div[@class='meta']/a/img/@data-src")
         loader.add_xpath('club_logo_img', "(.//div/ul/li/figure/img/@data-src)[1]")
         loader.add_xpath('team_logo_img', "(.//div/ul/li/figure/img/@data-src)[2]")
+
+        print(response.request.headers['User-Agent'])
+        self.logger.info(f'Parse function called on {response.url}')
 
         yield loader.load_item()
