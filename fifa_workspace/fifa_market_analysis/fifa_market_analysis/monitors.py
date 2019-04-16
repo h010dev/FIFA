@@ -55,4 +55,5 @@ class SpiderCloseMonitorSuite(MonitorSuite):
     monitors = [
         ItemCountMonitor,
         ItemValidationMonitor,
+        PeriodicJobStatsMonitor
     ]
