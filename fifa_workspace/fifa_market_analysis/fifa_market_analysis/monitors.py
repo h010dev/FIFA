@@ -15,6 +15,7 @@ class ItemCountMonitor(Monitor):
             self.data.stats, 'page_counter', 0
         )
 
+        # TODO: enable page counting during pause/resume sessions
         minimum_threshold = ((pages_visited - 1) * 60) + 1
         maximum_threshold = ((pages_visited - 1) * 60) + 61
 
