@@ -18,7 +18,7 @@ class ItemCountMonitor(Monitor):
         minimum_threshold = ((pages_visited - 1) * 60) + 1
         maximum_threshold = ((pages_visited - 1) * 60) + 61
 
-        msg = f'Extracted {item_extracted} out of {minimum_threshold} items.'
+        msg = f'Extracted {item_extracted} out of [{minimum_threshold}, {maximum_threshold}] items.'
         self.assertTrue(
             maximum_threshold >= item_extracted >= minimum_threshold, msg=msg
         )

@@ -5,6 +5,8 @@ from pymongo import MongoClient
 from fifa_market_analysis.proxy_generator import proxies
 from fifa_market_analysis.user_agent_generator import user_agent
 from fifa_market_analysis.sofifa_settings import sofifa_settings
+from fifa_market_analysis.custom_logging import *
+from fifa_market_analysis.custom_stats import *
 
 
 class SofifaPlayerPagesSpider(scrapy.Spider):
@@ -13,19 +15,26 @@ class SofifaPlayerPagesSpider(scrapy.Spider):
 
     custom_settings = sofifa_settings(name=name, proxies=proxies, user_agent=user_agent, collection='player_details',
                                       validator='PlayerItem')
+    client = MongoClient('localhost', 27017)
+    db = client.sofifa
+    collection = db.player_urls
+
+    urls = [x["player_page"] for x in collection.find({'player_page': {'$exists': 'true'}})]
 
     def start_requests(self):
 
-        client = MongoClient('localhost', 27017)
-        db = client.sofifa
-        collection = db.player_urls
+        # client = MongoClient('localhost', 27017)
+        # db = client.sofifa
+        # collection = db.player_urls
+        #
+        # urls = [x["player_page"] for x in collection.find({'player_page': {'$exists': 'true'}})]
 
-        urls = [x["player_page"] for x in collection.find({'player_page': {'$exists': 'true'}})]
-
-        for url in urls:
+        for url in self.urls:
             yield scrapy.Request(url=url, callback=self.parse)
 
     def parse(self, response):
+
+        self.crawler.stats.set_value('pages_to_visit', len(self.urls))
 
         loader = ItemLoader(item=SofifaItem(), response=response)
         col_4_loader = loader.nested_xpath(".//div[@class='column col-4 text-center']")
@@ -196,7 +205,15 @@ class SofifaPlayerPagesSpider(scrapy.Spider):
         loader.add_xpath('club_logo_img', "(.//div/ul/li/figure/img/@data-src)[1]")
         loader.add_xpath('team_logo_img', "(.//div/ul/li/figure/img/@data-src)[2]")
 
-        print(response.request.headers['User-Agent'])
         self.logger.info(f'Parse function called on {response.url}')
+
+        self.logger.info(f"Currently on page {self.crawler.stats.get_value('page_counter')} out of "
+                         f"{self.crawler.stats.get_value('pages_to_visit')}")
+
+        # TODO: enable continued logging of page_counter after a pause/resume.
+        self.crawler.stats.inc_value(key='page_counter', count=1, start=0)
+
+        print(response.request.headers['User-Agent'])
+        print(f"{self.crawler.stats.get_value('page_counter')} out of {self.crawler.stats.get_value('pages_to_visit')}")
 
         yield loader.load_item()
