@@ -47,6 +47,10 @@ class SofifaPlayerURLsSpider(CrawlSpider):
             print(response.request.headers['User-Agent'])
 
             def page_counter(url):
+                """
+                :param url: response.url item
+                :return: current page that spider is on
+                """
                 try:
                     offset = re.findall(r'[0-9]+', url)[0]
                     page = int(eval(offset) / 60)
