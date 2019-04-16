@@ -9,6 +9,8 @@ class PlayerItem(Model):
     total_stats = IntType()
     hits = StringType()
     comments = StringType()
+    # TODO: create separate class for player_pages spider as the player_page is not available for the player_detail
+    #  spider, causing problems in the stats logger.
     player_page = URLType(required=True)
 
     name = StringType()
