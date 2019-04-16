@@ -23,12 +23,6 @@ class SofifaPlayerPagesSpider(scrapy.Spider):
 
     def start_requests(self):
 
-        # client = MongoClient('localhost', 27017)
-        # db = client.sofifa
-        # collection = db.player_urls
-        #
-        # urls = [x["player_page"] for x in collection.find({'player_page': {'$exists': 'true'}})]
-
         for url in self.urls:
             yield scrapy.Request(url=url, callback=self.parse)
 
