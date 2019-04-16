@@ -6,7 +6,8 @@ from fifa_market_analysis.items import MainPageItem
 from fifa_market_analysis.proxy_generator import proxies
 from fifa_market_analysis.user_agent_generator import user_agent
 from fifa_market_analysis.sofifa_settings import sofifa_settings
-import re
+from fifa_market_analysis.custom_logging import *
+from fifa_market_analysis.custom_stats import *
 
 
 class SofifaPlayerURLsSpider(CrawlSpider):
@@ -19,14 +20,14 @@ class SofifaPlayerURLsSpider(CrawlSpider):
     rules = (
         Rule(LinkExtractor(deny=([r'\?', r'[0-9]+/[0-9]+/', r'/changeLog', r'/live', r'/squads', r'/calculator/',
                                   r'/team/', r'[0-9]+', r'/[a-zA-Z0-9]+$'])),
-             callback='parse_start_url', follow=True),
-        # Rule(LinkExtractor(restrict_xpaths="//a[text()='Next']"), callback='parse_item', follow=True)
+             callback='parse_item', follow=True),
+        Rule(LinkExtractor(restrict_xpaths="//a[text()='Next']"), callback='parse_item', follow=True)
     )
 
     custom_settings = sofifa_settings(name=name, proxies=proxies, user_agent=user_agent, collection='player_urls',
                                       validator='PlayerItem')
 
-    def parse_start_url(self, response):
+    def parse_item(self, response):
 
         """
         @url http://sofifa.com/players/
@@ -34,6 +35,8 @@ class SofifaPlayerURLsSpider(CrawlSpider):
         @returns requests 0 0
         @scrapes id_player_main total_stats hits comments player_page
         """
+
+        self.crawler.stats.set_value('page_counter', page_counter(response.url))
 
         for row in response.xpath("//table[@class='table table-hover persist-area']/tbody/tr"):
             loader = ItemLoader(item=MainPageItem(), selector=row, response=response)
@@ -46,20 +49,6 @@ class SofifaPlayerURLsSpider(CrawlSpider):
 
             print(response.request.headers['User-Agent'])
 
-            def page_counter(url):
-                """
-                :param url: response.url item
-                :return: current page that spider is on
-                """
-                try:
-                    offset = re.findall(r'[0-9]+', url)[0]
-                    page = int(eval(offset) / 60)
-                    return page
-                except IndexError:
-                    page = 1
-                    return page
-
-            self.logger.info(f'Currently on page {page_counter(response.url)}')
-            self.crawler.stats.set_value('page_counter', page_counter(response.url))
+            self.logger.info(f'Currently on page {current_page(response.url)}')
 
             yield loader.load_item()
