@@ -6,6 +6,7 @@ from fifa_market_analysis.items import MainPageItem
 from fifa_market_analysis.proxy_generator import proxies
 from fifa_market_analysis.user_agent_generator import user_agent
 from fifa_market_analysis.sofifa_settings import sofifa_settings
+import re
 
 
 class SofifaPlayerURLsSpider(CrawlSpider):
@@ -44,6 +45,17 @@ class SofifaPlayerURLsSpider(CrawlSpider):
             loader.add_xpath('player_page', ".//a[contains(@href, 'player/')]/@href")
 
             print(response.request.headers['User-Agent'])
-            self.logger.info(f'Parse function called on {response.url}')
+
+            def page_counter(url):
+                try:
+                    offset = re.findall(r'[0-9]+', url)[0]
+                    page = int(eval(offset) / 60)
+                    return page
+                except IndexError:
+                    page = 1
+                    return page
+
+            self.logger.info(f'Currently on page {page_counter(response.url)}')
+            self.crawler.stats.set_value('page_counter', page_counter(response.url))
 
             yield loader.load_item()

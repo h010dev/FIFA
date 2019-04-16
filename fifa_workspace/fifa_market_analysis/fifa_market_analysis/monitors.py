@@ -9,12 +9,18 @@ class ItemCountMonitor(Monitor):
     @monitors.name('Minimum number of items')
     def test_minimum_number_of_items(self):
         item_extracted = getattr(
-            self.data.stats, 'item_scraped_count', 0)
-        minimum_threshold = 61
+            self.data.stats, 'item_scraped_count', 0
+        )
+        pages_visited = getattr(
+            self.data.stats, 'page_counter', 0
+        )
 
-        msg = f'Extracted only {item_extracted} out of {minimum_threshold} items.'
+        minimum_threshold = ((pages_visited - 1) * 60) + 1
+        maximum_threshold = ((pages_visited - 1) * 60) + 61
+
+        msg = f'Extracted {item_extracted} out of {minimum_threshold} items.'
         self.assertTrue(
-            item_extracted >= minimum_threshold, msg=msg
+            maximum_threshold >= item_extracted >= minimum_threshold, msg=msg
         )
 
 
