@@ -11,37 +11,45 @@ from scrapy import Request
 from scrapy.exceptions import DropItem
 
 
-class MongoDBPipeline(object):
+class MongoPipeline(object):
 
-    # collection = 'player_stats'
-
-    def __init__(self, mongo_uri, mongo_db):
+    def __init__(self, mongo_uri, mongo_db, mongo_collection):
         self.mongo_uri = mongo_uri
         self.mongo_db = mongo_db
+        self.mongo_collection = mongo_collection
 
     @classmethod
     def from_crawler(cls, crawler):
         return cls(
             mongo_uri=crawler.settings.get('MONGO_URI'),
-            mongo_db=crawler.settings.get('MONGO_DB')
+            mongo_db=crawler.settings.get('MONGO_DB'),
+            mongo_collection=crawler.settings.get('COLLECTION_NAME')
         )
 
     def open_spider(self, spider):
         self.client = MongoClient(self.mongo_uri)
         self.db = self.client[self.mongo_db]
+        self.collection = self.db[self.mongo_collection]
 
     def close_spider(self, spider):
         self.client.close()
 
     def process_item(self, item, spider):
+        self.collection.insert_one(dict(item))
+        return item
 
-        if spider.settings.get('COLLECTION_NAME') == 'user_agents':
 
-            if self.db[spider.settings.get('COLLECTION_NAME')].count_documents(
+class MongoDBPipeline(MongoPipeline):
+
+    def process_item(self, item, spider):
+
+        if self.collection == 'user_agents':
+
+            if self.collection.count_documents(
                     {'id': item.get('user_agent')}) == 1:
                 raise DropItem('Item dropped')
             else:
-                self.db[spider.settings.get('COLLECTION_NAME')].update(
+                self.collection.update(
                     {
                         'user_agent': item.get('user_agent'),
                     },
@@ -51,17 +59,41 @@ class MongoDBPipeline(object):
 
         else:
 
-            if self.db[spider.settings.get('COLLECTION_NAME')].count_documents(
+            if self.collection.count_documents(
                     {'id': item.get('id')}) == 1:
                 raise DropItem('Item dropped')
             else:
-                self.db[spider.settings.get('COLLECTION_NAME')].update(
+                self.collection.update(
                     {
                         'id': item.get('id'),
                     },
                     dict(item),
                     upsert=True)
                 return item
+
+
+class SpiderStats(MongoPipeline):
+
+    def __init__(self, mongo_uri, mongo_db, mongo_collection, stats):
+        super().__init__(mongo_uri, mongo_db, mongo_collection)
+        self.stats = stats
+
+    @classmethod
+    def from_crawler(cls, crawler):
+        return cls(
+            mongo_uri='mongodb://localhost:27017',
+            mongo_db='stats',
+            mongo_collection='spider_stats',
+            stats=crawler.stats
+        )
+
+    def process_item(self, item, spider):
+        self.collection.update_one(
+            filter={'spider_name': spider.name},
+            update={'$set': {'item_scraped_count': self.stats.get_value('item_scraped_count')}},
+            upsert=True
+        )
+        return item
 
 
 class ImagesToDownloadPipeline(ImagesPipeline, MediaPipeline):
