@@ -28,3 +28,4 @@ fifa_workspace/user_agents/*
 proxy_update.py
 *.json
 *.txt
+*.log
