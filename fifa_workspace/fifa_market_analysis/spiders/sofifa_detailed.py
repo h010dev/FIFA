@@ -28,7 +28,7 @@ class SofifaDetailedSpider(CrawlSpider):
         'MONGO_DB': 'sofifa',
         'HTTPCACHE_ENABLED': False,
         'ITEM_PIPELINES': {
-            'fifa_market_analysis.pipelines.MongoDBPipeline': 300,
+            'fifa_market_analysis_.pipelines.MongoDBPipeline': 300,
             'spidermon.contrib.scrapy.pipelines.ItemValidationPipeline': 800,
         },
         'ROBOTSTXT_OBEY': True,
@@ -38,10 +38,10 @@ class SofifaDetailedSpider(CrawlSpider):
             'spidermon.contrib.scrapy.extensions.Spidermon': 500,
         },
         'SPIDERMON_SPIDER_CLOSE_MONITORS': (
-            'fifa_market_analysis.monitors.SpiderCloseMonitorSuite',
+            'fifa_market_analysis_.monitors.SpiderCloseMonitorSuite',
         ),
         'SPIDERMON_VALIDATION_MODELS': (
-            'fifa_market_analysis.validators.PlayerItem',
+            'fifa_market_analysis_.validators.PlayerItem',
         ),
         # 'JOBDIR': 'pause_resume/player_dir',
         'DOWNLOADER_MIDDLEWARES': {

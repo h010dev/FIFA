@@ -50,7 +50,7 @@ class SofifaClubsSpider(CrawlSpider):
         'DEPTH_LIMIT': 2,
         'HTTPCACHE_ENABLED': True,
         'ITEM_PIPELINES': {
-            'fifa_market_analysis.pipelines.MongoDBPipeline': 300,
+            'fifa_market_analysis_.pipelines.MongoDBPipeline': 300,
         },
         'ROBOTSTXT_OBEY': True,
         'COLLECTION_NAME': 'club_stats',
@@ -59,10 +59,10 @@ class SofifaClubsSpider(CrawlSpider):
             'spidermon.contrib.scrapy.extensions.Spidermon': 500,
         },
         'SPIDERMON_SPIDER_CLOSE_MONITORS': (
-            'fifa_market_analysis.monitors.SpiderCloseMonitorSuite',
+            'fifa_market_analysis_.monitors.SpiderCloseMonitorSuite',
         ),
         'SPIDERMON_VALIDATION_MODELS': (
-            'fifa_market_analysis.validators.ClubItem',
+            'fifa_market_analysis_.validators.ClubItem',
         ),
         'JOBDIR': 'pause_resume/club_dir'
     }
@@ -228,7 +228,7 @@ class SofifaTeamsSpider(SofifaClubsSpider):
         'DEPTH_LIMIT': 1,
         'HTTPCACHE_ENABLED': True,
         'ITEM_PIPELINES': {
-            'fifa_market_analysis.pipelines.MongoDBPipeline': 300,
+            'fifa_market_analysis_.pipelines.MongoDBPipeline': 300,
         },
         'ROBOTSTXT_OBEY': True,
         'COLLECTION_NAME': 'team_stats',
@@ -237,10 +237,10 @@ class SofifaTeamsSpider(SofifaClubsSpider):
             'spidermon.contrib.scrapy.extensions.Spidermon': 500,
         },
         'SPIDERMON_SPIDER_CLOSE_MONITORS': (
-            'fifa_market_analysis.monitors.SpiderCloseMonitorSuite',
+            'fifa_market_analysis_.monitors.SpiderCloseMonitorSuite',
         ),
         'SPIDERMON_VALIDATION_MODELS': (
-            'fifa_market_analysis.validators.TeamItem',
+            'fifa_market_analysis_.validators.TeamItem',
         ),
         'JOBDIR': 'pause_resume/team_dir'
     }
