@@ -32,4 +32,4 @@ proxy_update.py
 *.jpg
 data/.scrapy/
 data/settings.py
-data/user_agents/*
+data/**/user_agents/*
