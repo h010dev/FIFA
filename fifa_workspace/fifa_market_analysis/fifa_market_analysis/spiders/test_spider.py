@@ -1,7 +1,9 @@
 import scrapy
 import logging
 from scrapy.utils.log import configure_logging
+from scrapy.crawler import CrawlerRunner
 from logging.handlers import TimedRotatingFileHandler
+from twisted.internet import reactor
 
 
 class TestSpider(scrapy.Spider):
@@ -42,3 +44,16 @@ class TestSpider(scrapy.Spider):
         if next_page is not None:
             next_page_link = response.urljoin(next_page)
             yield scrapy.Request(url=next_page_link, callback=self.parse)
+
+
+def main():
+
+    runner = CrawlerRunner()
+
+    d = runner.crawl(TestSpider)
+    d.addBoth(lambda _: reactor.stop())
+    reactor.run()
+
+
+if __name__ == '__main__':
+    main()
