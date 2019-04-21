@@ -105,14 +105,14 @@ class UserAgentScraperSpider(CrawlSpider):
         @url https://developers.whatismybrowser.com/useragents/explore/software_name/chrome/
         @returns items 1 10
         @returns requests 0 0
-        @scrapes user_agent
+        @scrapes user_agent_generator.py
         """
 
         for row in response.xpath("//div[@class='content-base']//tbody/tr"):
 
             loader = ItemLoader(UserAgentScraperItem(), selector=row, response=response)
 
-            loader.add_xpath('user_agent', ".//td[@class='useragent']/a/text()")
+            loader.add_xpath('user_agent_generator.py', ".//td[@class='useragent']/a/text()")
             loader.add_xpath('version', ".//td[@class='useragent']/following-sibling::td[1]/text()")
             loader.add_xpath('OS', ".//td[@class='useragent']/following-sibling::td[2]/text()")
             loader.add_xpath('hardware_type', ".//td[@class='useragent']/following-sibling::td[3]/text()")

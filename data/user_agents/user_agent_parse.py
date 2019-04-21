@@ -10,10 +10,10 @@ headers = {
 }
 
 post_data = {
-    # "user_agent":
+    # "user_agent_generator.py":
     #     "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome"
     #     "/63.0.3282.167 Safari/537.36",
-    "user_agent":
+    "user_agent_generator.py":
         "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome"
         "/60.0.3112.113 Safari/537.36"
 }
