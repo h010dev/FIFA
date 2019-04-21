@@ -34,3 +34,4 @@ data/.scrapy/
 data/settings.py
 data/**/user_agents/*
 pause_resume/
+fifa_data/.scrapy/
