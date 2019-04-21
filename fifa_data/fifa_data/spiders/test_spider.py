@@ -16,7 +16,7 @@ class TestSpider(scrapy.Spider):
 
     log_format = '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
     log_level = logging.INFO
-    log_dir = 'C:\\Users\\E46Racing\\Documents\\PycharmProjects\\FIFA\\fifa_data\\logs'
+    log_dir = os.path.join(os.getcwd(), 'logs')
     log_file = os.path.join(log_dir, 'test_log.log')
 
     logging.basicConfig(
