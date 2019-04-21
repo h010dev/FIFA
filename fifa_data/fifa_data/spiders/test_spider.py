@@ -1,5 +1,6 @@
 import scrapy
 import logging
+import os
 from scrapy.utils.log import configure_logging
 from scrapy.crawler import CrawlerRunner
 from logging.handlers import TimedRotatingFileHandler
@@ -11,17 +12,12 @@ class TestSpider(scrapy.Spider):
     name = 'test_spider'
     start_urls = ['http://quotes.toscrape.com/']
 
-    custom_settings = {
-        'EXTENSIONS': {
-            'scrapy.extensions.test_extension.CustomStats': 500
-        }
-    }
-
     configure_logging(install_root_handler=False)
 
     log_format = '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
     log_level = logging.INFO
-    log_file = 'test_log.log'
+    log_dir = 'C:\\Users\\E46Racing\\Documents\\PycharmProjects\\FIFA\\fifa_data\\logs'
+    log_file = os.path.join(log_dir, 'test_log.log')
 
     logging.basicConfig(
         format=log_format,
