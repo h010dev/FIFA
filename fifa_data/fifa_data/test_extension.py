@@ -14,13 +14,13 @@ class CustomStats(CoreStats):
     def spider_opened(self, spider):
 
         # User spider name to set file name:
-        # log_dir = 'C:\\Users\\E46Racing\\Documents\\PycharmProjects\\FIFA\\fifa_data\\logs'
+        log_dir = os.path.join(os.getcwd(), 'logs')
         file_name = str(spider.name + '_log' + '.json')
-        # os.path.join(log_dir, file_name)
-        self.file = file_name
+        # self.file = file_name
+        self.file = os.path.join(log_dir, file_name)
 
         # Check to see if file exists:
-        exists = os.path.isfile(file_name)
+        exists = os.path.isfile(self.file)
 
         if exists:
 
