@@ -33,3 +33,4 @@ proxy_update.py
 data/.scrapy/
 data/settings.py
 data/**/user_agents/*
+pause_resume/
