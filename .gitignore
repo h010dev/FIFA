@@ -30,3 +30,5 @@ proxy_update.py
 *.txt
 *.log
 *.jpg
+data/.scrapy/
+data/settings.py
