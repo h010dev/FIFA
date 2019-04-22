@@ -4,6 +4,7 @@
 #
 # Don't forget to add your pipeline to the ITEM_PIPELINES setting
 # See: https://doc.scrapy.org/en/latest/topics/item-pipeline.html
+import pymongo
 from pymongo import MongoClient
 from scrapy.pipelines.images import ImagesPipeline
 from scrapy.pipelines.media import *
@@ -46,12 +47,12 @@ class MongoDBPipeline(MongoPipeline):
         if self.collection == 'user_agents':
 
             if self.collection.count_documents(
-                    {'id': item.get('user_agent_generator.py')}) == 1:
+                    {'id': item.get('user_agent')}) == 1:
                 raise DropItem('Item dropped')
             else:
                 self.collection.update(
                     {
-                        'user_agent_generator.py': item.get('user_agent_generator.py'),
+                        'user_agent': item.get('user_agent'),
                     },
                     dict(item),
                     upsert=True)
@@ -92,6 +93,18 @@ class SpiderStats(MongoPipeline):
             filter={'spider_name': spider.name},
             update={'$set': {'item_scraped_count': self.stats.get_value('item_scraped_count')}},
             upsert=True
+        )
+        return item
+
+
+class ProxyPipeline(MongoPipeline):
+
+    def process_item(self, item, spider):
+
+        self.collection.bulk_write(
+            [pymongo.operations.InsertOne(
+                {'ip': ip},
+            ) for ip in item.get('ip_dump')]
         )
         return item
 

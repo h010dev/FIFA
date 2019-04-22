@@ -1132,3 +1132,11 @@ class UserAgentScraperItem(scrapy.Item):
         input_processor=Identity(),
         output_processor=TakeFirst()
     )
+
+
+class ProxyItem(scrapy.Item):
+
+    ip_dump = scrapy.Field(
+        input_processor=MapCompose(lambda x: re.findall(r'\"host\"\:\ \"([0-9.]+)\"', x)),
+        output_process=Identity()
+    )
