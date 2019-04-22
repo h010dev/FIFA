@@ -102,8 +102,10 @@ class ProxyPipeline(MongoPipeline):
     def process_item(self, item, spider):
 
         self.collection.bulk_write(
-            [pymongo.operations.InsertOne(
+            [pymongo.operations.UpdateOne(
                 {'ip': ip},
+                {'$setOnInsert': {'ip': ip}},
+                upsert=True
             ) for ip in item.get('ip_dump')]
         )
         return item
