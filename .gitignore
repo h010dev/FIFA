@@ -36,3 +36,8 @@ data/**/user_agents/*
 pause_resume/
 fifa_data/.scrapy/
 settings*
+Include/*
+Lib/*
+Scripts/*
+tcl/*
+fifa_data/logs/*
