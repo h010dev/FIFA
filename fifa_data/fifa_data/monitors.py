@@ -1,6 +1,6 @@
 from spidermon import Monitor, MonitorSuite, monitors
 from spidermon.contrib.monitors.mixins import StatsMonitorMixin
-from fifa_market_analysis.actions import CloseSpiderAction
+from fifa_data.actions import CloseSpiderAction
 
 
 @monitors.name('Item count')
