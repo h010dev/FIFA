@@ -4,9 +4,6 @@ from scrapy.spiders import CrawlSpider, Rule
 from scrapy.linkextractors import LinkExtractor
 from scrapy.loader import ItemLoader
 from fifa_data.items import UserAgentScraperItem
-import logging
-from scrapy.utils.log import configure_logging
-import datetime
 from proxies.proxy_generator import proxies
 from user_agents.user_agent_generator import user_agent
 
