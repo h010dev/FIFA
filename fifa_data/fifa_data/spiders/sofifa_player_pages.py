@@ -1,5 +1,8 @@
 import scrapy
 from scrapy.loader import ItemLoader
+from scrapy.crawler import CrawlerRunner
+from scrapy.utils.log import configure_logging
+from twisted.internet import reactor
 from fifa_data.items import SofifaItem
 from pymongo import MongoClient
 from proxies.proxy_generator import proxies
@@ -211,3 +214,15 @@ class SofifaPlayerPagesSpider(scrapy.Spider):
         print(f"{self.crawler.stats.get_value('page_counter')} out of {self.crawler.stats.get_value('pages_to_visit')}")
 
         yield loader.load_item()
+
+
+def main():
+    configure_logging()
+    runner = CrawlerRunner()
+    d = runner.crawl(SofifaPlayerPagesSpider)
+    d.addBoth(lambda _: reactor.stop())
+    reactor.run()
+
+
+if __name__ == '__main__':
+    main()

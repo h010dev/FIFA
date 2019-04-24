@@ -1,7 +1,12 @@
 import scrapy
+import datetime
 from scrapy.linkextractors import LinkExtractor
 from scrapy.spiders import CrawlSpider, Rule
 from scrapy.loader import ItemLoader
+from scrapy.utils.log import configure_logging
+from scrapy.utils.project import get_project_settings
+from scrapy.crawler import CrawlerRunner
+from twisted.internet import reactor
 from fifa_data.items import MainPageItem
 from proxies.proxy_generator import proxies
 from user_agents.user_agent_generator import user_agent
@@ -10,7 +15,7 @@ from fifa_data.custom_logging import *
 from fifa_data.custom_stats import *
 
 
-class SofifaPlayerURLsSpider(CrawlSpider):
+class SofifaPlayerURLsSpider(scrapy.Spider):
 
     name = 'player_pages'
 
@@ -21,13 +26,13 @@ class SofifaPlayerURLsSpider(CrawlSpider):
         Rule(LinkExtractor(deny=([r'\?', r'[0-9]+/[0-9]+/', r'/changeLog', r'/live', r'/squads', r'/calculator/',
                                   r'/team/', r'[0-9]+', r'/[a-zA-Z0-9]+$'])),
              callback='parse_item', follow=True),
-        Rule(LinkExtractor(restrict_xpaths="//a[text()='Next']"), callback='parse_item', follow=True)
+        # Rule(LinkExtractor(restrict_xpaths="//a[text()='Next']"), callback='parse_item', follow=True)
     )
 
     custom_settings = sofifa_settings(name=name, proxies=proxies, user_agent=user_agent, collection='player_urls',
                                       validator='PlayerItem')
 
-    def parse_item(self, response):
+    def parse(self, response):
 
         """
         @url http://sofifa.com/players/
@@ -52,3 +57,18 @@ class SofifaPlayerURLsSpider(CrawlSpider):
             self.logger.info(f'Currently on page {current_page(response.url)}')
 
             yield loader.load_item()
+
+
+def main():
+
+    configure_logging()
+
+    runner = CrawlerRunner()
+
+    d = runner.crawl(SofifaPlayerURLsSpider)
+    d.addBoth(lambda _: reactor.stop())
+    reactor.run()
+
+
+if __name__ == '__main__':
+    main()
