@@ -132,6 +132,23 @@ def player_id_list(value):
     return eval_list
 
 
+def host_port_ip(value):
+
+    rows = re.findall(r'\n?\{.+\}\n?', value)
+
+    type_ = r'\"type\"\:\ \"(https?)\"'
+    host_ = r'\"host\"\:\ \"([0-9.]+)\"'
+    port_ = r'\"port\"\:\ ([0-9]+)'
+
+    ip = list()
+
+    for i in range(len(rows)):
+        ip.append(str(re.findall(type_, rows[i])[0] + '://' +
+                      re.findall(host_, rows[i])[0] + ':' +
+                      re.findall(port_, rows[i])[0]))
+    return ip
+
+
 class SofifaItem(scrapy.Item):
 
     # GENERAL PLAYER INFORMATION
@@ -1137,6 +1154,6 @@ class UserAgentScraperItem(scrapy.Item):
 class ProxyItem(scrapy.Item):
 
     ip_dump = scrapy.Field(
-        input_processor=MapCompose(lambda x: re.findall(r'\"host\"\:\ \"([0-9.]+)\"', x)),
+        input_processor=MapCompose(host_port_ip),
         output_process=Identity()
     )

@@ -1,5 +1,9 @@
 import scrapy
 from scrapy.loader import ItemLoader
+from scrapy.crawler import CrawlerRunner
+from scrapy.utils.log import configure_logging
+from twisted.internet import reactor, defer
+from twisted.internet.task import LoopingCall
 from fifa_data.items import ProxyItem
 from proxies.proxy_generator import proxies
 from user_agents.user_agent_generator import user_agent
@@ -52,3 +56,25 @@ class FateProxySpider(scrapy.Spider):
         loader.add_xpath('ip_dump', ".//body/p/text()")
 
         yield loader.load_item()
+
+
+def main():
+
+    configure_logging()
+    runner = CrawlerRunner()
+    d = runner.crawl(FateProxySpider)
+    d.addBoth(lambda _: reactor.stop())
+    reactor.run()
+
+
+def task():
+
+    configure_logging()
+    runner = CrawlerRunner()
+    task = LoopingCall(lambda: runner.crawl(FateProxySpider))
+    task.start(60 * 15)
+    reactor.run()
+
+
+if __name__ == '__main__':
+    task()
