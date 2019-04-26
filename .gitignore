@@ -41,3 +41,8 @@ Lib/*
 Scripts/*
 tcl/*
 fifa_data/logs/*
+dbs/
+eggs/
+fifa_data/build/
+fifa_data/project.egg-info/
+fifa_data/setup.py
