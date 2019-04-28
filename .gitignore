@@ -1,48 +1,25 @@
-my_apps/*
+# Cache
+
 __pycache__/
 *.py[cod]
-cv_builder/**/data/*
-cv_builder/**/*__init__.py
-cv_builder/**/data_exploration.py
-cv_builder/**/html_scrape.py
-cv_builder/**/sample_code.py
-cv_builder/**/secret_vars.py
-cv_builder/**/transform_csv.py
-.idea/
-__init__.py
 
-fifa_workspace/**/*settings.py
-fifa_workspace/fifa_market_analysis/*.cfg
-fifa_workspace/Include/*
-fifa_workspace/Lib/*
-fifa_workspace/Scripts/*
-fifa_workspace/tcl/*
-fifa_workspace/*.txt
-fifa_workspace/**/*.scrapy
-fifa_workspace/**/*.md
-fifa_workspace/**/full/*
-fifa_workspace/fifa_market_analysis/pause_resume/*
-fifa_workspace/fifa_market_analysis/user_agents/*
-*_generator.py
-*_settings.py
-proxy_update.py
-*.json
-*.txt
-*.log
-*.jpg
-data/.scrapy/
-data/settings.py
-data/**/user_agents/*
-pause_resume/
-fifa_data/.scrapy/
-settings*
+# IntelliJ
+.idea/
+
+# Scrapy
 Include/*
 Lib/*
 Scripts/*
+fifa_data/.scrapy/*
+fifa_data/full/
+fifa_data/pause_resume/
+pause_resume/*
+logs/*
 tcl/*
-fifa_data/logs/*
-dbs/
-eggs/
-fifa_data/build/
-fifa_data/project.egg-info/
-fifa_data/setup.py
+
+# Scrapyd
+
+dbs/*
+eggs/*
+fifa_data/build/*
+fifa_data/project.egg-info/*
