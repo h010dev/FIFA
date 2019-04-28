@@ -16,6 +16,8 @@ fifa_data/pause_resume/
 pause_resume/*
 logs/*
 tcl/*
+*.txt
+*.json
 
 # Scrapyd
 
