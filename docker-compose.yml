@@ -5,7 +5,7 @@ services:
         container_name: python3.7.3_scrapy
         volumes:
             - ~/PycharmProjects:/src
-        restart: always
+        restart: on-failure
         links:
             - mongo
     mongo:
