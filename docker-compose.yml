@@ -7,7 +7,7 @@ services:
             - ~/PycharmProjects:/src
         restart: always
         links:
-                - mongo
+            - mongo
     mongo:
         container_name: mongo4.0.9
         image: mongo:4.0.9

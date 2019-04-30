@@ -27,3 +27,7 @@ dbs/*
 eggs/*
 fifa_data/build/*
 fifa_data/project.egg-info/*
+
+# Docker
+
+data/*
