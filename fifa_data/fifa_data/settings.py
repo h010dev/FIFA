@@ -109,7 +109,7 @@ AUTOTHROTTLE_ENABLED = True
 # FEED_URI = 'file:///C:/Users/E46Racing/Documents/PycharmProjects/my_projects/fifa_workspace/fifa_market_analysis_' \
 #            '/fifa_market_analysis_/feed_dump/test.json'
 
-# MONGO_URI = 'mongodb://localhost:27017'
+MONGO_URI = 'mongodb://mongo:27017'
 # MONGO_DB = 'sofifa_stats'
 
 SPLASH_URL = 'http://localhost:8050'
