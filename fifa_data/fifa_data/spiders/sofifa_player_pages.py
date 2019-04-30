@@ -18,7 +18,7 @@ class SofifaPlayerPagesSpider(scrapy.Spider):
 
     custom_settings = sofifa_settings(name=name, proxies=proxies, user_agent=user_agent, collection='player_details',
                                       validator='PlayerItem')
-    client = MongoClient('localhost', 27017)
+    client = MongoClient('mongo', 27017)
     db = client.sofifa
     collection = db.player_urls
 

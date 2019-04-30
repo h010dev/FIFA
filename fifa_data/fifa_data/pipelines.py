@@ -82,7 +82,7 @@ class SpiderStats(MongoPipeline):
     @classmethod
     def from_crawler(cls, crawler):
         return cls(
-            mongo_uri='mongodb://localhost:27017',
+            mongo_uri='mongodb://mongo:27017',
             mongo_db='stats',
             mongo_collection='spider_stats',
             stats=crawler.stats

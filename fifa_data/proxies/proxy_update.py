@@ -4,7 +4,7 @@ import json
 from pprint import pprint
 
 
-client = MongoClient('localhost', 27017)
+client = MongoClient('mongo', 27017)
 db = client.agents_proxies
 collection = db.fate0_proxy_list
 

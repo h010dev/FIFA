@@ -68,7 +68,7 @@ class UserAgentScraperSpider(CrawlSpider):
 
     custom_settings = {
         'ITEM_PIPELINES': {
-            'fifa_market_analysis_.pipelines.MongoDBPipeline': 300,
+            'fifa_data.pipelines.MongoDBPipeline': 300,
         },
         'DOWNLOADER_MIDDLEWARES': {
             'scrapy.downloadermiddlewares.useragent.UserAgentMiddleware': None,

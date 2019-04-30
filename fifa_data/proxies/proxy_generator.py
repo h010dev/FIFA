@@ -2,7 +2,7 @@ from pymongo import MongoClient
 import random
 
 
-client = MongoClient('localhost', 27017)
+client = MongoClient('mongo', 27017)
 db = client.sofifa
 collection = db.proxies
 
