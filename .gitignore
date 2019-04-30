@@ -4,9 +4,11 @@ __pycache__/
 *.py[cod]
 
 # IntelliJ
+
 .idea/
 
 # Scrapy
+
 Include/*
 Lib/*
 Scripts/*
