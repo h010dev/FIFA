@@ -5,4 +5,4 @@ WORKDIR .
 
 RUN pip install -r requirements.txt
 
-CMD ["python3", "./fifa_data/fifa_data/spiders/test_spider.py"]
+CMD ["python3", "~/PycharmProjects/FIFA/fifa_data/fifa_data/spiders/test_spider.py"]
