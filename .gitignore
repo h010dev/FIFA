@@ -31,7 +31,12 @@ fifa_data/project.egg-info/*
 # Docker
 
 data/*
-
+Docker/.circleci/*
+Docker/.gitignore
+Docker/LICENSE
+Docker/README.md
+Docker/dags/tuto.py
 # Vim
 
 tags
+*.swp
