@@ -6,24 +6,33 @@ from datetime import datetime, timedelta
 default_args = {
     'owner': 'airflow',
     'depends_on_past': False,
-    'start_date': datetime(2019, 6, 5),
+    'start_date': datetime.today(),
     'email_on_failure': False,
     'email_on_retry': False,
     'retries': 1,
     'retry_delay': timedelta(minutes=2)
 }
 
-dag = DAG('airflow_scrape', default_args=default_args, \
+dag = DAG('airflow_scrape', default_args=default_args,
           schedule_interval=timedelta(days=1))
 
-t1 = BashOperator(
-    task_id='get_useragents',
-    bash_command=\
-    "cd /FIFA/fifa_data/ && python3 -m fifa_data.spiders.user_agent_scraper",
-    dag=dag)
+with DAG('proxy_dag', default_args=default_args,
+         schedule_interval='*/15 * * * *') as dag:
+    proxy_task =
+        BashOperator(
+        task_id='get_proxies',
+        bash_command=\
+        "cd /FIFA/fifa_data/ && python3 -m fifa_data.spiders.fate_proxy",
+        dag=dag)
 
-t2 = BashOperator(
-    task_id='get_proxies',
-    bash_command=\
-    "cd /FIFA/fifa_data/ && python3 -m fifa_data.spiders.fate_proxy",
-    dag=dag)
+# TODO 
+""" look for a way to schedule dags to stop after certain time interval.
+reference airflow.sensors.time_delta_sensor for more info."""
+
+with DAG('useragent_dag', default_args=default_args,
+         schedulele_interval='@weekly') as dag:
+        BashOperator(
+        task_id='get_useragents',
+        bash_command=\
+        "cd /FIFA/fifa_data/ && python3 -m fifa_data.spiders.user_agent_scraper",
+        dag=dag)
