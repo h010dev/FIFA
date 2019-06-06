@@ -13,8 +13,6 @@ default_args = {
     'retry_delay': timedelta(minutes=2)
 }
 
-dag = DAG('airflow_scrape', default_args=default_args,
-          schedule_interval=timedelta(days=1))
 
 with DAG('proxy_dag', default_args=default_args,
          schedule_interval='*/15 * * * *') as dag:
