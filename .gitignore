@@ -31,3 +31,7 @@ fifa_data/project.egg-info/*
 # Docker
 
 data/*
+
+# Vim
+
+tags

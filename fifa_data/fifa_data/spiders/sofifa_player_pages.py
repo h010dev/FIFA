@@ -5,6 +5,7 @@ from scrapy.utils.log import configure_logging
 from twisted.internet import reactor
 from fifa_data.items import SofifaItem
 from pymongo import MongoClient
+from fifa_data.mongodb_addr import port
 from proxies.proxy_generator import proxies
 from user_agents.user_agent_generator import user_agent
 from fifa_data.sofifa_settings import sofifa_settings
@@ -18,7 +19,7 @@ class SofifaPlayerPagesSpider(scrapy.Spider):
 
     custom_settings = sofifa_settings(name=name, proxies=proxies, user_agent=user_agent, collection='player_details',
                                       validator='PlayerItem')
-    client = MongoClient('mongo', 27017)
+    client = MongoClient(f'{port}', 27017)
     db = client.sofifa
     collection = db.player_urls
 

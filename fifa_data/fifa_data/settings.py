@@ -9,6 +9,8 @@
 #     https://doc.scrapy.org/en/latest/topics/downloader-middleware.html
 #     https://doc.scrapy.org/en/latest/topics/spider-middleware.html
 
+from fifa_data.mongodb_addr import port
+
 BOT_NAME = 'fifa_data'
 
 SPIDER_MODULES = ['fifa_data.spiders']
@@ -109,7 +111,7 @@ AUTOTHROTTLE_ENABLED = True
 # FEED_URI = 'file:///C:/Users/E46Racing/Documents/PycharmProjects/my_projects/fifa_workspace/fifa_market_analysis_' \
 #            '/fifa_market_analysis_/feed_dump/test.json'
 
-MONGO_URI = 'mongodb://mongo:27017'
+MONGO_URI = f'mongodb://{port}:27017'
 # MONGO_DB = 'sofifa_stats'
 
 SPLASH_URL = 'http://localhost:8050'

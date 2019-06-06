@@ -7,6 +7,7 @@ def sofifa_settings(name, proxies, user_agent, collection, validator):
 
         # DATABASE SETTINGS
         'MONGO_DB': 'sofifa',
+        'MONGO_URI': f'mongodb://{port}:27017',
         'COLLECTION_NAME': f'{collection}',
 
         # SPIDER CHECKPOINTS

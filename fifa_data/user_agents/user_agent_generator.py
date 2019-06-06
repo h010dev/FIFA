@@ -1,34 +1,45 @@
 from pymongo import MongoClient
+from fifa_data.mongodb_addr import host
 import random
 
 
-client = MongoClient('mongo', 27017)
-db = client.agents_proxies
-collection = db.user_agents
+def gen_useragent_list():
 
-query = collection.find({
-    '$and': [
-        {'$or': [
-            {'OS': 'Windows'},
-            {'OS': 'Mac OS X'},
-            {'OS': 'macOS'},
-            {'OS': 'Linux'}
-        ]},
-        {'$or': [
-            {'hardware_type': 'Computer'},
-            {'hardware_type': 'Windows'},
-            {'hardware_type': 'Linux'},
-            {'hardware_type': 'Mac'}
-        ]},
-        {'$or': [
-            {'popularity': 'Very common'},
-            {'popularity': 'Common'}
-        ]}
-    ]
-    },
-        {'_id': 0, 'user_agent': 1}
-)
+    client = MongoClient(f'{host}', 27017)
+    db = client.agents_proxies
+    collection = db.user_agents
 
-user_agent = [x['user_agent'] for x in query]
+    query = collection.find({
+        '$and': [
+            {'$or': [
+                {'OS': 'Windows'},
+                {'OS': 'Mac OS X'},
+                {'OS': 'macOS'},
+                {'OS': 'Linux'}
+            ]},
+            {'$or': [
+                {'hardware_type': 'Computer'},
+                {'hardware_type': 'Windows'},
+                {'hardware_type': 'Linux'},
+                {'hardware_type': 'Mac'}
+            ]},
+            {'$or': [
+                {'popularity': 'Very common'},
+                {'popularity': 'Common'}
+            ]}
+        ]
+        },
+            {'_id': 0, 'user_agent': 1}
+    )
 
-random.shuffle(user_agent)
+    user_agent = [x['user_agent'] for x in query]
+
+    random.shuffle(user_agent)
+
+    print(user_agent)
+
+    return user_agent
+
+
+if __name__=='__main__':
+    gen_useragent_list()

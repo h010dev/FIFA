@@ -16,7 +16,7 @@ class SofifaClubPagesSpider(scrapy.Spider):
 
     def start_requests(self):
 
-        client = MongoClient('mongo', 27017)
+        client = MongoClient(f'{port}', 27017)
         db = client.sofifa
         collection = db.club_urls
 

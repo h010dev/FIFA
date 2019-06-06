@@ -3,6 +3,7 @@ from scrapy.loader import ItemLoader
 from pymongo import MongoClient
 from proxies.proxy_generator import proxies
 from user_agents.user_agent_generator import user_agent
+from fifa_data.mongodb_addr import port
 from fifa_data.items import NationalTeamDetailedStats
 from fifa_data.sofifa_settings import sofifa_settings
 
@@ -17,7 +18,7 @@ class SofifaTeamPagesSpider(scrapy.Spider):
 
     def start_requests(self):
 
-        client = MongoClient('mongo', 27017)
+        client = MongoClient(f'{port}', 27017)
         db = client.sofifa
         collection = db.team_urls
 

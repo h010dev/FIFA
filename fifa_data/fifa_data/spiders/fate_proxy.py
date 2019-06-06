@@ -5,18 +5,24 @@ from scrapy.utils.log import configure_logging
 from twisted.internet import reactor, defer
 from twisted.internet.task import LoopingCall
 from fifa_data.items import ProxyItem
-from proxies.proxy_generator import proxies
-from user_agents.user_agent_generator import user_agent
+from proxies.proxy_generator import *
+from user_agents.user_agent_generator import *
+from fifa_data.mongodb_addr import host
 
 
 class FateProxySpider(scrapy.Spider):
 
+    proxies = gen_proxy_list()
+    user_agent = gen_useragent_list()
+
     name = 'fate_proxy'
-    start_urls = ['https://raw.githubusercontent.com/fate0/proxylist/master/proxy.list']
+    start_urls =\
+        ['https://raw.githubusercontent.com/fate0/proxylist/master/proxy.list']
 
     custom_settings = {
         # DATABASE SETTINGS
-        'MONGO_DB': 'sofifa',
+        'MONGO_URI': f'mongodb://{host}:27017',
+        'MONGO_DB': 'agents_proxies',
         'COLLECTION_NAME': 'proxies',
 
         # SPIDER LOGGING
@@ -25,9 +31,7 @@ class FateProxySpider(scrapy.Spider):
 
         # EXTENSION ACTIVATION
         'PROXY_POOL_ENABLED': True,
-        'EXTENSIONS': {
-            'spidermon.contrib.scrapy.extensions.Spidermon': 510,
-        },
+        'EXTENSIONS': {'spidermon.contrib.scrapy.extensions.Spidermon': 510, },
 
         # BAN PREVENTION
         'ROTATING_PROXY_LIST': proxies,
@@ -39,9 +43,7 @@ class FateProxySpider(scrapy.Spider):
         'DOWNLOAD_TIMEOUT': 30,
 
         # PIPELINES, MIDDLEWARES, AND EXTENSIONS
-        'ITEM_PIPELINES': {
-            'fifa_data.pipelines.ProxyPipeline': 302,
-        },
+        'ITEM_PIPELINES': {'fifa_data.pipelines.ProxyPipeline': 302, },
         'DOWNLOADER_MIDDLEWARES': {
             'scrapy.downloadermiddlewares.useragent.UserAgentMiddleware': None,
             'scrapy_useragents.downloadermiddlewares.useragents.UserAgentsMiddleware': 500,

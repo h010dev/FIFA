@@ -1,13 +1,8 @@
-# -*- coding: utf-8 -*-
-
-# Define your item pipelines here
-#
-# Don't forget to add your pipeline to the ITEM_PIPELINES setting
-# See: https://doc.scrapy.org/en/latest/topics/item-pipeline.html
 import pymongo
 from pymongo import MongoClient
 from scrapy.pipelines.images import ImagesPipeline
 from scrapy.pipelines.media import *
+from fifa_data.mongodb_addr import host
 from scrapy import Request
 from scrapy.exceptions import DropItem
 
@@ -17,7 +12,7 @@ class MongoPipeline(object):
     def __init__(self, mongo_uri, mongo_db, mongo_collection):
         self.mongo_uri = mongo_uri
         self.mongo_db = mongo_db
-        self.mongo_collection = mongo_collection
+        self.mongo_collection = mongo_collection 
 
     @classmethod
     def from_crawler(cls, crawler):
@@ -82,7 +77,7 @@ class SpiderStats(MongoPipeline):
     @classmethod
     def from_crawler(cls, crawler):
         return cls(
-            mongo_uri='mongodb://mongo:27017',
+            mongo_uri=f'mongodb://{host}:27017',
             mongo_db='stats',
             mongo_collection='spider_stats',
             stats=crawler.stats

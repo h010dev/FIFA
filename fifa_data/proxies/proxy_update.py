@@ -1,10 +1,11 @@
 import pymongo
 from pymongo import MongoClient
+from fifa_data.mongodb_addr import port
 import json
 from pprint import pprint
 
 
-client = MongoClient('mongo', 27017)
+client = MongoClient(f'{port}', 27017)
 db = client.agents_proxies
 collection = db.fate0_proxy_list
 

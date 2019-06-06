@@ -1,11 +1,22 @@
 from pymongo import MongoClient
+from fifa_data.mongodb_addr import host 
 import random
 
 
-client = MongoClient('mongo', 27017)
-db = client.sofifa
-collection = db.proxies
+def gen_proxy_list():
 
-proxies = [x['ip'] for x in collection.find()]
+    client = MongoClient(f'{host}', 27017)
+    db = client.sofifa
+    collection = db.proxies
 
-random.shuffle(proxies)
+    proxies = [x['ip'] for x in collection.find()]
+
+    random.shuffle(proxies)
+
+    print(proxies)
+
+    return proxies
+
+
+if __name__=='__main__':
+    gen_proxy_list()
