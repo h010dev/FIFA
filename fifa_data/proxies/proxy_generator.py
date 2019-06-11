@@ -1,5 +1,5 @@
 from pymongo import MongoClient
-from fifa_data.mongodb_addr import host 
+from fifa_data.mongodb_addr import host
 import random
 
 

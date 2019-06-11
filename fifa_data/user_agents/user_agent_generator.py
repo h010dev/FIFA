@@ -1,5 +1,7 @@
 from pymongo import MongoClient
 from fifa_data.mongodb_addr import host
+from user_agents.useragent_update import initdb, updatedb
+import json
 import random
 
 
@@ -35,9 +37,6 @@ def gen_useragent_list():
     user_agent = [x['user_agent'] for x in query]
 
     random.shuffle(user_agent)
-
-    print(user_agent)
-
     return user_agent
 
 

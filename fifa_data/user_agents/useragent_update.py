@@ -7,12 +7,12 @@ from pprint import pprint
 
 client = MongoClient(f'{host}', 27017)
 db = client.agents_proxies
-collection = db.fate0_proxy_list
+collection = db.user_agents
 
-FILE_NAME = '/FIFA/fifa_data/proxies/proxy_storage.json'
+FILE_NAME = '/FIFA/fifa_data/user_agents/useragent_storage.json'
 
 
-def get_proxies(filename):
+def get_useragents(filename):
 
     input_file = open(filename)
     json_array = json.load(input_file)
@@ -20,17 +20,21 @@ def get_proxies(filename):
     return json_array
 
 
-new_proxies = get_proxies(filename=FILE_NAME)
+new_useragents = get_useragents(filename=FILE_NAME)
 
 # INITIAL IMPORT
 
 def initdb():
 
     init_operations = [pymongo.operations.InsertOne(
-        {"ip": ip["ip"]}
-    ) for ip in new_proxies]
+        {"user_agent": agent["user_agent"],
+         "version": agent["version"],
+         "OS": agent["OS"],
+         "hardware_type": agent["hardware_type"],
+         "popularity": agent["popularity"]}
+    ) for agent in new_useragents if "version" in agent]
 
-    init_result = db.collection.bulk_write(init_operations)
+    init_result = collection.bulk_write(init_operations)
 
     init_result
 
@@ -41,12 +45,12 @@ def initdb():
 def updatedb():
 
     operations = [pymongo.operations.UpdateOne(
-        filter={"ip": ip["ip"]},
-        update={"$setOnInsert": {"ip": ip["ip"]}},
+        filter={"user_agent": agent["user_agent"]},
+        update={"$setOnInsert": {"user_agent": agent["user_agent"]}},
         upsert=True
-        ) for ip in new_proxies]
+        ) for agent in new_useragents]
 
-    result = db.collection.bulk_write(operations)
+    result = collection.bulk_write(operations)
 
     result
     pprint(result.bulk_api_result)

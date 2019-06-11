@@ -59,5 +59,8 @@ class CustomStats(CoreStats):
         self.stats.set_value('elapsed_time_seconds', elapsed_time_seconds, spider=spider)
         self.stats.set_value('finish_time', finish_time, spider=spider)
         self.stats.set_value('finish_reason', reason, spider=spider)
-        with open(self.file, 'w') as outfile:
-            json.dump(self.stats.get_stats(), outfile, default=str)
+        try:
+            with open(self.file, 'w') as outfile:
+                json.dump(self.stats.get_stats(), outfile, default=str)
+        except FileNotFoundError:
+            print('No log file found')

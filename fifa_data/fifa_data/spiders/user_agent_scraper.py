@@ -115,6 +115,10 @@ class UserAgentScraperSpider(CrawlSpider):
             'rotating_proxies.middlewares.RotatingProxyMiddleware': 610,
             'rotating_proxies.middlewares.BanDetectionMiddleware': 620
         },
+        'EXTENSIONS': {
+            'scrapy.extensions.closespider.CloseSpider': 400
+        },
+        'CLOSESPIDER_TIMEOUT': 60,
         'MONGO_DB': 'agents_proxies',
         'MONGO_URI': f'mongodb://{host}:27017',
         'HTTPCACHE_ENABLED': True,

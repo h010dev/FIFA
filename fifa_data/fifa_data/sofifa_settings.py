@@ -1,5 +1,5 @@
 import datetime
-
+from fifa_data.mongodb_addr import host
 
 def sofifa_settings(name, proxies, user_agent, collection, validator):
 
@@ -7,7 +7,7 @@ def sofifa_settings(name, proxies, user_agent, collection, validator):
 
         # DATABASE SETTINGS
         'MONGO_DB': 'sofifa',
-        'MONGO_URI': f'mongodb://{port}:27017',
+        'MONGO_URI': f'mongodb://{host}:27017',
         'COLLECTION_NAME': f'{collection}',
 
         # SPIDER CHECKPOINTS

@@ -3,14 +3,20 @@ from scrapy.linkextractors import LinkExtractor
 from scrapy.spiders import CrawlSpider, Rule
 from scrapy.loader import ItemLoader
 from fifa_data.items import NationalTeamStats
-from proxies.proxy_generator import proxies
-from user_agents.user_agent_generator import user_agent
 from fifa_data.sofifa_settings import sofifa_settings
+from scrapy.utils.log import configure_logging
+from proxies.proxy_generator import *
+from user_agents.user_agent_generator import *
+from scrapy.crawler import CrawlerRunner
+from twisted.internet import reactor
 
 
 class SofifaTeamUrlsSpider(CrawlSpider):
 
     name = 'team_pages'
+    proxies = gen_proxy_list()
+    user_agent = gen_useragent_list()
+
     allowed_domains = ['sofifa.com']
     start_urls = ['https://sofifa.com/teams/national/']
 
@@ -44,3 +50,17 @@ class SofifaTeamUrlsSpider(CrawlSpider):
             loader.add_xpath('team_page', ".//a[contains(@href, 'team/')]/@href")
 
             yield loader.load_item()
+
+
+def main():
+
+    configure_logging()
+    runner = CrawlerRunner()
+
+    d = runner.crawl(SofifaTeamUrlsSpider)
+    d.addBoth(lambda _: reactor.stop())
+    reactor.run()
+
+
+if __name__ == '__main__':
+    main()

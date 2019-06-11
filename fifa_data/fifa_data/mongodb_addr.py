@@ -1,1 +1,1 @@
-host = 'localhost'
+host = 'mongo_server'
