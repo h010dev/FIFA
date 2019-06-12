@@ -17,7 +17,7 @@ services:
           - "27017:27017"
 
     webserver:
-        image: puckel/docker-airflow:1.10.2
+        image: puckel/docker-airflow:1.10.1
         restart: always
         depends_on:
             - postgres

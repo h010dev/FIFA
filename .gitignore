@@ -36,7 +36,12 @@ Docker/.gitignore
 Docker/LICENSE
 Docker/README.md
 Docker/dags/tuto.py
+
 # Vim
 
 tags
 *.swp
+
+# Ubuntu
+
+*.directory

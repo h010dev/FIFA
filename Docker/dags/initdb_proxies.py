@@ -1,6 +1,3 @@
-from airflow import DAG
-from airflow.operators.bash_operator import BashOperator
-from airflow.operators.docker_operator import DockerOperator
 from datetime import datetime, timedelta
 
 
