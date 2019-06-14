@@ -1,13 +1,17 @@
+import random
 from pymongo import MongoClient
 from fifa_data.mongodb_addr import host
 from user_agents.useragent_update import initdb, updatedb
-import json
-import random
 
 
 def gen_useragent_list():
 
-    client = MongoClient(f'{host}', 27017)
+    """
+    Generate a list of user-agents from the user-agent database. This list will
+    be used by the user-agent rotator.
+    """
+
+    client = MongoClient(host, 27017)
     db = client.agents_proxies
     collection = db.user_agents
 
@@ -35,10 +39,10 @@ def gen_useragent_list():
     )
 
     user_agent = [x['user_agent'] for x in query]
-
     random.shuffle(user_agent)
+
     return user_agent
 
 
-if __name__=='__main__':
+if __name__ == '__main__':
     gen_useragent_list()

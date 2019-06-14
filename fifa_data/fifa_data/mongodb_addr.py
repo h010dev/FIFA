@@ -1,1 +1,2 @@
-host = 'mongo_server'
+host = 'localhost'
+port = 27017

@@ -1,18 +1,15 @@
 import pymongo
 from pymongo import MongoClient
 from fifa_data.mongodb_addr import host
-import json
-from pprint import pprint
-
-
-client = MongoClient(f'{host}', 27017)
-db = client.agents_proxies
-collection = db.fate0_proxy_list
-
-FILE_NAME = '/FIFA/fifa_data/proxies/proxy_storage.json'
 
 
 def get_proxies(filename):
+
+    """
+    Retrieve proxies from json storage. This is used as an initialization
+    file to be used by the proxy rotator before the spiders collect fresh
+    proxies.
+    """
 
     input_file = open(filename)
     json_array = json.load(input_file)
@@ -20,25 +17,32 @@ def get_proxies(filename):
     return json_array
 
 
-new_proxies = get_proxies(filename=FILE_NAME)
-
-# INITIAL IMPORT
-
 def initdb():
+
+    """
+    This will dump the stored proxies into the proxy database. Running
+    this assumes that the database is empty. Otherwise run updatedb instead.
+    """
 
     init_operations = [pymongo.operations.InsertOne(
         {"ip": ip["ip"]}
     ) for ip in new_proxies]
 
-    init_result = db.collection.bulk_write(init_operations)
+    result = collection.bulk_write(init_operations)
 
-    init_result
+    try:
+        return result
+    finally:
+        pprint(result.bulk_api_result)
 
-    pprint(init_result.bulk_api_result)
-
-# SUBSEQUENT UPDATES
 
 def updatedb():
+
+    """
+    This will update the proxy database with new ones from storage. This
+    is to be used when the proxy database has a few entries, as it will
+    skip duplicates.
+    """
 
     operations = [pymongo.operations.UpdateOne(
         filter={"ip": ip["ip"]},
@@ -46,14 +50,28 @@ def updatedb():
         upsert=True
         ) for ip in new_proxies]
 
-    result = db.collection.bulk_write(operations)
+    result = collection.bulk_write(operations)
 
-    result
-    pprint(result.bulk_api_result)
+    try:
+        return result
+    finally:
+        pprint(result.bulk_api_result)
 
 
-if __name__=='__main__':
-    if db.user_agents.find({}).count() < 1:
+if __name__ == '__main__':
+
+    import os
+
+    dirname = os.path.dirname(__file__)
+    filename = os.path.join(dirname, 'proxy_storage.json')
+
+    client = MongoClient(host, 27017)
+    db = client.agents_proxies
+    collection = db.proxies
+
+    new_proxies = get_proxies(filename=filename)
+
+    if db.proxies.count_documents(filter=({})) < 1:
         initdb()
     else:
         updatedb()

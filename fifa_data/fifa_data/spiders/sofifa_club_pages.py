@@ -313,7 +313,6 @@ class SofifaClubPagesSpider(scrapy.Spider):
             "(.//span[text()='Team Width'])[2]/following::span[1]/span/text()"
         )
 
-
         loader.add_xpath(
             'defence_extra_defender_line',
             ".//span[text()='Defender Line']/following::span/text()"
@@ -331,14 +330,12 @@ class SofifaClubPagesSpider(scrapy.Spider):
             "(.//table)[2]/tbody/tr//a[contains(@href, '/player/')]/@href"
         )
 
-
         # MEDIA
 
         loader.add_xpath(
             'kits',
             ".//div[@class='column col-sm-5 text-center']//img/@src"
         )
-
 
         # COMMUNITY
 
@@ -351,7 +348,6 @@ class SofifaClubPagesSpider(scrapy.Spider):
             'dislikes',
             "text()[contains(.,'Dislike')]/following::span[1]/text()"
         )
-
 
         print(
             response.request.headers[

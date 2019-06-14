@@ -32,4 +32,4 @@ mongo --quiet agents_proxies --eval \
 				"hardware_type": 1, 
 				"popularity": 1
 			}).toArray())' \
-			> /home/camillitea/FIFA/fifa_data/user_agents/useragent_storage.json
+			> ./useragent_storage.json
