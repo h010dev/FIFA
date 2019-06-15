@@ -1,23 +1,20 @@
-from airflow import DAG
+import pprint
+from datetime import datetime
+
+from airflow.models import DAG
 from airflow.operators.bash_operator import BashOperator
-from datetime import datetime, timedelta
 
+pp = pprint.PrettyPrinter(indent=4)
 
-default_args = {
+args = {
+    'start_date': datetime(2019, 6, 15),
     'owner': 'airflow',
-    'depends_on_past': False,
-    'start_date': datetime(2019, 6, 10),
-    'email_on_failure': False,
-    'email_on_retry': False,
-    'retries': 1,
-    'retry_delay': timedelta(minutes=2)
 }
 
 dag = DAG(
-    dag_id='collect_useragents',
-    description='Start collecting useragents every day.',
-    default_args=default_args,
-    schedule_interval='*/5 * * * *',
+    dag_id='useragentscraper_dag',
+    default_args=args,
+    schedule_interval='*/4 * * * *',
     catchup=False
 )
 
