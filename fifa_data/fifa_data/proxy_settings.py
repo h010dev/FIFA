@@ -14,7 +14,7 @@ def proxy_settings(name, database, collection, proxies, user_agent, validator):
         # SPIDER LOGGING
         'LOG_ENABLED': True,
         'LOG_LEVEL': 'DEBUG',
-        'LOG_FILE': f'{name}_log_{datetime.date.today()}.txt',
+        'LOG_FILE': f'logs/{name}_log_{datetime.date.today()}.txt',
 
         # EXTENSION ACTIVATION
         'SPIDERMON_ENABLED': True,
