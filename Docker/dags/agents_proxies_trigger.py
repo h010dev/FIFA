@@ -52,6 +52,15 @@ trigger_proxy = TriggerDagRunOperator(
     dag=dag,
 )
 
+trigger_sofifa = TriggerDagRunOperator(
+    task_id='trigger_sofifacraper',
+    trigger_dag_id='sofifascraper_dag',
+    python_callable=conditionally_trigger,
+    params={'condition_param': True, 'message': 'triggering sofifa scraper'},
+    trigger_rule=TriggerRule.ALL_SUCCESS,
+    dag=dag,
+)
+
 # Custom task to start before trigger
 
 initdb_useragent = BashOperator(
@@ -70,3 +79,4 @@ initdb_proxy = BashOperator(
 
 [initdb_useragent, initdb_proxy] >> trigger_useragent
 [initdb_useragent, initdb_proxy] >> trigger_proxy
+[initdb_useragent, initdb_proxy] >> trigger_sofifa
