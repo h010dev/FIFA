@@ -61,10 +61,11 @@ dag = DAG(
     dag_id='example_trigger_controller_dag',
     default_args={
         "owner": "airflow",
-        "start_date": datetime.utcnow(),
-        "depends_on_pasat": False
+        "start_date": datetime(2019, 6, 14),
+        "depends_on_past": False
     },
-    schedule_interval='*/3 * * * *',
+    schedule_interval='@once',
+    catchup=False
 )
 
 # Define the single task in this controller example DAG
@@ -74,7 +75,6 @@ trigger = TriggerDagRunOperator(
     python_callable=conditionally_trigger,
     params={'condition_param': True, 'message': 'Hello World'},
     trigger_rule=TriggerRule.ALL_SUCCESS,
-    execution_date=datetime.utcnow(),
     dag=dag,
 )
 

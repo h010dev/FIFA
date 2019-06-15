@@ -3,6 +3,20 @@ from schematics.types import URLType, StringType, ListType, IntType, FloatType, 
 import datetime
 
 
+class ProxyItem(Model):
+
+    ip_dump = StringType(required=True)
+
+
+class UserAgentItem(Model):
+
+    user_agent = StringType(required=True)
+    version = StringType()
+    OS = StringType()
+    hardware_type = StringType()
+    popularity = StringType()
+
+
 class PlayerItem(Model):
 
     id = IntType(required=True)

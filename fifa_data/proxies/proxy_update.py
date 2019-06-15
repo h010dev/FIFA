@@ -1,4 +1,6 @@
 import pymongo
+import json
+from pprint import pprint
 from pymongo import MongoClient
 from fifa_data.mongodb_addr import host
 

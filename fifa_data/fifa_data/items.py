@@ -134,6 +134,10 @@ def player_id_list(value):
 
 def host_port_ip(value):
 
+    """
+    Combine columns from proxy list to create a single proxy for each entry.
+    """
+
     rows = re.findall(r'\n?\{.+\}\n?', value)
 
     type_ = r'\"type\"\:\ \"(https?)\"'

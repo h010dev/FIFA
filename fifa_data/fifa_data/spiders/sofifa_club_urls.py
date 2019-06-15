@@ -29,30 +29,25 @@ class SofifaClubUrlsSpider(CrawlSpider):
     rules = (
         Rule(
             LinkExtractor(
-                deny=(
-                    [
-                        r'\?',
-                        r'/[0-9]+',
-                        r'/forgot',
-                        r'/shortlist',
-                        r'/authorize',
-                        r'/leagues',
-                        r'/squad',
-                        r'/help',
-                        r'/compare',
-                        r'/players',
-                        r'/teams'
-                    ]
-                )
+                deny=([
+                    r'\?',
+                    r'/[0-9]+',
+                    r'/forgot',
+                    r'/shortlist',
+                    r'/authorize',
+                    r'/leagues',
+                    r'/squad',
+                    r'/help',
+                    r'/compare',
+                    r'/players',
+                    r'/teams'
+                ])
             ),
             callback='parse_start_url',
             follow=True
         ),
-
         Rule(
-            LinkExtractor(
-                restrict_xpaths="//a[text()='Next']"
-            ),
+            LinkExtractor(restrict_xpaths="//a[text()='Next']"),
             callback='parse_item',
             follow=True
         )
@@ -82,34 +77,28 @@ class SofifaClubUrlsSpider(CrawlSpider):
                 'id',
                 ".//a[contains(@href, 'team/')]/@href"
             )
-
             loader.add_xpath(
                 'nationality',
                 ".//a[contains(@href, 'teams?na')]/text()"
             )
-
             loader.add_xpath(
                 'region',
                 ".//a[contains(@href, 'teams?ct')]/text()"
             )
-
             loader.add_xpath(
                 'num_players',
                 ".//td[@class='col text-center'][last()]/div/text()"
             )
-
             loader.add_xpath(
                 'hits',
-                ".//div[@class='col-comments text-right text-ellipsis rtl']\
-                /text()"
+                """.//div[@class='col-comments text-right text-ellipsis rtl']\
+                /text()"""
             )
-
             loader.add_xpath(
                 'comments',
-                ".//div[@class='col-comments text-right text-ellipsis rtl']\
-                /text()"
+                """.//div[@class='col-comments text-right text-ellipsis rtl']\
+                /text()"""
             )
-
             loader.add_xpath(
                 'club_page',
                 ".//a[contains(@href, 'team/')]/@href"

@@ -12,7 +12,7 @@ services:
         image: mongo:3.6.3
         restart: always
         volumes: 
-          - /data/db:/data/db
+          - /home/mohamed/.mongodb/data/db:/data/db
         ports:
           - "27017:27017"
 
@@ -31,7 +31,7 @@ services:
             # Custom python package
             - ./requirements.txt:/requirements.txt
             # FIFA file path
-            - ~/FIFA:/FIFA
+            - /home/mohamed/Projects/FIFA:/FIFA
             # Give access to docker.sock
             - /var/run/docker.sock:/var/run/docker.sock
         # Give privilege to run docker

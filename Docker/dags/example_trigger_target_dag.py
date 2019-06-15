@@ -45,14 +45,15 @@ from airflow.operators.python_operator import PythonOperator
 pp = pprint.PrettyPrinter(indent=4)
 
 args = {
-    'start_date': datetime.utcnow(),
+    'start_date': datetime(2019, 6, 14),
     'owner': 'airflow',
 }
 
 dag = DAG(
     dag_id='example_trigger_target_dag',
     default_args=args,
-    schedule_interval=None
+    schedule_interval='*/3 * * * *',
+    catchup=False
 )
 
 

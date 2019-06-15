@@ -13,7 +13,7 @@ def dummy_success(context):
 default_args = {
     'owner': 'airflow',
     'depends_on_past': False,
-    'start_date': datetime.today(),
+    'start_date': datetime(2019, 6, 14),
     'retries': 1,
     'retry_delay': timedelta(minutes=2),
 }
@@ -21,7 +21,8 @@ default_args = {
 dag = DAG(
     dag_id='dummy_dag',
     default_args=default_args,
-    schedule_interval='@once'
+    schedule_interval='@once',
+    catchup=False
 )
 
 task_1 = DummyOperator(

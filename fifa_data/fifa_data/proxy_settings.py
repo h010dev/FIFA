@@ -2,7 +2,7 @@ import datetime
 from fifa_data.mongodb_addr import host, port
 
 
-def sofifa_settings(name, database, collection, proxies, user_agent, validator):
+def proxy_settings(name, database, collection, proxies, user_agent, validator):
 
     settings = {
 
@@ -10,9 +10,6 @@ def sofifa_settings(name, database, collection, proxies, user_agent, validator):
         'MONGO_DB': f'{database}',
         'MONGO_URI': f'mongodb://{host}:{port}',
         'COLLECTION_NAME': f'{collection}',
-
-        # SPIDER CHECKPOINTS
-        'JOBDIR': f'pause_resume/{name}',
 
         # SPIDER LOGGING
         'LOG_ENABLED': True,
@@ -46,8 +43,8 @@ def sofifa_settings(name, database, collection, proxies, user_agent, validator):
 
         'DOWNLOADER_MIDDLEWARES': {
             'scrapy.downloadermiddlewares.useragent.UserAgentMiddleware': None,
-            'scrapy_useragents.downloadermiddlewares.useragents.\
-            UserAgentsMiddleware': 500,
+            'scrapy_useragents.downloadermiddlewares.useragents.'
+            'UserAgentsMiddleware': 500,
             'rotating_proxies.middlewares.RotatingProxyMiddleware': 610,
             'rotating_proxies.middlewares.BanDetectionMiddleware': 620
         },
@@ -59,10 +56,6 @@ def sofifa_settings(name, database, collection, proxies, user_agent, validator):
         'SPIDERMON_VALIDATION_MODELS': (
             f'fifa_data.validators.{validator}',
         ),
-
-        'SPIDERMON_PERIODIC_MONITORS': {
-            'fifa_data.monitors.PeriodicMonitorSuite': 60,
-        },
 
         # TODO integrate expected finish reasons into settings: currently
         # defined in monitors.

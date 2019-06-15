@@ -2,7 +2,8 @@ import datetime
 from fifa_data.mongodb_addr import host, port
 
 
-def sofifa_settings(name, database, collection, proxies, user_agent, validator):
+def useragent_settings(name, database, collection, proxies, user_agent,
+                       validator, timeout):
 
     settings = {
 
@@ -17,7 +18,7 @@ def sofifa_settings(name, database, collection, proxies, user_agent, validator):
         # SPIDER LOGGING
         'LOG_ENABLED': True,
         'LOG_LEVEL': 'DEBUG',
-        'LOG_FILE': f'{name}_log_{datetime.date.today()}.txt',
+        'LOG_FILE': f'logs/{name}_log_{datetime.date.today()}.txt',
 
         # EXTENSION ACTIVATION
         'SPIDERMON_ENABLED': True,
@@ -25,6 +26,7 @@ def sofifa_settings(name, database, collection, proxies, user_agent, validator):
         'EXTENSIONS': {
             'fifa_data.test_extension.CustomStats': 600,
             'spidermon.contrib.scrapy.extensions.Spidermon': 510,
+            'scrapy.extensions.closespider.CloseSpider': 400,
         },
 
         # BAN PREVENTION
@@ -32,22 +34,23 @@ def sofifa_settings(name, database, collection, proxies, user_agent, validator):
         'USER_AGENTS': user_agent,
 
         # MISC. SETTINGS
-        'HTTPCACHE_ENABLED': False,
+        'HTTPCACHE_ENABLED': True,
         'ROBOTSTXT_OBEY': False,
         'DOWNLOAD_TIMEOUT': 30,
+        'CLOSESPIDER_TIMEOUT': timeout,
+        'DEPTH_STATS_VERBOSE': True,
 
         # PIPELINES, MIDDLEWARES, AND EXTENSIONS
         'ITEM_PIPELINES': {
             'fifa_data.pipelines.MongoDBPipeline': 300,
             'fifa_data.pipelines.SpiderStats': 301,
-            'fifa_data.pipelines.ProxyPipeline': 302,
             'spidermon.contrib.scrapy.pipelines.ItemValidationPipeline': 800,
         },
 
         'DOWNLOADER_MIDDLEWARES': {
             'scrapy.downloadermiddlewares.useragent.UserAgentMiddleware': None,
-            'scrapy_useragents.downloadermiddlewares.useragents.\
-            UserAgentsMiddleware': 500,
+            'scrapy_useragents.downloadermiddlewares.useragents.'
+            'UserAgentsMiddleware': 500,
             'rotating_proxies.middlewares.RotatingProxyMiddleware': 610,
             'rotating_proxies.middlewares.BanDetectionMiddleware': 620
         },

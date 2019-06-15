@@ -1,6 +1,7 @@
 import datetime
 import json
 import os
+from pprint import pprint
 from scrapy.extensions.corestats import CoreStats
 
 
@@ -62,5 +63,8 @@ class CustomStats(CoreStats):
         try:
             with open(self.file, 'w') as outfile:
                 json.dump(self.stats.get_stats(), outfile, default=str)
-        except FileNotFoundError:
+        except FileNotFoundError as e:
             print('No log file found')
+            print(str(e))
+            with open('secondary_log.json', 'w') as outfile:
+                json.dump(pprint(self.stats.get_stats()), outfile, default=str)

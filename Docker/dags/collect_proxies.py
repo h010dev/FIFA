@@ -1,24 +1,20 @@
 from airflow import DAG
+import pprint
+from datetime import datetime
+
+from airflow.models import DAG
 from airflow.operators.bash_operator import BashOperator
-from airflow.operators.sensors import ExternalTaskSensor
-from airflow.operators.dagrun_operator import TriggerDagRunOperator
-from datetime import datetime, timedelta
-from initialize_databases import initdb_useragent, initdb_proxy
 
+pp = pprint.PrettyPrinter(indent=4)
 
-default_args = {
+args = {
+    'start_date': datetime(2019, 6, 15),
     'owner': 'airflow',
-    'depends_on_past': False,
-    'start_date': datetime(2019, 6, 10),
-    'email_on_failure': False,
-    'email_on_retry': False,
-    'retries': 1,
-    'retry_delay': timedelta(minutes=2)
 }
 
 dag = DAG(
-    dag_id='collect_proxies',
-    default_args=default_args,
+    dag_id='proxyscraper_dag',
+    default_args=args,
     schedule_interval='*/5 * * * *',
     catchup=False
 )

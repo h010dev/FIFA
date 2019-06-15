@@ -4,58 +4,49 @@ from scrapy.crawler import CrawlerRunner
 from scrapy.utils.log import configure_logging
 from twisted.internet import reactor, defer
 from twisted.internet.task import LoopingCall
+from fifa_data.proxy_settings import proxy_settings
 from fifa_data.items import ProxyItem
-from proxies.proxy_generator import *
-from user_agents.user_agent_generator import *
+from proxies.proxy_generator import gen_proxy_list
+from user_agents.user_agent_generator import gen_useragent_list
 from fifa_data.mongodb_addr import host
 
 
 class FateProxySpider(scrapy.Spider):
 
+    """
+    Collects all proxies from the fate0 proxy list on github, to be used by
+    both this spider and others.
+    """
+
+    name = 'fate_proxy'
+
     proxies = gen_proxy_list()
     user_agent = gen_useragent_list()
 
-    name = 'fate_proxy'
-    start_urls =\
-        ['https://raw.githubusercontent.com/fate0/proxylist/master/proxy.list']
+    start_urls = [
+        'https://raw.githubusercontent.com/fate0/proxylist/master/proxy.list'
+    ]
 
-    custom_settings = {
-        # DATABASE SETTINGS
-        'MONGO_URI': f'mongodb://{host}:27017',
-        'MONGO_DB': 'agents_proxies',
-        'COLLECTION_NAME': 'proxies',
-
-        # SPIDER LOGGING
-        'LOG_ENABLED': True,
-        'LOG_LEVEL': 'DEBUG',
-
-        # EXTENSION ACTIVATION
-        'PROXY_POOL_ENABLED': True,
-        'EXTENSIONS': {'spidermon.contrib.scrapy.extensions.Spidermon': 510, },
-
-        # BAN PREVENTION
-        'ROTATING_PROXY_LIST': proxies,
-        'USER_AGENTS': user_agent,
-
-        # MISC. SETTINGS
-        'HTTPCACHE_ENABLED': False,
-        'ROBOTSTXT_OBEY': False,
-        'DOWNLOAD_TIMEOUT': 30,
-
-        # PIPELINES, MIDDLEWARES, AND EXTENSIONS
-        'ITEM_PIPELINES': {'fifa_data.pipelines.ProxyPipeline': 302, },
-        'DOWNLOADER_MIDDLEWARES': {
-            'scrapy.downloadermiddlewares.useragent.UserAgentMiddleware': None,
-            'scrapy_useragents.downloadermiddlewares.useragents.UserAgentsMiddleware': 500,
-            'rotating_proxies.middlewares.RotatingProxyMiddleware': 610,
-            'rotating_proxies.middlewares.BanDetectionMiddleware': 620
-        },
-    }
+    custom_settings = proxy_settings(
+        name=name,
+        database='agents_proxies',
+        collection='proxies',
+        proxies=proxies,
+        user_agent=user_agent,
+        validator='ProxyItem'
+    )
 
     def parse(self, response):
 
-        loader = ItemLoader(item=ProxyItem(), response=response)
-        loader.add_xpath('ip_dump', ".//body/p/text()")
+        loader = ItemLoader(
+            item=ProxyItem(),
+            response=response
+        )
+
+        loader.add_xpath(
+            'ip_dump',
+            ".//body/p/text()"
+        )
 
         yield loader.load_item()
 

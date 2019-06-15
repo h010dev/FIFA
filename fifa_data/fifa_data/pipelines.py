@@ -42,7 +42,10 @@ class MongoDBPipeline(MongoPipeline):
         if self.collection == 'user_agents':
 
             if self.collection.count_documents(
-                    {'id': item.get('user_agent')}) == 1:
+                    {
+                        'id': item.get('user_agent')
+                    }
+            ) == 1:
                 raise DropItem('Item dropped')
             else:
                 self.collection.update(
