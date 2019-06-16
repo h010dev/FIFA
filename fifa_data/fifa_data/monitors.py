@@ -1,5 +1,6 @@
-from spidermon import Monitor, MonitorSuite, monitors
+from spidermon import monitors, Monitor, MonitorSuite
 from spidermon.contrib.monitors.mixins import StatsMonitorMixin
+
 from fifa_data.actions import CloseSpiderAction
 
 
@@ -18,7 +19,8 @@ class ItemCountMonitor(Monitor):
         minimum_threshold = ((pages_visited - 1) * 60) + 1
         maximum_threshold = ((pages_visited - 1) * 60) + 61
 
-        msg = f'Extracted {item_extracted} out of [{minimum_threshold}, {maximum_threshold}] items.'
+        msg = f'Extracted {item_extracted} out of '\
+            f'[{minimum_threshold}, {maximum_threshold}] items.'
         self.assertTrue(
             maximum_threshold >= item_extracted >= minimum_threshold, msg=msg
         )
@@ -60,7 +62,8 @@ class FinishReasonMonitor(Monitor):
     def test_should_finish_with_expected_reason(self):
         expected_reasons = self.SPIDERMON_EXPECTED_FINISH_REASONS
         finished_reason = getattr(self.data.stats, 'finish_reason')
-        msg = f'Finished with {finished_reason}, the expected reasons are {expected_reasons}'
+        msg = f'Finished with {finished_reason}, the expected reasons are '\
+            f'{expected_reasons}'
         self.assertTrue(finished_reason in expected_reasons, msg=msg)
 
 
@@ -77,7 +80,10 @@ class UnwantedHTTPCodesMonitor(Monitor):
         error_codes = self.DEFAULT_ERROR_CODES
         for code, max_errors in error_codes.items():
             code = int(code)
-            count = getattr(self.data.stats, f'downloader/response_status_count/{code}', 0)
+            count = getattr(
+                self.data.stats,
+                f'downloader/response_status_count/{code}', 0
+            )
             msg = (
                 f'Found {count} Responses with status code = {code} - '
                 f'This exceeds the limit of {max_errors}'
