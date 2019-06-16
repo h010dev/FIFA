@@ -1,22 +1,37 @@
 import scrapy
-from scrapy.linkextractors import LinkExtractor
-from scrapy.spiders import CrawlSpider, Rule
-from scrapy.loader import ItemLoader
-from fifa_data.items import TeamStatItem
-from scrapy.utils.log import configure_logging
-from proxies.proxy_generator import proxies
-from user_agents.user_agent_generator import user_agent
-from fifa_data.sofifa_settings import sofifa_settings
 from scrapy.crawler import CrawlerRunner
+from scrapy.linkextractors import LinkExtractor
+from scrapy.loader import ItemLoader
+from scrapy.spiders import CrawlSpider, Rule
+from scrapy.utils.log import configure_logging
+
 from twisted.internet import reactor
+
+from fifa_data.items import TeamStatItem
+from fifa_data.sofifa_settings import sofifa_settings
+from proxies.proxy_generator import gen_proxy_list
+from user_agents.user_agent_generator import gen_useragent_list
 
 
 class SofifaClubUrlsSpider(CrawlSpider):
+
+    """
+    Collects all club urls found on sofifa.com to be later scraped by
+    the SofifaClubPagesSpider.
+    """
 
     name = 'club_pages'
 
     proxies = gen_proxy_list()
     user_agent = gen_useragent_list()
+
+    custom_settings = sofifa_settings(
+        name=name,
+        proxies=proxies,
+        user_agent=user_agent,
+        collection='club_urls',
+        validator='ClubItem'
+    )
 
     allowed_domains = [
         'sofifa.com'
@@ -53,14 +68,6 @@ class SofifaClubUrlsSpider(CrawlSpider):
         )
     )
 
-    custom_settings = sofifa_settings(
-        name=name,
-        proxies=proxies,
-        user_agent=user_agent,
-        collection='club_urls',
-        validator='ClubItem'
-    )
-
     def parse_start_url(self, response):
 
         for row in response.xpath(
@@ -91,13 +98,13 @@ class SofifaClubUrlsSpider(CrawlSpider):
             )
             loader.add_xpath(
                 'hits',
-                """.//div[@class='col-comments text-right text-ellipsis rtl']\
-                /text()"""
+                ".//div[@class='col-comments text-right text-ellipsis rtl']"\
+                "/text()"
             )
             loader.add_xpath(
                 'comments',
-                """.//div[@class='col-comments text-right text-ellipsis rtl']\
-                /text()"""
+                ".//div[@class='col-comments text-right text-ellipsis rtl']"\
+                "/text()"
             )
             loader.add_xpath(
                 'club_page',
