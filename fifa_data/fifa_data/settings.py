@@ -6,7 +6,8 @@ SPIDER_MODULES = ['fifa_data.spiders']
 
 NEWSPIDER_MODULE = 'fifa_data.spiders'
 
-USER_AGENT = "'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64; rv:48.0) Gecko/20100101 Firefox/48.0'"
+USER_AGENT = "'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64; rv:48.0) "\
+    "Gecko/20100101 Firefox/48.0'"
 
 ROBOTSTXT_OBEY = True
 
@@ -36,13 +37,15 @@ DOWNLOADER_MIDDLEWARES = {
     # 'fifa_market_analysis_.middlewares.UserAgentRotatorMiddleware': 400,
     'scrapy_splash.SplashCookiesMiddleware': 723,
     'scrapy_splash.SplashMiddleware': 725,
-    'scrapy.downloadermiddlewares.httpcompression.HttpCompressionMiddleware': 810,
+    'scrapy.downloadermiddlewares.httpcompression.'\
+    'HttpCompressionMiddleware': 810,
 }
 
 DOWNLOADER_MIDDLEWARES.update(
     {
         'scrapy.downloadermiddlewares.useragent.UserAgentMiddleware': None,
-        'scrapy_useragents.downloadermiddlewares.useragents.UserAgentsMiddleware': 500,
+        'scrapy_useragents.downloadermiddlewares.useragents.'\
+        'UserAgentsMiddleware': 500,
     }
 )
 
@@ -79,7 +82,8 @@ AUTOTHROTTLE_ENABLED = True
 
 # FEED_FORMAT = 'json'
 
-# FEED_URI = 'file:///C:/Users/E46Racing/Documents/PycharmProjects/my_projects/fifa_workspace/fifa_market_analysis_' \
+# FEED_URI = 'file:///C:/Users/E46Racing/Documents/PycharmProjects/'\
+# 'my_projects/fifa_workspace/fifa_market_analysis_' \
 #            '/fifa_market_analysis_/feed_dump/test.json'
 
 MONGO_URI = f'mongodb://{host}:{port}'

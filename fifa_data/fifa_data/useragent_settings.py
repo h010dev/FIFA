@@ -8,9 +8,9 @@ def useragent_settings(name, database, collection, proxies, user_agent,
     settings = {
 
         # DATABASE SETTINGS
-        'MONGO_DB': f'{database}',
+        'MONGO_DB': database,
         'MONGO_URI': f'mongodb://{host}:{port}',
-        'COLLECTION_NAME': f'{collection}',
+        'COLLECTION_NAME': collection,
 
         # SPIDER CHECKPOINTS
         'JOBDIR': f'pause_resume/{name}',

@@ -2,14 +2,15 @@ import datetime
 from fifa_data.mongodb_addr import host, port
 
 
-def sofifa_settings(name, database, collection, proxies, user_agent, validator):
+def sofifa_settings(name, database, collection, proxies, user_agent,
+                    validator):
 
     settings = {
 
         # DATABASE SETTINGS
-        'MONGO_DB': f'{database}',
+        'MONGO_DB': database,
         'MONGO_URI': f'mongodb://{host}:{port}',
-        'COLLECTION_NAME': f'{collection}',
+        'COLLECTION_NAME': collection,
 
         # SPIDER CHECKPOINTS
         'JOBDIR': f'pause_resume/{name}',
