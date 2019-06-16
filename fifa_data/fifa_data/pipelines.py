@@ -1,10 +1,12 @@
 import pymongo
 from pymongo import MongoClient
-from scrapy.pipelines.images import ImagesPipeline
-from scrapy.pipelines.media import *
-from fifa_data.mongodb_addr import host
+
 from scrapy import Request
 from scrapy.exceptions import DropItem
+from scrapy.pipelines.images import ImagesPipeline
+from scrapy.pipelines.media import *
+
+from fifa_data.mongodb_addr import host, port
 
 
 class MongoPipeline(object):
@@ -80,7 +82,7 @@ class SpiderStats(MongoPipeline):
     @classmethod
     def from_crawler(cls, crawler):
         return cls(
-            mongo_uri=f'mongodb://{host}:27017',
+            mongo_uri=f'mongodb://{host}:{port}',
             mongo_db='stats',
             mongo_collection='spider_stats',
             stats=crawler.stats
@@ -89,7 +91,13 @@ class SpiderStats(MongoPipeline):
     def process_item(self, item, spider):
         self.collection.update_one(
             filter={'spider_name': spider.name},
-            update={'$set': {'item_scraped_count': self.stats.get_value('item_scraped_count')}},
+            update={
+                '$set': {
+                    'item_scraped_count': self.stats.get_value(
+                        'item_scraped_count'
+                    )
+                }
+            },
             upsert=True
         )
         return item
@@ -142,7 +150,7 @@ class ImagesToDownloadPipeline(ImagesPipeline, MediaPipeline):
         dfd.addCallback(self._check_media_to_download, request, info)
         dfd.addBoth(self._cache_result_and_execute_waiters, fp, info)
         dfd.addErrback(lambda f: logger.error(
-            f.value, exc_info=failure_to_exc_info(f), extra={'spider': info.spider})
+            f.value, exc_info=failure_to_exc_info(f),extra={'spider': info.spider})
         )
         return dfd.addBoth(lambda _: wad)  # it must return wad at last
 
