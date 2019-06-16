@@ -1,21 +1,16 @@
-# -*- coding: utf-8 -*-
-
-# Define here the models for your scraped items
-#
-# See documentation in:
-# https://doc.scrapy.org/en/latest/topics/items.html
-
-import scrapy
-from scrapy.loader.processors import MapCompose, TakeFirst, Identity, Compose
 import re
 from datetime import datetime
 from urllib.parse import urljoin
+
+import scrapy
+from scrapy.loader.processors import Compose, Identity, MapCompose, TakeFirst
 
 
 def convert_currency_format(value):
 
     """
-    Strips away currency symbol and applies multiplier based on abbreviation (K to 1,000, M to 1,000,000).
+    Strips away currency symbol and applies multiplier based on
+    abbreviation (K to 1,000, M to 1,000,000).
 
     >>> convert_currency_format('€110.5M')
     >>> 110500000.0
@@ -37,19 +32,20 @@ def convert_currency_format(value):
     """
 
     pattern = r'\W|[0-9.]+|[a-zA-Z]'
+    match = re.findall(pattern, value)
 
     if type(value) is str:
-        if re.findall(pattern, value)[0] == u"\u20ac" and re.findall(pattern, value)[-1] == 'K':
-            new_value = float(re.findall(pattern, value)[1]) * 1000
+        if match[0] == u"\u20ac" and match[-1] == 'K':
+            new_value = float(match[1]) * 1000
             return new_value
-        elif re.findall(pattern, value)[0] == u"\u20ac" and re.findall(pattern, value)[-1] == 'M':
-            new_value = float(re.findall(pattern, value)[1]) * 1000000
+        elif mathc[0] == u"\u20ac" and match[-1] == 'M':
+            new_value = float(match[1]) * 1000000
             return new_value
-        elif re.findall(pattern, value)[0] == u"\u20ac" and re.findall(pattern, value)[-1] != ('M' or 'K'):
-            new_value = float(re.findall(pattern, value)[1])
+        elif match[0] == u"\u20ac" and match[-1] != ('M' or 'K'):
+            new_value = float(match[1])
             return new_value
-        elif re.findall(pattern, value)[0] != u"\u20ac" and re.findall(pattern, value)[-1] != ('M' or 'K'):
-            new_value = float(re.findall(pattern, value)[0])
+        elif match[0] != u"\u20ac" and match[-1] != ('M' or 'K'):
+            new_value = float(match[0])
             return new_value
     else:
         return float(value)
@@ -135,7 +131,8 @@ def player_id_list(value):
 def host_port_ip(value):
 
     """
-    Combine columns from proxy list to create a single proxy for each entry.
+    Combine columns from proxy list to create a single proxy for each
+    entry.
     """
 
     rows = re.findall(r'\n?\{.+\}\n?', value)
@@ -271,7 +268,9 @@ class SofifaItem(scrapy.Item):
     )
 
     club_join_date = scrapy.Field(
-        input_processor=MapCompose(lambda x: datetime.strptime(x, '%b %d, %Y')),
+        input_processor=MapCompose(
+            lambda x: datetime.strptime(x, '%b %d, %Y')
+        ),
         output_processor=TakeFirst()
     )
 
@@ -328,62 +327,86 @@ class SofifaItem(scrapy.Item):
     )
 
     PAC = scrapy.Field(
-        input_processor=MapCompose(lambda x: re.findall(r'pointPAC = ([0-9]+)', x)[0], eval),
+        input_processor=MapCompose(
+            lambda x: re.findall(r'pointPAC = ([0-9]+)', x)[0], eval
+        ),
         output_processor=TakeFirst()
     )
 
     SHO = scrapy.Field(
-        input_processor=MapCompose(lambda x: re.findall(r'pointSHO = ([0-9]+)', x)[0], eval),
+        input_processor=MapCompose(
+            lambda x: re.findall(r'pointSHO = ([0-9]+)', x)[0], eval
+        ),
         output_processor=TakeFirst()
     )
 
     PAS = scrapy.Field(
-        input_processor=MapCompose(lambda x: re.findall(r'pointPAS = ([0-9]+)', x)[0], eval),
+        input_processor=MapCompose(
+            lambda x: re.findall(r'pointPAS = ([0-9]+)', x)[0], eval
+        ),
         output_processor=TakeFirst()
     )
 
     DRI = scrapy.Field(
-        input_processor=MapCompose(lambda x: re.findall(r'pointDRI = ([0-9]+)', x)[0], eval),
+        input_processor=MapCompose(
+            lambda x: re.findall(r'pointDRI = ([0-9]+)', x)[0], eval
+        ),
         output_processor=TakeFirst()
     )
 
     DEF = scrapy.Field(
-        input_processor=MapCompose(lambda x: re.findall(r'pointDEF = ([0-9]+)', x)[0], eval),
+        input_processor=MapCompose(
+            lambda x: re.findall(r'pointDEF = ([0-9]+)', x)[0], eval
+        ),
         output_processor=TakeFirst()
     )
 
     PHY = scrapy.Field(
-        input_processor=MapCompose(lambda x: re.findall(r'pointPHY = ([0-9]+)', x)[0], eval),
+        input_processor=MapCompose(
+            lambda x: re.findall(r'pointPHY = ([0-9]+)', x)[0], eval
+        ),
         output_processor=TakeFirst()
     )
 
     DIV = scrapy.Field(
-        input_processor=MapCompose(lambda x: re.findall(r'pointPAC = ([0-9]+)', x)[0], eval),
+        input_processor=MapCompose(
+            lambda x: re.findall(r'pointPAC = ([0-9]+)', x)[0], eval
+        ),
         output_processor=TakeFirst()
     )
 
     HAN = scrapy.Field(
-        input_processor=MapCompose(lambda x: re.findall(r'pointSHO = ([0-9]+)', x)[0], eval),
+        input_processor=MapCompose(
+            lambda x: re.findall(r'pointSHO = ([0-9]+)', x)[0], eval
+        ),
         output_processor=TakeFirst()
     )
 
     KIC = scrapy.Field(
-        input_processor=MapCompose(lambda x: re.findall(r'pointPAS = ([0-9]+)', x)[0], eval),
+        input_processor=MapCompose(
+            lambda x: re.findall(r'pointPAS = ([0-9]+)', x)[0], eval
+        ),
         output_processor=TakeFirst()
     )
 
     REF = scrapy.Field(
-        input_processor=MapCompose(lambda x: re.findall(r'pointDRI = ([0-9]+)', x)[0], eval),
+        input_processor=MapCompose(
+            lambda x: re.findall(r'pointDRI = ([0-9]+)', x)[0], eval
+        ),
         output_processor=TakeFirst()
     )
 
     SPD = scrapy.Field(
-        input_processor=MapCompose(lambda x: re.findall(r'pointDEF = ([0-9]+)', x)[0], eval),
+        input_processor=MapCompose(
+            lambda x: re.findall(r'pointDEF = ([0-9]+)', x)[0], eval
+        ),
         output_processor=TakeFirst()
     )
 
     POS = scrapy.Field(
-        input_processor=MapCompose(lambda x: re.findall(r'pointPHY = ([0-9]+)', x)[0], eval),
+        input_processor=MapCompose(
+            lambda x: re.findall(r'pointPHY = ([0-9]+)', x)[0], eval
+        ),
         output_processor=TakeFirst()
     )
 
@@ -752,7 +775,9 @@ class ImageItem(scrapy.Item):
     )
 
     category = scrapy.Field(
-        input_processor=MapCompose(lambda x: re.findall(r'org/([a-zA-Z]+)', x)[0]),
+        input_processor=MapCompose(
+            lambda x: re.findall(r'org/([a-zA-Z]+)', x)[0]
+        ),
         output_processor=TakeFirst()
     )
 
@@ -765,7 +790,9 @@ class ImageItem(scrapy.Item):
 class MainPageItem(scrapy.Item):
 
     id = scrapy.Field(
-        input_processor=MapCompose(lambda x: re.findall(r'/([0-9]+)/', x), eval),
+        input_processor=MapCompose(
+            lambda x: re.findall(r'/([0-9]+)/', x), eval
+        ),
         output_processor=TakeFirst()
     )
 
@@ -775,7 +802,9 @@ class MainPageItem(scrapy.Item):
     )
 
     hits = scrapy.Field(
-        input_processor=MapCompose(lambda x: re.findall(r'<?[0-9.K]+', x)[0]),
+        input_processor=MapCompose(
+            lambda x: re.findall(r'<?[0-9.K]+', x)[0]
+        ),
         output_processor=TakeFirst()
     )
 
@@ -785,7 +814,9 @@ class MainPageItem(scrapy.Item):
     )
 
     player_page = scrapy.Field(
-        input_processor=MapCompose(lambda x: f'{urljoin("https://sofifa.com", x)}'),
+        input_processor=MapCompose(
+            lambda x: f'{urljoin("https://sofifa.com", x)}'
+        ),
         output_processor=TakeFirst()
     )
 
@@ -793,7 +824,9 @@ class MainPageItem(scrapy.Item):
 class TeamStatItem(scrapy.Item):
 
     id = scrapy.Field(
-        input_processor=MapCompose(lambda x: re.findall(r'/([0-9]+)/', x), eval),
+        input_processor=MapCompose(
+            lambda x: re.findall(r'/([0-9]+)/', x), eval
+        ),
         output_processor=TakeFirst()
     )
 
@@ -823,7 +856,9 @@ class TeamStatItem(scrapy.Item):
     )
 
     club_page = scrapy.Field(
-        input_processor=MapCompose(lambda x: f'{urljoin("https://sofifa.com", x)}'),
+        input_processor=MapCompose(
+            lambda x: f'{urljoin("https://sofifa.com", x)}'
+        ),
         output_processor=TakeFirst()
     )
 
@@ -838,7 +873,9 @@ class DetailedTeamStatItem(scrapy.Item):
     )
 
     club_name = scrapy.Field(
-        input_processor=MapCompose(lambda x: re.findall(r'^[^\(]+', x), str.strip),
+        input_processor=MapCompose(
+            lambda x: re.findall(r'^[^\(]+', x), str.strip
+        ),
         output_processor=TakeFirst()
     )
 
@@ -917,42 +954,58 @@ class DetailedTeamStatItem(scrapy.Item):
     )
 
     captain = scrapy.Field(
-        input_processor=MapCompose(lambda x: re.findall(r'([0-9]+)', x)[0], eval),
+        input_processor=MapCompose(
+            lambda x: re.findall(r'([0-9]+)', x)[0], eval
+        ),
         output_processor=TakeFirst()
     )
 
     short_free_kick = scrapy.Field(
-        input_processor=MapCompose(lambda x: re.findall(r'([0-9]+)', x)[0], eval),
+        input_processor=MapCompose(
+            lambda x: re.findall(r'([0-9]+)', x)[0], eval
+        ),
         output_processor=TakeFirst()
     )
 
     long_free_kick = scrapy.Field(
-        input_processor=MapCompose(lambda x: re.findall(r'([0-9]+)', x)[0], eval),
+        input_processor=MapCompose(
+            lambda x: re.findall(r'([0-9]+)', x)[0], eval
+        ),
         output_processor=TakeFirst()
     )
 
     left_short_free_kick = scrapy.Field(
-        input_processor=MapCompose(lambda x: re.findall(r'([0-9]+)', x)[0], eval),
+        input_processor=MapCompose(
+            lambda x: re.findall(r'([0-9]+)', x)[0], eval
+        ),
         output_processor=TakeFirst()
     )
 
     right_short_free_kick = scrapy.Field(
-        input_processor=MapCompose(lambda x: re.findall(r'([0-9]+)', x)[0], eval),
+        input_processor=MapCompose(
+            lambda x: re.findall(r'([0-9]+)', x)[0], eval
+        ),
         output_processor=TakeFirst()
     )
 
     penalties = scrapy.Field(
-        input_processor=MapCompose(lambda x: re.findall(r'([0-9]+)', x)[0], eval),
+        input_processor=MapCompose(
+            lambda x: re.findall(r'([0-9]+)', x)[0], eval
+        ),
         output_processor=TakeFirst()
     )
 
     left_corner = scrapy.Field(
-        input_processor=MapCompose(lambda x: re.findall(r'([0-9]+)', x)[0], eval),
+        input_processor=MapCompose(
+            lambda x: re.findall(r'([0-9]+)', x)[0], eval
+        ),
         output_processor=TakeFirst()
     )
 
     right_corner = scrapy.Field(
-        input_processor=MapCompose(lambda x: re.findall(r'([0-9]+)', x)[0], eval),
+        input_processor=MapCompose(
+            lambda x: re.findall(r'([0-9]+)', x)[0], eval
+        ),
         output_processor=TakeFirst()
     )
 
@@ -1099,12 +1152,16 @@ class DetailedTeamStatItem(scrapy.Item):
 class NationalTeamStats(TeamStatItem):
 
     id = scrapy.Field(
-        input_processor=MapCompose(lambda x: re.findall(r'/([0-9]+)/', x), eval),
+        input_processor=MapCompose(
+            lambda x: re.findall(r'/([0-9]+)/', x), eval
+        ),
         output_processor=TakeFirst()
     )
 
     team_page = scrapy.Field(
-        input_processor=MapCompose(lambda x: f'{urljoin("https://sofifa.com", x)}'),
+        input_processor=MapCompose(
+            lambda x: f'{urljoin("https://sofifa.com", x)}'
+        ),
         output_processor=TakeFirst()
     )
 
