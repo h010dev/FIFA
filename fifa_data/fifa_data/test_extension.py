@@ -2,6 +2,7 @@ import datetime
 import json
 import os
 from pprint import pprint
+
 from scrapy.extensions.corestats import CoreStats
 
 
@@ -34,7 +35,9 @@ class CustomStats(CoreStats):
             if status not in ['finished']:
                 for stat in self.data.keys():
                     try:
-                        self.stats.set_value(stat, self.data[stat], spider=spider)
+                        self.stats.set_value(
+                            stat, self.data[stat],spider=spider
+                        )
                     except KeyError:
                         pass
 
@@ -44,7 +47,9 @@ class CustomStats(CoreStats):
         else:
             pass
 
-        self.stats.set_value('start_time', datetime.datetime.now(), spider=spider)
+        self.stats.set_value(
+            'start_time', datetime.datetime.now(), spider=spider
+        )
         self.stats.set_value('spider_name', spider.name)
 
     def spider_closed(self, spider, reason):
@@ -53,11 +58,14 @@ class CustomStats(CoreStats):
 
         # Add previous run's elapsed time to current run:
         try:
-            elapsed_time_seconds = elapsed_time.total_seconds() + self.stats.get_value('elapsed_time_seconds')
+            elapsed_time_seconds = elapsed_time.total_seconds()
+            + self.stats.get_value('elapsed_time_seconds')
         except TypeError:
             elapsed_time_seconds = elapsed_time.total_seconds()
 
-        self.stats.set_value('elapsed_time_seconds', elapsed_time_seconds, spider=spider)
+        self.stats.set_value(
+            'elapsed_time_seconds', elapsed_time_seconds, spider=spider
+        )
         self.stats.set_value('finish_time', finish_time, spider=spider)
         self.stats.set_value('finish_reason', reason, spider=spider)
         try:

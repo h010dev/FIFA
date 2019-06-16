@@ -1,6 +1,8 @@
-from schematics.models import Model
-from schematics.types import URLType, StringType, ListType, IntType, FloatType, DecimalType, DateTimeType
 import datetime
+
+from schematics.models import Model
+from schematics.types import DateTimeType, DecimalType, IntType, ListType, \
+    StringType, URLType
 
 
 class ProxyItem(Model):
@@ -23,7 +25,8 @@ class PlayerItem(Model):
     total_stats = IntType()
     hits = StringType()
     comments = StringType()
-    # TODO: create separate class for player_pages spider as the player_page is not available for the player_detail
+    # TODO: create separate class for player_pages spider as the
+    # player_page is not available for the player_detail
     #  spider, causing problems in the stats logger.
     player_page = URLType(required=True)
 
