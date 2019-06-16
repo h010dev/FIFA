@@ -1,13 +1,8 @@
-# -*- coding: utf-8 -*-
-
-# Define here the models for your spider middleware
-#
-# See documentation in:
-# https://doc.scrapy.org/en/latest/topics/spider-middleware.html
+import logging
+import random
 
 from scrapy import signals
 from scrapy.downloadermiddlewares.useragent import UserAgentMiddleware
-import random, logging
 
 
 class UserAgentRotatorMiddleware(UserAgentMiddleware):
@@ -28,6 +23,7 @@ class UserAgentRotatorMiddleware(UserAgentMiddleware):
             request.headers.setdefault('User-Agent', self.user_agent)
         except IndexError:
             logging.error("Couldn't fetch the user agent.")
+
 
 class FifaMarketAnalysisSpiderMiddleware(object):
     # Not all methods need to be defined. If a method is not defined,
