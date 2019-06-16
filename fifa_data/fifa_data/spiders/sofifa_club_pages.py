@@ -1,8 +1,8 @@
 import scrapy
 from scrapy.loader import ItemLoader
 from pymongo import MongoClient
-from proxies.proxy_generator import proxies
-from user_agents.user_agent_generator import user_agent
+from proxies.proxy_generator import gen_proxy_list
+from user_agents.user_agent_generator import gen_useragent_list
 from fifa_data.items import DetailedTeamStatItem
 from fifa_data.sofifa_settings import sofifa_settings
 
@@ -11,8 +11,12 @@ class SofifaClubPagesSpider(scrapy.Spider):
 
     name = 'club_details'
 
+    proxies = gen_proxy_list()
+    user_agent = gen_useragent_list()
+
     custom_settings = sofifa_settings(
         name=name,
+        database='sofifa',
         proxies=proxies,
         user_agent=user_agent,
         collection='club_details',
@@ -356,9 +360,7 @@ class SofifaClubPagesSpider(scrapy.Spider):
         )
 
         self.logger.info(
-            f'Parse function called on {
-                response.url
-                }'
+            f'Parse function called on {response.url}'
         )
 
         yield loader.load_item()

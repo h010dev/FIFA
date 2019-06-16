@@ -17,7 +17,8 @@ class SofifaClubUrlsSpider(CrawlSpider):
 
     """
     Collects all club urls found on sofifa.com to be later scraped by
-    the SofifaClubPagesSpider.
+    the SofifaClubPagesSpider. URLs are stored inside the club_urls
+    collection at mongodb://mongo_server:27017/sofifa
     """
 
     name = 'club_pages'
@@ -27,9 +28,10 @@ class SofifaClubUrlsSpider(CrawlSpider):
 
     custom_settings = sofifa_settings(
         name=name,
+        database='sofifa',
+        collection='club_urls',
         proxies=proxies,
         user_agent=user_agent,
-        collection='club_urls',
         validator='ClubItem'
     )
 
@@ -38,7 +40,7 @@ class SofifaClubUrlsSpider(CrawlSpider):
     ]
 
     start_urls = [
-        'https://sofifa.com/teams/club/'
+        'https://sofifa.com/teams?type=club/'
     ]
 
     rules = (
@@ -62,7 +64,7 @@ class SofifaClubUrlsSpider(CrawlSpider):
             follow=True
         ),
         Rule(
-            LinkExtractor(restrict_xpaths="//a[text()='Next']"),
+            LinkExtractor(restrict_xpaths="//a/span[text()='Next']"),
             callback='parse_item',
             follow=True
         )
@@ -86,29 +88,27 @@ class SofifaClubUrlsSpider(CrawlSpider):
             )
             loader.add_xpath(
                 'nationality',
-                ".//a[contains(@href, 'teams?na')]/text()"
+                ".//div/a[1]/@title"
             )
             loader.add_xpath(
                 'region',
-                ".//a[contains(@href, 'teams?ct')]/text()"
+                ".//td/a[1]/text()"
             )
             loader.add_xpath(
                 'num_players',
-                ".//td[@class='col text-center'][last()]/div/text()"
+                ".//td[@data-col='ps']/text()"
             )
             loader.add_xpath(
                 'hits',
-                ".//div[@class='col-comments text-right text-ellipsis rtl']"\
-                "/text()"
+                ".//td[@class='col-comment']/text()[1]"
             )
             loader.add_xpath(
                 'comments',
-                ".//div[@class='col-comments text-right text-ellipsis rtl']"\
-                "/text()"
+                ".//td[@class='col-comment']/text()[2]"
             )
             loader.add_xpath(
                 'club_page',
-                ".//a[contains(@href, 'team/')]/@href"
+                ".//td[2]/div/a[2]/@href"
             )
 
             yield loader.load_item()

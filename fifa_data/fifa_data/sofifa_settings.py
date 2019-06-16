@@ -48,8 +48,8 @@ def sofifa_settings(name, database, collection, proxies, user_agent,
 
         'DOWNLOADER_MIDDLEWARES': {
             'scrapy.downloadermiddlewares.useragent.UserAgentMiddleware': None,
-            'scrapy_useragents.downloadermiddlewares.useragents.\
-            UserAgentsMiddleware': 500,
+            'scrapy_useragents.downloadermiddlewares.useragents.'\
+            'UserAgentsMiddleware': 500,
             'rotating_proxies.middlewares.RotatingProxyMiddleware': 610,
             'rotating_proxies.middlewares.BanDetectionMiddleware': 620
         },
