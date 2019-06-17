@@ -1,21 +1,31 @@
 import scrapy
-from scrapy.loader import ItemLoader
 from scrapy.crawler import CrawlerRunner
+from scrapy.loader import ItemLoader
 from scrapy.utils.log import configure_logging
-from twisted.internet import reactor
+
 from pymongo import MongoClient
+from twisted.internet import reactor
+
 from fifa_data.items import SofifaItem
-from fifa_data.mongodb_addr import host
+from fifa_data.mongodb_addr import host, port
 from fifa_data.sofifa_settings import sofifa_settings
 from proxies.proxy_generator import gen_proxy_list
 from user_agents.user_agent_generator import gen_useragent_list
 
+
 class SofifaPlayerPagesSpider(scrapy.Spider):
+
+    """
+    Visits the urls collceted by SofifaPlayerUrlsSpider and scrapes
+    data from those urls. Data is stored inside the player_details
+    collection at mongodb://mongo_server:27017/sofifa
+    """
 
     name = 'player_details'
 
     proxies = gen_proxy_list()
     user_agent = gen_useragent_list()
+
     custom_settings = sofifa_settings(
         name=name,
         database='sofifa',
@@ -25,24 +35,21 @@ class SofifaPlayerPagesSpider(scrapy.Spider):
         validator='PlayerItem'
     )
 
-    client = MongoClient(f'{host}', 27017)
-    db = client.sofifa
-    collection = db.player_urls
-
-    [x[
-        "player_page"
-    ] for x in collection.find(
-        {
-            'player_page': {
-                '$exists': 'true'
-            }
-        }
-    )
-]
-
     def start_requests(self):
 
-        for url in self.urls:
+        client = MongoClient(host, port)
+        db = client.sofifa
+        collection = db.player_urls
+
+        urls = [x["player_page"] for x in collection.find(
+            {
+                'player_page': {
+                    '$exists': 'true'
+                }
+            }
+        )]
+
+        for url in urls:
             yield scrapy.Request(
                 url=url,
                 callback=self.parse
@@ -50,12 +57,7 @@ class SofifaPlayerPagesSpider(scrapy.Spider):
 
     def parse(self, response):
 
-        self.crawler.stats.set_value(
-            'pages_to_visit',
-            len(
-                self.urls
-            )
-        )
+        self.crawler.stats.set_value('pages_to_visit', len(self.urls))
 
         loader = ItemLoader(
             item=SofifaItem(),
@@ -80,32 +82,32 @@ class SofifaPlayerPagesSpider(scrapy.Spider):
 
         loader.add_xpath(
             'full_name',
-            ".//div[@class='meta']/text()"
+            ".//div[contains(@class, 'meta')]/text()[1]"
         )
 
         loader.add_xpath(
             'age',
-            ".//div[@class='meta']/text()/following-sibling::text()[last()]"
+            ".//div[contains(@class, 'meta')]/text()[1]"
         )
 
         loader.add_xpath(
             'dob',
-            ".//div[@class='meta']/text()/following-sibling::text()[last()]"
+            ".//div[contains(@class, 'meta')]/text()[1]"
         )
 
         loader.add_xpath(
             'height',
-            ".//div[@class='meta']/text()/following-sibling::text()[last()]"
+            ".//div[contains(@class, 'meta')]/text()[1]"
         )
 
         loader.add_xpath(
             'weight',
-            ".//div[@class='meta']/text()/following-sibling::text()[last()]"
+            ".//div[contains(@class, 'meta')]/text()[1]"
         )
 
         loader.add_xpath(
             'nationality',
-            ".//div[@class='meta']/a/@title"
+            ".//div[contains(@class, 'meta')]/a/@title"
         )
 
         # GENERAL PLAYER STATS
@@ -117,7 +119,8 @@ class SofifaPlayerPagesSpider(scrapy.Spider):
 
         loader.add_xpath(
             'international_reputation',
-            "(.//label[text()='International Reputation']/following::text())[1]"
+            "(.//label[text()='International Reputation']"\
+            "/following::text())[1]"
         )
 
         loader.add_xpath(
@@ -149,12 +152,13 @@ class SofifaPlayerPagesSpider(scrapy.Spider):
 
         col_4_loader.add_xpath(
             'value',
-            "following::text()[contains(., 'Value')]/following::span[1]/text()"
+            "/following::text()[contains(., 'Value')]"\
+            "/following::span[1]/text()"
         )
 
         col_4_loader.add_xpath(
             'wage',
-            "following::text()[contains(., 'Wage')]/following::span[1]/text()"
+            "/following::text()[contains(., 'Wage')]/following::span[1]/text()"
         )
 
         loader.add_xpath(
@@ -164,12 +168,17 @@ class SofifaPlayerPagesSpider(scrapy.Spider):
 
         loader.add_xpath(
             'club_name',
-            "(.//ul[@class='pl']//a/text())[1]"
+            "(.//ul[contains(@class, 'pl')]//a/text())[1]"
+        )
+
+        loader.add_xpath(
+            'club_url',
+            "(.//ul[contains(@class, 'pl')]//a/@href)[1]"
         )
 
         loader.add_xpath(
             'club_rating',
-            ".//div[@class='column col-4'][3]/ul/li[2]/span/text()"
+            ".//div[contains(@class, 'column col-5')][1]//li[2]/span[1]/text()"
         )
 
         loader.add_xpath(
@@ -199,123 +208,122 @@ class SofifaPlayerPagesSpider(scrapy.Spider):
 
         loader.add_xpath(
             'team_name',
-            "(.//ul[@class='pl']//a/text())[2]"
+            "(.//ul[contains(@class, 'pl')]//a/text())[last()]"
         )
 
         loader.add_xpath(
             'team_rating',
-            ".//div[@class='column col-4'][4]/ul/li[2]/span/text()"
+            ".//div[contains(@class, 'column col-5')][last()]//li[2]/span[1]"\
+            "/text()"
         )
 
         loader.add_xpath(
             'team_position',
-            "(.//label[text()='Position']/following::text()[1])[2]"
+            "(.//label[text()='Position']/following::text()[1])[last()]"
         )
 
         loader.add_xpath(
             'team_jersey_number',
-            "(.//label[text()='Jersey Number']/following::text()[1])[2]"
+            "(.//label[text()='Jersey Number']/following::text()[1])[last()]"
         )
 
         # PLAYER GAME STATS
 
         loader.add_xpath(
             'overall_rating',
-            "(.//div[@class='column col-4 text-center']\
-            /preceding::text()[contains(.,'Overall Rating')])[2]\
-            /following::span[1]/text()"
+            "//div[@class='column col-4 text-center'][1]/span/text()"
         )
 
         col_4_loader.add_xpath(
             'potential_rating',
-            "following::text()[contains(., 'Potential')]\
-            /following::span[1]/text()"
+            "//div[@class='column col-4 text-center'][2]/span/text()"
         )
 
         loader.add_xpath(
             'positions',
-            ".//div[@class='meta']/span/text()"
+            ".//div[contains(@class, 'meta')]/span/text()"
         )
 
         loader.add_xpath(
             'unique_attributes',
-            ".//div[@class='mt-2']/a/text()"
+            ".//div[contains(@class, 'mt-2')]/a/text()"
         )
 
-        if 'GK' in response.xpath(".//div[@class='meta']/span/text()").getall():
+        if 'GK' in response.xpath(".//div[contains(@class, 'meta')]"\
+                                  "/span/text()").getall():
 
             loader.add_xpath(
                 'DIV',
-                ".//div[@class='wrapper']\
-                //script[contains(text(), 'var overallRating')]/text()"
+                "(.//div[@class='wrapper']"\
+                "//script)[1][contains(text(), 'var')]/text()"
             )
 
             loader.add_xpath(
                 'HAN',
-                ".//div[@class='wrapper']\
-                //script[contains(text(), 'var overallRating')]/text()"
+                "(.//div[@class='wrapper']"\
+                "//script)[1][contains(text(), 'var')]/text()"
             )
 
             loader.add_xpath(
                 'KIC',
-                ".//div[@class='wrapper']\
-                //script[contains(text(), 'var overallRating')]/text()"
+                "(.//div[@class='wrapper']"\
+                "//script)[1][contains(text(), 'var')]/text()"
             )
 
             loader.add_xpath(
                 'REF',
-                ".//div[@class='wrapper']\
-                //script[contains(text(), 'var overallRating')]/text()"
+                "(.//div[@class='wrapper']"\
+                "//script)[1][contains(text(), 'var')]/text()"
             )
 
             loader.add_xpath(
                 'SPD',
-                ".//div[@class='wrapper']\
-                //script[contains(text(), 'var overallRating')]/text()"
+                "(.//div[@class='wrapper']"\
+                "//script)[1][contains(text(), 'var')]/text()"
             )
 
             loader.add_xpath(
                 'POS',
-                ".//div[@class='wrapper']\
-                //script[contains(text(), 'var overallRating')]/text()"
+                "(.//div[@class='wrapper']"\
+                "//script)[1][contains(text(), 'var')]/text()"
             )
 
         else:
 
             loader.add_xpath(
                 'PAC',
-                ".//div[@class='wrapper']\
-                //script[contains(text(), 'var overallRating')]/text()"
+                "(.//div[@class='wrapper']"\
+                "//script)[1][contains(text(), 'var')]/text()"
             )
 
             loader.add_xpath(
                 'SHO',
-                ".//div[@class='wrapper']\
-                //script[contains(text(), 'var overallRating')]/text()"
+                "(.//div[@class='wrapper']"\
+                "//script)[1][contains(text(), 'var')]/text()"
             )
 
             loader.add_xpath(
                 'PAS',
-                ".//div[@class='wrapper']\
-                //script[contains(text(), 'var overallRating')]/text()"
+                "(.//div[@class='wrapper']"\
+                "//script)[1][contains(text(), 'var')]/text()"
             )
 
             loader.add_xpath(
                 'DRI',
-                ".//div[@class='wrapper']\
-                //script[contains(text(), 'var overallRating')]/text()"
+                "(.//div[@class='wrapper']"\
+                "//script)[1][contains(text(), 'var')]/text()"
             )
 
             loader.add_xpath(
                 'DEF',
-                ".//div[@class='wrapper']\
-                //script[contains(text(), 'var overallRating')]/text()"
+                "(.//div[@class='wrapper']"\
+                "//script)[1][contains(text(), 'var')]/text()"
             )
 
             loader.add_xpath(
                 'PHY',
-                ".//div[@class='wrapper']\
-                //script[contains(text(), 'var overallRating')]/text()"
+                "(.//div[@class='wrapper']"\
+                "//script)[1][contains(text(), 'var')]/text()"
             )
 
         # PLAYER DETAILED STATS
@@ -631,20 +639,20 @@ class SofifaPlayerPagesSpider(scrapy.Spider):
 
         loader.add_xpath(
             'followers',
-            "(.//div[@class='operation mt-2']/a/text()[contains(.,'Follow')]\
-            /following::span)[1]/text()"
+            "(.//div[contains(@class, 'operation spacing')]/a/span[2]/span"\
+            "/text())[3]"
         )
 
         loader.add_xpath(
             'likes',
-            "(.//div[@class='operation mt-2']/a/text()[contains(.,'Like')]\
-            /following::span)[1]/text()"
+            "(.//div[contains(@class, 'operation spacing')]/a/span[2]/span"\
+            "/text())[1]"
         )
 
         loader.add_xpath(
             'dislikes',
-            "(.//div[@class='operation mt-2']/a/text()[contains(.,'Dislike')]\
-            /following::span)[1]/text()"
+            "(.//div[contains(@class, 'operation spacing')]/a/span[2]/span"\
+            "/text())[2]"
         )
 
         # MEDIA
@@ -656,7 +664,7 @@ class SofifaPlayerPagesSpider(scrapy.Spider):
 
         loader.add_xpath(
             'flag_img',
-            ".//div[@class='meta']/a/img/@data-src"
+            ".//div[contains(@class, 'meta')]/a/img/@data-src"
         )
 
         loader.add_xpath(
@@ -666,15 +674,16 @@ class SofifaPlayerPagesSpider(scrapy.Spider):
 
         loader.add_xpath(
             'team_logo_img',
-            "(.//div/ul/li/figure/img/@data-src)[2]"
+            "(.//div/ul/li/figure/img/@data-src)[last()]"
         )
 
-        self.logger.info(
-            f'Parse function called on {response.url}'
-        )
+        self.logger.info(f'Parse function called on {response.url}')
 
         self.logger.info(
-            f"Currently on page {self.crawler.stats.get_value('page_counter')} out of {self.crawler.stats.get_value('pages_to_visit')}")
+            f"Currently on page "\
+            f"{self.crawler.stats.get_value('page_counter')} out of "\
+            f"{self.crawler.stats.get_value('pages_to_visit')}"
+        )
 
         # TODO: enable continued logging of page_counter after a pause/resume.
 
@@ -684,18 +693,20 @@ class SofifaPlayerPagesSpider(scrapy.Spider):
             start=0
         )
 
-        print(
-            response.request.headers[
-                'User-Agent'
-            ]
-        )
+        print(response.request.headers['User-Agent'])
 
-        print(f"{self.crawler.stats.get_value('page_counter')} out of {self.crawler.stats.get_value('pages_to_visit')}")
+        print(f"{self.crawler.stats.get_value('page_counter')} "\
+              f"out of {self.crawler.stats.get_value('pages_to_visit')}")
 
         yield loader.load_item()
 
 
 def main():
+
+    """
+    Run this spider a single time only.
+    """
+
     configure_logging()
     runner = CrawlerRunner()
     d = runner.crawl(SofifaPlayerPagesSpider)

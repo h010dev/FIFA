@@ -1,7 +1,10 @@
 import scrapy
+from scrapy.crawler import CrawlerRunner
 from scrapy.loader import ItemLoader
+from scrapy.utils.log import configure_logging
 
 from pymongo import MongoClient
+from twisted.internet import reactor
 
 from fifa_data.items import DetailedTeamStatItem
 from fifa_data.mongodb_addr import host, port
@@ -26,9 +29,9 @@ class SofifaClubPagesSpider(scrapy.Spider):
     custom_settings = sofifa_settings(
         name=name,
         database='sofifa',
+        collection='club_details',
         proxies=proxies,
         user_agent=user_agent,
-        collection='club_details',
         validator='ClubItem'
     )
 

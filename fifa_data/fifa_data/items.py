@@ -252,6 +252,13 @@ class SofifaItem(scrapy.Item):
         output_processor=TakeFirst()
     )
 
+    club_url = scrapy.Field(
+        input_processor=MapCompose(
+            lambda x: f'{urljoin("https://sofifa.com", x)}'
+        ),
+        output_processor=TakeFirst()
+    )
+
     club_rating = scrapy.Field(
         input_processor=MapCompose(eval),
         output_processor=TakeFirst()
