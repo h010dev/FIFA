@@ -8,17 +8,19 @@ from scrapy.utils.project import get_project_settings
 from scrapy.crawler import CrawlerRunner
 from twisted.internet import reactor
 from fifa_data.items import MainPageItem
-from proxies.proxy_generator import proxies
-from user_agents.user_agent_generator import user_agent
 from fifa_data.sofifa_settings import sofifa_settings
 from fifa_data.custom_logging import *
 from fifa_data.custom_stats import *
 
+from proxies.proxy_generator import gen_proxy_list
+from user_agents.user_agent_generator import gen_useragent_list
 
 class SofifaPlayerURLsSpider(scrapy.Spider):
 
     name = 'player_pages'
 
+    proxies = gen_proxy_list()
+    user_agent = gen_useragent_list()
     allowed_domains = [
         'sofifa.com'
     ]
@@ -59,6 +61,7 @@ class SofifaPlayerURLsSpider(scrapy.Spider):
 
     custom_settings = sofifa_settings(
         name=name,
+        database='sofifa',
         proxies=proxies,
         user_agent=user_agent,
         collection='player_urls',
@@ -124,13 +127,7 @@ class SofifaPlayerURLsSpider(scrapy.Spider):
                 ]
             )
 
-            self.logger.info(
-                f'Currently on page {
-                    current_page(
-                        response.url
-                    )
-                }'
-            )
+            self.logger.info(f'Currently on page {current_page(response.url)}')
 
             yield loader.load_item()
 

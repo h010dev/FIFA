@@ -5,11 +5,11 @@ from scrapy.loader import ItemLoader
 from fifa_data.items import NationalTeamStats
 from fifa_data.sofifa_settings import sofifa_settings
 from scrapy.utils.log import configure_logging
-from proxies.proxy_generator import proxies
-from user_agents.user_agent_generator import user_agent
 from scrapy.crawler import CrawlerRunner
 from twisted.internet import reactor
 
+from proxies.proxy_generator import gen_proxy_list
+from user_agents.user_agent_generator import gen_useragent_list
 
 class SofifaTeamUrlsSpider(CrawlSpider):
 
@@ -61,6 +61,7 @@ class SofifaTeamUrlsSpider(CrawlSpider):
 
     custom_settings = sofifa_settings(
         name=name,
+        database='sofifa',
         proxies=proxies,
         user_agent=user_agent,
         collection='team_urls',

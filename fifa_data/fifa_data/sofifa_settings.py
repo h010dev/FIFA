@@ -34,7 +34,7 @@ def sofifa_settings(name, database, collection, proxies, user_agent,
         'USER_AGENTS': user_agent,
 
         # MISC. SETTINGS
-        'HTTPCACHE_ENABLED': False,
+        'HTTPCACHE_ENABLED': True,
         'ROBOTSTXT_OBEY': False,
         'DOWNLOAD_TIMEOUT': 30,
 
@@ -42,7 +42,6 @@ def sofifa_settings(name, database, collection, proxies, user_agent,
         'ITEM_PIPELINES': {
             'fifa_data.pipelines.MongoDBPipeline': 300,
             'fifa_data.pipelines.SpiderStats': 301,
-            'fifa_data.pipelines.ProxyPipeline': 302,
             'spidermon.contrib.scrapy.pipelines.ItemValidationPipeline': 800,
         },
 
@@ -63,7 +62,7 @@ def sofifa_settings(name, database, collection, proxies, user_agent,
         ),
 
         'SPIDERMON_PERIODIC_MONITORS': {
-            'fifa_data.monitors.PeriodicMonitorSuite': 60,
+            'fifa_data.monitors.PeriodicMonitorSuite': 300,
         },
 
         # TODO integrate expected finish reasons into settings: currently

@@ -35,7 +35,7 @@ def useragent_settings(name, database, collection, proxies, user_agent,
         'USER_AGENTS': user_agent,
 
         # MISC. SETTINGS
-        'HTTPCACHE_ENABLED': True,
+        'HTTPCACHE_ENABLED': False,
         'ROBOTSTXT_OBEY': False,
         'DOWNLOAD_TIMEOUT': 30,
         'CLOSESPIDER_TIMEOUT': timeout,
@@ -50,7 +50,7 @@ def useragent_settings(name, database, collection, proxies, user_agent,
 
         'DOWNLOADER_MIDDLEWARES': {
             'scrapy.downloadermiddlewares.useragent.UserAgentMiddleware': None,
-            'scrapy_useragents.downloadermiddlewares.useragents.'
+            'scrapy_useragents.downloadermiddlewares.useragents.'\
             'UserAgentsMiddleware': 500,
             'rotating_proxies.middlewares.RotatingProxyMiddleware': 610,
             'rotating_proxies.middlewares.BanDetectionMiddleware': 620

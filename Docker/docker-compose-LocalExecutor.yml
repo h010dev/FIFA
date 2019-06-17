@@ -9,7 +9,7 @@ services:
 
     # Custom mongo db
     mongo_server:
-        image: mongo:3.6.3
+        image: mongo:4.0.10
         restart: always
         volumes: 
           - /home/mohamed/.mongodb/data/db:/data/db

@@ -122,7 +122,7 @@ class UserAgentScraperSpider(CrawlSpider):
         proxies=proxies,
         user_agent=user_agent,
         validator='UserAgentItem',
-        timeout=60
+        timeout=60*2
     )
 
     def parse_item(self, response):

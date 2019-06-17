@@ -9,7 +9,7 @@ NEWSPIDER_MODULE = 'fifa_data.spiders'
 USER_AGENT = "'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64; rv:48.0) "\
     "Gecko/20100101 Firefox/48.0'"
 
-ROBOTSTXT_OBEY = True
+ROBOTSTXT_OBEY = False 
 
 #CONCURRENT_REQUESTS = 32
 
@@ -28,9 +28,9 @@ ROBOTSTXT_OBEY = True
 #   'Accept-Language': 'en',
 #}
 
-SPIDER_MIDDLEWARES = {
-    'scrapy_splash.SplashDeduplicateArgsMiddleware': 100,
-}
+#SPIDER_MIDDLEWARES = {
+#    'scrapy_splash.SplashDeduplicateArgsMiddleware': 100,
+#}
 
 DOWNLOADER_MIDDLEWARES = {
     'scrapy.downloadermiddlewares.useragent.UserAgentMiddleware': None,

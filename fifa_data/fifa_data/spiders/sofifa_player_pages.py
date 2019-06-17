@@ -7,19 +7,21 @@ from pymongo import MongoClient
 from fifa_data.items import SofifaItem
 from fifa_data.mongodb_addr import host
 from fifa_data.sofifa_settings import sofifa_settings
-from proxies.proxy_generator import proxies
-from user_agents.user_agent_generator import user_agent
-
+from proxies.proxy_generator import gen_proxy_list
+from user_agents.user_agent_generator import gen_useragent_list
 
 class SofifaPlayerPagesSpider(scrapy.Spider):
 
     name = 'player_details'
 
+    proxies = gen_proxy_list()
+    user_agent = gen_useragent_list()
     custom_settings = sofifa_settings(
         name=name,
+        database='sofifa',
+        collection='player_details',
         proxies=proxies,
         user_agent=user_agent,
-        collection='player_details',
         validator='PlayerItem'
     )
 
@@ -27,16 +29,16 @@ class SofifaPlayerPagesSpider(scrapy.Spider):
     db = client.sofifa
     collection = db.player_urls
 
-        x[
-            "player_page"
-        ] for x in collection.find(
-            {
-                'player_page': {
-                    '$exists': 'true'
-                }
+    [x[
+        "player_page"
+    ] for x in collection.find(
+        {
+            'player_page': {
+                '$exists': 'true'
             }
-        )
-    ]
+        }
+    )
+]
 
     def start_requests(self):
 
@@ -668,22 +670,11 @@ class SofifaPlayerPagesSpider(scrapy.Spider):
         )
 
         self.logger.info(
-            f'Parse function called on {
-                response.url
-            }'
+            f'Parse function called on {response.url}'
         )
 
         self.logger.info(
-            f"Currently on page {
-                self.crawler.stats.get_value(
-                    'page_counter'
-                )
-            } out of f"{
-                self.crawler.stats.get_value(
-                    'pages_to_visit'
-                )
-            }"
-        )
+            f"Currently on page {self.crawler.stats.get_value('page_counter')} out of {self.crawler.stats.get_value('pages_to_visit')}")
 
         # TODO: enable continued logging of page_counter after a pause/resume.
 
@@ -699,17 +690,7 @@ class SofifaPlayerPagesSpider(scrapy.Spider):
             ]
         )
 
-        print(
-            f"{
-                self.crawler.stats.get_value(
-                    'page_counter'
-                )
-            } out of {
-                self.crawler.stats.get_value(
-                    'pages_to_visit'
-                )
-                }"
-        )
+        print(f"{self.crawler.stats.get_value('page_counter')} out of {self.crawler.stats.get_value('pages_to_visit')}")
 
         yield loader.load_item()
 

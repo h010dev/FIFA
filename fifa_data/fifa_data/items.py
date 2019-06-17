@@ -846,12 +846,12 @@ class TeamStatItem(scrapy.Item):
     )
 
     hits = scrapy.Field(
-        input_processor=MapCompose(lambda x: re.findall(r'<?[0-9.K]+', x)[0]),
+        input_processor=MapCompose(lambda x: re.findall(r'[0-9.K?M?]+', x)[0]),
         output_processor=TakeFirst()
     )
 
     comments = scrapy.Field(
-        input_processor=MapCompose(lambda x: re.findall(r'<?[0-9.K]+', x)[1]),
+        input_processor=MapCompose(lambda x: re.findall(r'[0-9.K?M?]+', x)[0]),
         output_processor=TakeFirst()
     )
 

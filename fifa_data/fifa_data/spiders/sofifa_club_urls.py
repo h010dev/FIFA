@@ -57,8 +57,14 @@ class SofifaClubUrlsSpider(CrawlSpider):
                     r'/help',
                     r'/compare',
                     r'/players',
-                    r'/teams'
-                ])
+                    r'/player',
+                    r'/changeLog',
+                    r'/live',
+                    r'/calculator'
+                ]),
+                allow=([
+                    'https://sofifa.com/teams?type=club/'
+                ]),
             ),
             callback='parse_start_url',
             follow=True

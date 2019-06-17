@@ -4,8 +4,8 @@ from scrapy.linkextractors import LinkExtractor
 from scrapy.spiders import CrawlSpider, Rule
 from scrapy.loader import ItemLoader
 from fifa_data.items import SofifaItem, MainPageItem
-from user_agents.user_agent_generator import user_agent
-
+from proxies.proxy_generator import gen_proxy_list
+from user_agents.user_agent_generator import gen_useragent_list
 
 class SofifaDetailedSpider(CrawlSpider):
 
@@ -23,6 +23,8 @@ class SofifaDetailedSpider(CrawlSpider):
         # Rule(LinkExtractor(restrict_xpaths="//a[text()='Next']"), callback='parse_item', follow=True)
     )
 
+    proxies = gen_proxy_list()
+    user_agent = gen_useragent_list()
     custom_settings = {
         'MONGO_DB': 'sofifa',
         'HTTPCACHE_ENABLED': False,

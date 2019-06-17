@@ -14,7 +14,7 @@ args = {
 dag = DAG(
     dag_id='useragentscraper_dag',
     default_args=args,
-    schedule_interval='*/4 * * * *',
+    schedule_interval='@once',
     catchup=False
 )
 
