@@ -41,7 +41,7 @@ class MongoDBPipeline(MongoPipeline):
 
     def process_item(self, item, spider):
 
-        if self.collection == 'user_agents':
+        if self.collection.name == 'user_agents':
 
             if self.collection.count_documents(
                     {
@@ -56,6 +56,8 @@ class MongoDBPipeline(MongoPipeline):
                     },
                     dict(item),
                     upsert=True)
+                print('INSERTED ITEM INTO DATABASE')
+                print(self.collection.name)
                 return item
 
         else:
@@ -70,6 +72,7 @@ class MongoDBPipeline(MongoPipeline):
                     },
                     dict(item),
                     upsert=True)
+                print('INSERTED ITEM INTO DATABASE')
                 return item
 
 
