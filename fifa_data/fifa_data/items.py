@@ -38,7 +38,7 @@ def convert_currency_format(value):
         if match[0] == u"\u20ac" and match[-1] == 'K':
             new_value = float(match[1]) * 1000
             return new_value
-        elif mathc[0] == u"\u20ac" and match[-1] == 'M':
+        elif match[0] == u"\u20ac" and match[-1] == 'M':
             new_value = float(match[1]) * 1000000
             return new_value
         elif match[0] == u"\u20ac" and match[-1] != ('M' or 'K'):
