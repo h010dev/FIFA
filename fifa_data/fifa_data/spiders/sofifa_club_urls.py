@@ -70,8 +70,10 @@ class SofifaClubUrlsSpider(CrawlSpider):
             follow=True
         ),
         Rule(
-            LinkExtractor(restrict_xpaths="//a/span[text()='Next']"),
-            callback='parse_item',
+            LinkExtractor(
+                restrict_xpaths="//a[contains(@class, 'button pjax')]"
+            ),
+            callback='parse_start_url',
             follow=True
         )
     )

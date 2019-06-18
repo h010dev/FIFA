@@ -1,6 +1,7 @@
 import scrapy
 from scrapy.crawler import CrawlerRunner
 from scrapy.loader import ItemLoader
+from scrapy.spiders import CrawlSpider
 from scrapy.utils.log import configure_logging
 
 from pymongo import MongoClient
@@ -13,7 +14,7 @@ from proxies.proxy_generator import gen_proxy_list
 from user_agents.user_agent_generator import gen_useragent_list
 
 
-class SofifaClubPagesSpider(scrapy.Spider):
+class SofifaClubPagesSpider(CrawlSpider):
 
     """
     Visits the urls collected by SofifaClubUrlsSpider and scrapes data
@@ -145,8 +146,8 @@ class SofifaClubPagesSpider(scrapy.Spider):
         team_spacing_loader.add_xpath(
             'transfer_budget',
             "./ul/li/following::label[contains(., 'Domestic Prestige')]"\
-            ".//following::label[contains(., 'Transfer Budget')]\
-            /following::text()[1]"
+            "/following::label[contains(., 'Transfer Budget')]"\
+            "/following::text()[1]"
         )
 
         team_spacing_loader.add_xpath(
@@ -359,13 +360,13 @@ class SofifaClubPagesSpider(scrapy.Spider):
 
         # COMMUNITY
 
-        add_xpath(
+        loader.add_xpath(
             'likes',
             "(//div[contains(@class, 'operation spacing')]/a/span[2]/span"\
             "/text())[1]"
         )
 
-        add_xpath(
+        loader.add_xpath(
             'dislikes',
             "(//div[contains(@class, 'operation spacing')]/a/span[2]/span"\
             "/text())[2]"
@@ -385,9 +386,9 @@ def main():
     """
 
     configure_logging()
-    runner = CrawlerRunner(SofifaClubPagesSpider)
+    runner = CrawlerRunner()
 
-    d = runner.crawl()
+    d = runner.crawl(SofifaClubPagesSpider)
     d.addBoth(lambda _: reactor.stop())
     reactor.run()
 
