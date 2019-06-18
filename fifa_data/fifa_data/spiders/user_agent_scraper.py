@@ -36,15 +36,16 @@ class UserAgentScraperSpider(CrawlSpider):
     rules = (
         Rule(
             LinkExtractor(
-                allow=([
-                    r'^https://developers.whatismybrowser.com/useragents/explore/'
-                ]),
                 deny=([
                     r'order_by',
                     r'\/operating_platform\/',
                     r'\/parse\/',
                     r'\/legal\/'
                 ])
+                allow=([
+                    r'^https://developers.whatismybrowser.com/useragents'\
+                    r'/explore/'
+                ]),
             ),
             callback='parse_item',
             follow=True
@@ -88,7 +89,8 @@ class UserAgentScraperSpider(CrawlSpider):
                     "//a[@class='maybe-long'][contains(text(), 'bsd')]",
                     "//a[@class='maybe-long'][contains(text(), 'Mac')]",
                     "//a[@class='maybe-long'][contains(text(), 'Crawler')]",
-                    "//a[@class='maybe-long'][contains(text(), 'Web Browser')]",
+                    "//a[@class='maybe-long'][contains(text(), "\
+                    "'Web Browser')]",
                     "//a[@class='maybe-long'][contains(text(), 'Trident')]",
                     "//a[@class='maybe-long'][contains(text(), 'Presto')]",
                     "//a[@class='maybe-long'][contains(text(), 'Goanna')]",
