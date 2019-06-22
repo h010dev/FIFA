@@ -55,6 +55,7 @@ class MongoDBPipeline(MongoPipeline):
                 self.collection.update(
                     {
                         'user_agent': item.get('user_agent'),
+                        'last_modified': datetime.utcnow(),
                     },
                     dict(item),
                     upsert=True)
@@ -71,6 +72,7 @@ class MongoDBPipeline(MongoPipeline):
                 self.collection.update(
                     {
                         'id': item.get('id'),
+                        'last_modified': datetime.utcnow(),
                     },
                     dict(item),
                     upsert=True)

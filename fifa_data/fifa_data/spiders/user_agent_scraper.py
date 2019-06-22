@@ -41,7 +41,7 @@ class UserAgentScraperSpider(CrawlSpider):
                     r'\/operating_platform\/',
                     r'\/parse\/',
                     r'\/legal\/'
-                ])
+                ]),
                 allow=([
                     r'^https://developers.whatismybrowser.com/useragents'\
                     r'/explore/'

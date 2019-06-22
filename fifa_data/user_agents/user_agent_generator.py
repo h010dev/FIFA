@@ -1,7 +1,6 @@
 import random
 from pymongo import MongoClient
 from fifa_data.mongodb_addr import host
-from user_agents.useragent_update import initdb, updatedb
 
 
 def gen_useragent_list():
