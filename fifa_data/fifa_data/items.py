@@ -8,7 +8,9 @@ from scrapy.loader.processors import Compose, Identity, MapCompose, TakeFirst
 
 def get_timestamp(value):
 
-    pass
+    string_time = datetime.strptime(str(value), "%Y-%m-%d %H:%M:%S.%f")
+
+    return string_time
 
 def convert_currency_format(value):
 
@@ -774,6 +776,11 @@ class SofifaItem(scrapy.Item):
         output_processor=TakeFirst()
     )
 
+    last_modified = scrapy.Field(
+        input_processor=MapCompose(get_timestamp),
+        output_processor=TakeFirst()
+    )
+
 
 class ImageItem(scrapy.Item):
 
@@ -794,6 +801,11 @@ class ImageItem(scrapy.Item):
 
     team_or_club = scrapy.Field(
         input_processor=Identity(),
+        output_processor=TakeFirst()
+    )
+
+    last_modified = scrapy.Field(
+        input_processor=MapCompose(get_timestamp),
         output_processor=TakeFirst()
     )
 
@@ -828,6 +840,11 @@ class MainPageItem(scrapy.Item):
         input_processor=MapCompose(
             lambda x: f'{urljoin("https://sofifa.com", x)}'
         ),
+        output_processor=TakeFirst()
+    )
+
+    last_modified = scrapy.Field(
+        input_processor=MapCompose(get_timestamp),
         output_processor=TakeFirst()
     )
 
@@ -870,6 +887,11 @@ class TeamStatItem(scrapy.Item):
         input_processor=MapCompose(
             lambda x: f'{urljoin("https://sofifa.com", x)}'
         ),
+        output_processor=TakeFirst()
+    )
+
+    last_modified = scrapy.Field(
+        input_processor=MapCompose(get_timestamp),
         output_processor=TakeFirst()
     )
 
@@ -1159,6 +1181,11 @@ class DetailedTeamStatItem(scrapy.Item):
         output_processor=TakeFirst()
     )
 
+    last_modified = scrapy.Field(
+        input_processor=MapCompose(get_timestamp),
+        output_processor=TakeFirst()
+    )
+
 
 class NationalTeamStats(TeamStatItem):
 
@@ -1173,6 +1200,11 @@ class NationalTeamStats(TeamStatItem):
         input_processor=MapCompose(
             lambda x: f'{urljoin("https://sofifa.com", x)}'
         ),
+        output_processor=TakeFirst()
+    )
+
+    last_modified = scrapy.Field(
+        input_processor=MapCompose(get_timestamp),
         output_processor=TakeFirst()
     )
 
@@ -1191,6 +1223,11 @@ class NationalTeamDetailedStats(DetailedTeamStatItem):
 
     team_logo = scrapy.Field(
         input_processor=Identity(),
+        output_processor=TakeFirst()
+    )
+
+    last_modified = scrapy.Field(
+        input_processor=MapCompose(get_timestamp),
         output_processor=TakeFirst()
     )
 
@@ -1219,6 +1256,11 @@ class UserAgentScraperItem(scrapy.Item):
 
     popularity = scrapy.Field(
         input_processor=Identity(),
+        output_processor=TakeFirst()
+    )
+
+    last_modified = scrapy.Field(
+        input_processor=MapCompose(get_timestamp),
         output_processor=TakeFirst()
     )
 

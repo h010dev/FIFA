@@ -1,3 +1,5 @@
+from datetime import datetime
+
 import scrapy
 from scrapy.crawler import CrawlerRunner
 from scrapy.linkextractors import LinkExtractor
@@ -164,6 +166,10 @@ class UserAgentScraperSpider(CrawlSpider):
             loader.add_xpath(
                 'popularity',
                 ".//td[@class='useragent']/following-sibling::td[4]/text()"
+            )
+            loader.add_value(
+                'last_modified',
+                datetime.utcnow()
             )
 
             self.logger.info(f'Parse function called on {response.url}')
