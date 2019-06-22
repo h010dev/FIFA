@@ -8,9 +8,9 @@ from fifa_data.mongodb_addr import host
 def get_useragents(filename):
 
     """
-    Retrieve user-agents from json storage. This is used as an initialization
-    file to be used by the user-agent rotator before the spiders collect fresh
-    user-agents.
+    Retrieve user-agents from json storage. This is used as an
+    initialization file to be used by the user-agent rotator before the
+    spiders collect fresh user-agents.
     """
 
     input_file = open(filename)
@@ -19,42 +19,28 @@ def get_useragents(filename):
     return json_array
 
 
-def initdb():
-
-    """
-    This will dump the stored user-agents into the user-agent database. Running
-    this assumes that the database is empty. Otherwise run updatedb instead.
-    """
-
-    operations = [pymongo.operations.InsertOne(
-        {"user_agent": agent["user_agent"],
-         "version": agent["version"],
-         "OS": agent["OS"],
-         "hardware_type": agent["hardware_type"],
-         "popularity": agent["popularity"]}
-    ) for agent in new_useragents if "version" in agent]
-
-    result = collection.bulk_write(operations)
-
-    try:
-        return result
-    finally:
-        pprint(result.bulk_api_result)
-
-
 def updatedb():
 
     """
-    This will update the user-agent database with new ones from storage. This
-    is to be used when the user-agent database has a few entries, as it will
-    skip duplicates.
+    This will update the user-agent database with new ones from
+    storage. This is to be used when the user-agent database has a few
+    entries, as it will skip duplicates.
     """
 
     operations = [pymongo.operations.UpdateOne(
-        filter={"user_agent": agent["user_agent"]},
-        update={"$setOnInsert": {"user_agent": agent["user_agent"]}},
+        {"$and": [
+            {"user_agent": agent["user_agent"],
+             "version": agent["version"],
+             "OS": agent["OS"],
+             "hardware_type": agent["hardware_type"],
+             "popularity": agent["popularity"]}
+        ]},
+        {
+            "$setOnInsert":
+                {"user_agent": agent["user_agent"]},
+        },
         upsert=True
-        ) for agent in new_useragents]
+    ) for agent in new_useragents if "version" in agent]
 
     result = collection.bulk_write(operations)
 
@@ -77,7 +63,4 @@ if __name__ == '__main__':
 
     new_useragents = get_useragents(filename=filename)
 
-    if db.user_agents.count_documents(filter=({})) < 1:
-        initdb()
-    else:
-        updatedb()
+    updatedb()
