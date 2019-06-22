@@ -34,9 +34,10 @@ def sofifa_settings(name, database, collection, proxies, user_agent,
         'USER_AGENTS': user_agent,
 
         # MISC. SETTINGS
-        'HTTPCACHE_ENABLED': True,
+        'HTTPCACHE_ENABLED': False,
         'ROBOTSTXT_OBEY': False,
         'DOWNLOAD_TIMEOUT': 30,
+        'ROTATING_PROXY_BACKOFF_BASE': 1200,
 
         # PIPELINES, MIDDLEWARES, AND EXTENSIONS
         'ITEM_PIPELINES': {

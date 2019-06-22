@@ -1,3 +1,5 @@
+from datetime import datetime
+
 import scrapy
 from scrapy.crawler import CrawlerRunner
 from scrapy.loader import ItemLoader
@@ -48,6 +50,11 @@ class FateProxySpider(scrapy.Spider):
         loader.add_xpath(
             'ip_dump',
             ".//body/p/text()"
+        )
+
+        loader.add_value(
+            'last_modified',
+            datetime.utcnow()
         )
 
         yield loader.load_item()

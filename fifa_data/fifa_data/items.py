@@ -6,6 +6,10 @@ import scrapy
 from scrapy.loader.processors import Compose, Identity, MapCompose, TakeFirst
 
 
+def get_timestamp(value):
+
+    pass
+
 def convert_currency_format(value):
 
     """
@@ -1223,5 +1227,5 @@ class ProxyItem(scrapy.Item):
 
     ip_dump = scrapy.Field(
         input_processor=MapCompose(host_port_ip),
-        output_process=Identity()
+        output_processor=Identity()
     )

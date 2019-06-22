@@ -1,3 +1,5 @@
+from datetime import datetime
+
 import pymongo
 from pymongo import MongoClient
 
@@ -112,7 +114,10 @@ class ProxyPipeline(MongoPipeline):
 
         self.collection.bulk_write(
             [pymongo.operations.UpdateOne(
-                {'ip': ip},
+                {'$and': [
+                    {'ip': ip},
+                    {'last_modified': datetime.utcnow()}
+                ]},
                 {'$setOnInsert': {'ip': ip}},
                 upsert=True
             ) for ip in item.get('ip_dump')]
