@@ -99,26 +99,26 @@ class SofifaPlayerURLsSpider(scrapy.Spider):
                 response=response
             )
 
+            loader.add_value(
+                'last_modified',
+                datetime.utcnow()
+            )
             loader.add_xpath(
                 'id',
                 ".//a[contains(@href, 'player/')]/@href"
             )
-
             loader.add_xpath(
                 'total_stats',
                 ".//span[contains(@class, 'primary')]/text()"
             )
-
             loader.add_xpath(
                 'hits',
                 ".//td[contains(@class, 'comment')]/text()[1]"
             )
-
             loader.add_xpath(
                 'comments',
                 ".//td[contains(@class, 'comment')]/text()[2]"
             )
-
             loader.add_xpath(
                 'player_page',
                 ".//a[contains(@href, 'player/')]/@href"

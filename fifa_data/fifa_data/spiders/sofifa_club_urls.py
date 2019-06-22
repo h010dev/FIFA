@@ -90,6 +90,10 @@ class SofifaClubUrlsSpider(CrawlSpider):
                 response=response
             )
 
+            loader.add_value(
+                'last_modified',
+                datetime.utcnow()
+            )
             loader.add_xpath(
                 'id',
                 ".//a[contains(@href, 'team/')]/@href"
