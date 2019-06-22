@@ -1,4 +1,6 @@
 import random
+from datetime import datetime, timedelta
+
 from pymongo import MongoClient
 from fifa_data.mongodb_addr import host
 
@@ -6,8 +8,8 @@ from fifa_data.mongodb_addr import host
 def gen_useragent_list():
 
     """
-    Generate a list of user-agents from the user-agent database. This list will
-    be used by the user-agent rotator.
+    Generate a list of user-agents from the user-agent database. This
+    list will be used by the user-agent rotator.
     """
 
     client = MongoClient(host, 27017)
@@ -15,6 +17,7 @@ def gen_useragent_list():
     collection = db.user_agents
 
     query = collection.find({
+        'last_modified': {'$gte': datetime.utcnow() - timedelta(days=14)},
         '$and': [
             {'$or': [
                 {'OS': 'Windows'},
@@ -34,12 +37,12 @@ def gen_useragent_list():
             ]}
         ]
         },
-            {'_id': 0, 'user_agent': 1}
+                            {'_id': 0, 'user_agent': 1}
     )
 
     user_agent = [x['user_agent'] for x in query]
     random.shuffle(user_agent)
-
+    print(user_agent)
     return user_agent
 
 

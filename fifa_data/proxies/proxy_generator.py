@@ -1,4 +1,6 @@
 import random
+from datetime import datetime, timedelta
+
 from pymongo import MongoClient
 from fifa_data.mongodb_addr import host, port
 
@@ -14,7 +16,13 @@ def gen_proxy_list():
     db = client.agents_proxies
     collection = db.proxies
 
-    proxies = [x['ip'] for x in collection.find({'ip': {"$exists": True}})]
+    query = collection.find({
+        'last_modified': {'$gte': datetime.utcnow() - timedelta(days=1)}
+    },
+        {'_id': 0, 'ip': 1}
+    )
+
+    proxies = [x['ip'] for x in query]
     random.shuffle(proxies)
 
     return proxies
