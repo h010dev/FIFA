@@ -42,7 +42,6 @@ def gen_useragent_list():
 
     user_agent = [x['user_agent'] for x in query]
     random.shuffle(user_agent)
-    print(user_agent)
     return user_agent
 
 
