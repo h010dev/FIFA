@@ -11,13 +11,21 @@ USER_AGENT = "'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64; rv:48.0) "\
 
 ROBOTSTXT_OBEY = False
 
-CONCURRENT_REQUESTS = 100
+CONCURRENT_REQUESTS = 400
 
-DOWNLOAD_DELAY = 1
+#DOWNLOAD_DELAY = 1
 
-#CONCURRENT_REQUESTS_PER_DOMAIN = 16
+CONCURRENT_REQUESTS_PER_DOMAIN = 200
 
-CONCURRENT_REQUESTS_PER_IP = 32
+CONCURRENT_REQUESTS_PER_IP = 0
+
+DNSCACHE_ENABLED = True
+
+DNSCACHE_SIZE = 10000
+
+DNS_TIMEOUT = 60
+
+MEMUSAGE_ENABLED = True
 
 #COOKIES_ENABLED = False
 
@@ -35,8 +43,8 @@ CONCURRENT_REQUESTS_PER_IP = 32
 DOWNLOADER_MIDDLEWARES = {
     'scrapy.downloadermiddlewares.useragent.UserAgentMiddleware': None,
     # 'fifa_market_analysis_.middlewares.UserAgentRotatorMiddleware': 400,
-    'scrapy_splash.SplashCookiesMiddleware': 723,
-    'scrapy_splash.SplashMiddleware': 725,
+    # 'scrapy_splash.SplashCookiesMiddleware': 723,
+    # 'scrapy_splash.SplashMiddleware': 725,
     'scrapy.downloadermiddlewares.httpcompression.'\
     'HttpCompressionMiddleware': 810,
 }
@@ -60,15 +68,15 @@ DOWNLOADER_MIDDLEWARES.update(
 #     'scrapy.pipelines.images.ImagesPipeline': 1,
 # }
 
-AUTOTHROTTLE_ENABLED = False
+AUTOTHROTTLE_ENABLED = True
 
 #AUTOTHROTTLE_START_DELAY = 5
 
 #AUTOTHROTTLE_MAX_DELAY = 60
 
-#AUTOTHROTTLE_TARGET_CONCURRENCY = 1.0
+AUTOTHROTTLE_TARGET_CONCURRENCY = 200
 
-#AUTOTHROTTLE_DEBUG = False
+AUTOTHROTTLE_DEBUG = True
 
 #HTTPCACHE_ENABLED = True
 
