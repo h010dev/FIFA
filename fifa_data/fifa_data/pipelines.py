@@ -125,6 +125,36 @@ class ProxyPipeline(MongoPipeline):
         return item
 
 
+class TestProxyPipeline(MongoPipeline):
+
+    def process_item(self, item, spider):
+
+        self.collection.bulk_write(
+            [pymongo.operations.UpdateOne(
+                {"$and": [
+                    {"anonymity": d["anonymity"],
+                     "export_address": d["export_address"],
+                     "response_time": d["response_time"],
+                     "port": d["port"],
+                     "country": d["country"],
+                     "host": d["host"],
+                     "type": d["type"],
+                     "from": d["from"],
+                     "time_stamp": datetime.utcnow()}
+                ]},
+                {"$setOnInsert": {"ip": str(
+                    str(d["type"])
+                    + '://'
+                    + str(d["host"])
+                    + ':'
+                    + str(d["port"])
+                )}},
+                upsert=True
+            ) for d in item.get('ip_dump')]
+        )
+        return item
+
+
 class ImagesToDownloadPipeline(ImagesPipeline, MediaPipeline):
 
     def get_media_requests(self, item, info):

@@ -3,18 +3,13 @@ import datetime
 from fifa_data.mongodb_addr import host, port
 
 
-def sofifa_settings(name, database, collection, proxies, user_agent,
-                    validator):
+def sofifa_settings(name, proxies, user_agent, validator):
 
     settings = {
 
-        # DATABASE SETTINGS
-        'MONGO_DB': database,
-        'MONGO_URI': f'mongodb://{host}:{port}',
-        'COLLECTION_NAME': collection,
-
-        # SPIDER CHECKPOINTS
-        'JOBDIR': f'pause_resume/{name}',
+        # DATA STORAGE
+        'FEED_FORMAT': 'json',
+        'FEED_URI': '/home/mohamed/Projects/FIFA/fifa_data/club_dump.json',
 
         # SPIDER LOGGING
         'LOG_ENABLED': False,
@@ -23,26 +18,21 @@ def sofifa_settings(name, database, collection, proxies, user_agent,
 
         # EXTENSION ACTIVATION
         'SPIDERMON_ENABLED': True,
-        'PROXY_POOL_ENABLED': True,
         'EXTENSIONS': {
             'fifa_data.test_extension.CustomStats': 600,
             'spidermon.contrib.scrapy.extensions.Spidermon': 510,
         },
 
         # BAN PREVENTION
-        'ROTATING_PROXY_LIST': proxies,
         'USER_AGENTS': user_agent,
 
         # MISC. SETTINGS
         'HTTPCACHE_ENABLED': False,
         'ROBOTSTXT_OBEY': False,
         'DOWNLOAD_TIMEOUT': 30,
-        'ROTATING_PROXY_BACKOFF_BASE': 1200,
 
         # PIPELINES, MIDDLEWARES, AND EXTENSIONS
         'ITEM_PIPELINES': {
-            'fifa_data.pipelines.MongoDBPipeline': 300,
-            'fifa_data.pipelines.SpiderStats': 301,
             'spidermon.contrib.scrapy.pipelines.ItemValidationPipeline': 800,
         },
 
@@ -50,8 +40,6 @@ def sofifa_settings(name, database, collection, proxies, user_agent,
             'scrapy.downloadermiddlewares.useragent.UserAgentMiddleware': None,
             'scrapy_useragents.downloadermiddlewares.useragents.'\
             'UserAgentsMiddleware': 500,
-            'rotating_proxies.middlewares.RotatingProxyMiddleware': 610,
-            'rotating_proxies.middlewares.BanDetectionMiddleware': 620
         },
 
         'SPIDERMON_SPIDER_CLOSE_MONITORS': (

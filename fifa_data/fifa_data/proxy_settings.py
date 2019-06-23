@@ -37,7 +37,7 @@ def proxy_settings(name, database, collection, proxies, user_agent, validator):
         # PIPELINES, MIDDLEWARES, AND EXTENSIONS
         'ITEM_PIPELINES': {
             'fifa_data.pipelines.SpiderStats': 301,
-            'fifa_data.pipelines.ProxyPipeline': 302,
+            'fifa_data.pipelines.TestProxyPipeline': 302,
             'spidermon.contrib.scrapy.pipelines.ItemValidationPipeline': 800,
         },
 

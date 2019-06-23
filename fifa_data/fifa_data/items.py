@@ -134,6 +134,19 @@ def player_id_list(value):
     return eval_list
 
 
+def proxy_details(value):
+
+    rows = re.findall(r'\n?\{.+\}\n?', value)
+
+    details = list()
+    null = None
+
+    for i in range(len(rows)):
+        details.append(eval(rows[i]))
+
+    return details
+
+
 def host_port_ip(value):
 
     """
@@ -154,6 +167,90 @@ def host_port_ip(value):
                       re.findall(host_, rows[i])[0] + ':' +
                       re.findall(port_, rows[i])[0]))
     return ip
+
+
+def proxy_anonymity(value):
+
+    rows = re.findall(r'\n?\{.+\}\n?', value)
+
+    pattern = r'\"\anonymity\"\:\ \"([a-zA-Z_]+)\"'
+
+    anonymity = list()
+
+    for i in range(len(rows)):
+        anonymity.append(str(re.findall(pattern, rows[i])[0]))
+
+    return anonymity
+
+
+def proxy_export_address(value):
+
+    rows = re.findall(r'\n?\{.+\}\n?', value)
+
+    pattern = r'\"export_address\"\: \[.*?\]'
+
+    export_address = list()
+
+    for i in range(len(rows)):
+        export_address.append(str(re.findall(pattern, rows[i])[0]))
+
+    return export_address
+
+
+def proxy_response_time(value):
+
+    rows = re.findall(r'\n?\{.+\}\n?', value)
+
+    pattern = r'\"response_time\"\: ([0-9\.?])'
+
+    response_time = list()
+
+    for i in range(len(rows)):
+        response_time.append(str(re.findall(pattern, rows[i])[0]))
+
+    return response_time
+
+
+def proxy_country(value):
+
+    rows = re.findall(r'\n?\{.+\}\n?', value)
+
+    pattern = r'\"country\"\: \"([a-zA-Z]+)\"'
+
+    country = list()
+
+    for i in range(len(rows)):
+        country.append(str(re.findall(pattern, rows[i])[0]))
+
+    return country
+
+
+def proxy_type(value):
+
+    rows = re.findall(r'\n?\{.+\}\n?', value)
+
+    pattern = r'\"type\"\: \"(https?)\"'
+
+    proxy_type = list()
+
+    for i in range(len(rows)):
+        proxy_type.append(str(re.findall(pattern, rows[i])[0]))
+
+    return proxy_type
+
+
+def proxy_from(value):
+
+    rows = re.findall(r'\n?\{.+\}\n?', value)
+
+    pattern = r'\"from\"\: \"([a-zA-Z.]+)\"'
+
+    proxy_from = list()
+
+    for i in range(len(rows)):
+        proxy_from.append(str(re.findall(pattern, rows[i])[0]))
+
+    return proxy_from
 
 
 class SofifaItem(scrapy.Item):
@@ -1268,6 +1365,6 @@ class UserAgentScraperItem(scrapy.Item):
 class ProxyItem(scrapy.Item):
 
     ip_dump = scrapy.Field(
-        input_processor=MapCompose(host_port_ip),
+        input_processor=MapCompose(proxy_details),
         output_processor=Identity()
     )
