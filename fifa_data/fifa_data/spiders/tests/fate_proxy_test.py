@@ -15,7 +15,7 @@ from twisted.internet.task import LoopingCall
 from fifa_data.items import ProxyItem
 from fifa_data.mongodb_addr import host
 from fifa_data.proxy_settings import proxy_settings
-from proxies.tests.proxy_generator import gen_proxy_list
+from proxies.proxy_generator import gen_proxy_list
 from user_agents.user_agent_generator import gen_useragent_list
 
 profile = line_profiler.LineProfiler()

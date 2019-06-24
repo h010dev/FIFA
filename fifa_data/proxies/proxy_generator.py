@@ -14,11 +14,14 @@ def gen_proxy_list():
 
     client = MongoClient(host, port)
     db = client.agents_proxies
-    collection = db.proxies
+    collection = db.proxy_test_new
 
-    query = collection.find({
-        'last_modified': {'$gte': datetime.utcnow() - timedelta(days=1)}
-    },
+    query = collection.find(
+        {"$and": [
+            {'time_stamp': {'$gte': datetime.utcnow() - timedelta(days=1)},
+             'type': 'https',
+             'response_time': {'$lte': 2}}
+        ]},
         {'_id': 0, 'ip': 1}
     )
 
