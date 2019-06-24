@@ -17,7 +17,7 @@ from twisted.internet import reactor
 
 from fifa_data.items import DetailedTeamStatItem
 from fifa_data.mongodb_addr import host, port
-from fifa_data.tests.sofifa_settings_test_nodb import sofifa_settings
+from fifa_data.tests.sofifa_settings import sofifa_settings
 from proxies.tests.proxy_generator import gen_proxy_list
 from user_agents.user_agent_generator import gen_useragent_list
 

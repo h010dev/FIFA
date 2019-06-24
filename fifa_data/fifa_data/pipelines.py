@@ -115,7 +115,15 @@ class ProxyPipeline(MongoPipeline):
         self.collection.bulk_write(
             [pymongo.operations.UpdateOne(
                 {"$and": [
-                    {"anonymity": d["anonymity"],
+                    {"ip":
+                     str(
+                        str(d["type"])
+                        + '://'
+                        + str(d["host"])
+                        + ':'
+                        + str(d["port"])
+                        ),
+                     "anonymity": d["anonymity"],
                      "export_address": d["export_address"],
                      "response_time": d["response_time"],
                      "port": d["port"],

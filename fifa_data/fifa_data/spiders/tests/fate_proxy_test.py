@@ -29,7 +29,7 @@ class FateProxySpider(scrapy.Spider):
     used by both this spider and others.
     """
 
-    name = 'fate_proxy'
+    name = 'fate_proxy_test'
 
     proxies = gen_proxy_list()
     user_agent = gen_useragent_list()

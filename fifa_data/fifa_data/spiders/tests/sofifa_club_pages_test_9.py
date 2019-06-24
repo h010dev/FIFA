@@ -26,7 +26,7 @@ from user_agents.user_agent_generator import gen_useragent_list
 #atexit.register(profile.print_stats)
 
 
-class SofifaClubPagesSpider2(CrawlSpider):
+class SofifaClubPagesSpider9(CrawlSpider):
 
     """
     Visits the urls collected by SofifaClubUrlsSpider and scrapes data
@@ -34,7 +34,7 @@ class SofifaClubPagesSpider2(CrawlSpider):
     at mongodb://mongo_server:27017/sofifa
     """
 
-    name = 'club_details_spider_2'
+    name = 'club_details_spider_9'
 
     proxies = gen_proxy_list()
     user_agent = gen_useragent_list()
@@ -61,7 +61,7 @@ class SofifaClubPagesSpider2(CrawlSpider):
             }
         )]
 
-        for url in sorted(urls[60:120]):
+        for url in sorted(urls[480:540]):
             yield scrapy.Request(
                 url=url,
                 callback=self.parse

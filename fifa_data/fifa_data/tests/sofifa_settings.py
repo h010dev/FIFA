@@ -7,51 +7,40 @@ def sofifa_settings(name, proxies, user_agent, validator):
 
     settings = {
 
-        # DATA STORAGE
+        # STORAGE
         'FEED_FORMAT': 'json',
-        'FEED_URI': '/home/mohamed/Projects/FIFA/fifa_data/club_dump.json',
+        'FEED_URI': f'/home/mohamed/Projects/FIFA/fifa_data/{name}_data.json',
 
         # SPIDER LOGGING
         'LOG_ENABLED': False,
-        'LOG_LEVEL': 'DEBUG',
-        'LOG_FILE': f'logs/{name}_log_{datetime.date.today()}.txt',
 
         # EXTENSION ACTIVATION
-        'SPIDERMON_ENABLED': True,
+        'PROXY_POOL_ENABLED': True,
         'EXTENSIONS': {
             'fifa_data.test_extension.CustomStats': 600,
-            'spidermon.contrib.scrapy.extensions.Spidermon': 510,
         },
 
         # BAN PREVENTION
+        'ROTATING_PROXY_LIST': proxies,
         'USER_AGENTS': user_agent,
 
         # MISC. SETTINGS
         'HTTPCACHE_ENABLED': False,
         'ROBOTSTXT_OBEY': False,
-        'DOWNLOAD_TIMEOUT': 30,
+        'DOWNLOAD_TIMEOUT': 0,
+        'ROTATING_PROXY_BACKOFF_BASE': 1200,
 
         # PIPELINES, MIDDLEWARES, AND EXTENSIONS
         'ITEM_PIPELINES': {
-            'spidermon.contrib.scrapy.pipelines.ItemValidationPipeline': 800,
+            'fifa_data.pipelines.SpiderStats': 301,
         },
 
         'DOWNLOADER_MIDDLEWARES': {
             'scrapy.downloadermiddlewares.useragent.UserAgentMiddleware': None,
             'scrapy_useragents.downloadermiddlewares.useragents.'\
             'UserAgentsMiddleware': 500,
-        },
-
-        'SPIDERMON_SPIDER_CLOSE_MONITORS': (
-            'fifa_data.monitors.SpiderCloseMonitorSuite',
-        ),
-
-        'SPIDERMON_VALIDATION_MODELS': (
-            f'fifa_data.validators.{validator}',
-        ),
-
-        'SPIDERMON_PERIODIC_MONITORS': {
-            'fifa_data.monitors.PeriodicMonitorSuite': 300,
+            'rotating_proxies.middlewares.RotatingProxyMiddleware': 610,
+            'rotating_proxies.middlewares.BanDetectionMiddleware': 620
         },
 
         # TODO integrate expected finish reasons into settings: currently

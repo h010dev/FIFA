@@ -17,16 +17,16 @@ from twisted.internet import reactor
 
 from fifa_data.items import DetailedTeamStatItem
 from fifa_data.mongodb_addr import host, port
-from fifa_data.sofifa_settings import sofifa_settings
-from proxies.tests.proxy_generator import gen_proxy_list
+from fifa_data.tests.sofifa_settings import sofifa_settings
+from proxies.proxy_generator import gen_proxy_list
 from user_agents.user_agent_generator import gen_useragent_list
 
 
-profile = line_profiler.LineProfiler()
-atexit.register(profile.print_stats)
+#profile = line_profiler.LineProfiler()
+#atexit.register(profile.print_stats)
 
 
-class SofifaClubPagesSpider(CrawlSpider):
+class SofifaClubPagesSpider1(CrawlSpider):
 
     """
     Visits the urls collected by SofifaClubUrlsSpider and scrapes data
@@ -41,14 +41,12 @@ class SofifaClubPagesSpider(CrawlSpider):
 
     custom_settings = sofifa_settings(
         name=name,
-        database='sofifa',
-        collection='club_details',
         proxies=proxies,
         user_agent=user_agent,
         validator='ClubItem'
     )
 
-    @profile
+   # @profile
     def start_requests(self):
 
         client = MongoClient(host, port)
@@ -63,13 +61,13 @@ class SofifaClubPagesSpider(CrawlSpider):
             }
         )]
 
-        for url in sorted(urls[:50]):
+        for url in sorted(urls[:60]):
             yield scrapy.Request(
                 url=url,
                 callback=self.parse
             )
 
-    @profile
+   # @profile
     def parse(self, response):
 
         loader = ItemLoader(
@@ -370,7 +368,7 @@ def main():
 
 
 if __name__ == '__main__':
-    cProfile.run('main()', 'restats')
-    p = pstats.Stats('restats')
-    p.sort_stats(SortKey.CUMULATIVE).dump_stats('mystats.txt')
-    #main()
+   # cProfile.run('main()', 'restats')
+   # p = pstats.Stats('restats')
+   # p.sort_stats(SortKey.CUMULATIVE).dump_stats('mystats.txt')
+    main()
