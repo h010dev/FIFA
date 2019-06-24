@@ -114,23 +114,6 @@ class ProxyPipeline(MongoPipeline):
 
         self.collection.bulk_write(
             [pymongo.operations.UpdateOne(
-                {'$and': [
-                    {'ip': ip},
-                    {'last_modified': datetime.utcnow()}
-                ]},
-                {'$setOnInsert': {'ip': ip}},
-                upsert=True
-            ) for ip in item.get('ip_dump')]
-        )
-        return item
-
-
-class TestProxyPipeline(MongoPipeline):
-
-    def process_item(self, item, spider):
-
-        self.collection.bulk_write(
-            [pymongo.operations.UpdateOne(
                 {"$and": [
                     {"anonymity": d["anonymity"],
                      "export_address": d["export_address"],
