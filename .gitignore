@@ -28,6 +28,7 @@ eggs/*
 fifa_data/build/*
 fifa_data/project.egg-info/*
 *.pid
+items/
 
 # Docker
 
