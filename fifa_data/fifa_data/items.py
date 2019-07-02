@@ -10,7 +10,7 @@ def get_timestamp(value):
 
     string_time = datetime.strptime(str(value), "%Y-%m-%d %H:%M:%S.%f")
 
-    return string_time
+    return str(string_time)
 
 def convert_currency_format(value):
 
@@ -882,7 +882,7 @@ class TeamStatItem(scrapy.Item):
     )
 
     last_modified = scrapy.Field(
-        input_processor=MapCompose(get_timestamp),
+        input_processor=Identity(),
         output_processor=TakeFirst()
     )
 
@@ -1173,7 +1173,7 @@ class DetailedTeamStatItem(scrapy.Item):
     )
 
     last_modified = scrapy.Field(
-        input_processor=MapCompose(get_timestamp),
+        input_processor=Identity(),
         output_processor=TakeFirst()
     )
 

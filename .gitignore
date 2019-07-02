@@ -47,3 +47,4 @@ tags
 # Ubuntu
 
 *.directory
+*.log
