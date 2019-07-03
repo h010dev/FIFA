@@ -20,7 +20,7 @@ def gen_proxy_list():
         {"$and": [
             {'time_stamp': {'$gte': datetime.utcnow() - timedelta(days=1)},
              'type': 'https',
-             'response_time': {'$lte': 2}}
+             'response_time': {'$lte': 2.5}}
         ]},
         {'_id': 0, 'ip': 1}
     )

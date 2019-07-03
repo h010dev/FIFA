@@ -8,22 +8,20 @@ def sofifa_settings(name, proxies, user_agent, validator):
         # REDIS
         'DUPEFILTER_CLASS': 'fifa_data.scrapy_redis_dupefilter.RFPDupeFilter',
 #        'SCHEDULER': 'fifa_data.scrapy_redis_scheduler.Scheduler',
-        'SCHEDULER_PERSIST': False,
+#        'SCHEDULER_PERSIST': False,
         'DOWNLOAD_DELAY': 1,
         'REDIS_START_URLS_AS_SET': True,
-        'REDIS_START_URLS_KEY': 'all_urls',
-        'SCHEDULER_QUEUE_CLASS': 'fifa_data.scrapy_redis_queue.FifoQueue',
-        'REDIS_START_URLS_BATCH_SIZE': 10,
+        'REDIS_START_URLS_BATCH_SIZE': 550,
 
         # SPIDER LOGGING
-        'LOG_ENABLED': True,
+        'LOG_ENABLED': False,
         'LOG_LEVEL': 'DEBUG',
         'LOG_FILE': f'logs/{name}_log_{datetime.date.today()}.txt',
 
         # EXTENSION ACTIVATION
         'PROXY_POOL_ENABLED': True,
         'EXTENSIONS': {
-            'fifa_data.test_extension.CustomStats': 600,
+            'fifa_data.test_extension.CustomStats': 700,
         },
 
         # BAN PREVENTION
@@ -39,7 +37,7 @@ def sofifa_settings(name, proxies, user_agent, validator):
         # PIPELINES, MIDDLEWARES, AND EXTENSIONS
         'ITEM_PIPELINES': {
             'fifa_data.scrapy_redis_pipelines.RedisPipeline': 300,
-            'fifa_data.pipelines.SpiderStats': 301,
+            'fifa_data.pipelines.SpiderStats': 400,
         },
 
         'DOWNLOADER_MIDDLEWARES': {

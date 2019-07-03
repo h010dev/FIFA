@@ -17,7 +17,7 @@ class SofifaClubPagesRedisSpider(RedisSpider):
     at mongodb://mongo_server:27017/sofifa
     """
 
-    name = 'sofifa_redis_spider'
+    name = 'sofifa_redis_club_pages'
 
     proxies = gen_proxy_list()
     user_agent = gen_useragent_list()

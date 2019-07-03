@@ -10,7 +10,9 @@ def extract_urls(key_from, key_to, url_path):
 
     for key in rj.scan_iter(f'{key_from}:item:*'):
         url = rj.jsonget(key, Path(f'.{url_path}'))
-        rj.sadd(key_to, url)
+        rj.sadd(f'{key_to}:start_urls', url)
+
+    print('url_count' + '=' + str(rj.scard(f'{key_to}:start_urls')))
 
 
 if __name__ == '__main__':
