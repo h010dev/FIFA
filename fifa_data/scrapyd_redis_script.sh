@@ -12,12 +12,8 @@ usage()
 		
 		Example: url_count = 10000, split = 1000
 		Number of spiders = url_count / split = 10
-		Default split point is 1000.
 -h help"
 }
-
-
-declare -i split=1000
 
 while [ "$1" != "" ]; do
 	case $1 in

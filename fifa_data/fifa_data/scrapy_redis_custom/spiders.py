@@ -1,5 +1,5 @@
 from scrapy import signals
-from scrapy.exceptions import DontCloseSpider
+from scrapy.exceptions import CloseSpider, DontCloseSpider
 from scrapy.spiders import Spider, CrawlSpider
 
 from . import connection, defaults
@@ -154,6 +154,10 @@ class RedisSpider(RedisMixin, Spider):
         obj = super(RedisSpider, self).from_crawler(crawler, *args, **kwargs)
         obj.setup_redis(crawler)
         return obj
+
+    def spider_idle(self):
+        if self.server.scard(self.redis_key) <= 0:
+            self.crawler.engine.close_spider(self, reason='finished')
 
 
 class RedisCrawlSpider(RedisMixin, CrawlSpider):

@@ -38,6 +38,8 @@ Docker/.gitignore
 Docker/LICENSE
 Docker/README.md
 Docker/dags/tuto.py
+fifa_data/Python-3.7.3/*
+fifa_data/line_profiler/*
 
 # Vim
 
