@@ -1,8 +1,62 @@
-version: '2.1'
+version: '3.4'
 services:
+
+    scrapyd:
+        image: vimagick/scrapyd:custom2
+        ports:
+          - "6800:6800"
+        volumes:
+          - FIFA:/var/lib/scrapyd
+          - /usr/local/lib/python3.7/dist-packages
+        restart: always
+
+    scrapy:
+        image: vimagick/scrapyd:custom2
+        command: bash
+        volumes:
+          - code:/code
+          - /usr/local/lib/python3.7/dist-packages
+        working_dir: /code
+        restart: always
+
+    scrapyrt:
+        image: vimagick/scrapyd:custom2
+        ports:
+          - "9080:9080"
+        volumes:
+          - code:/code
+          - config:/config
+          - /usr/local/lib/python3.7/dist-packages
+        working_dir: /code
+        command: scrapyrt -i 0.0.0.0 -p 9080
+        #entrypoint: /code/entrypoint.sh
+        restart: always
+
     redis:
-        image: 'redis:3.2.7'
-        # command: redis-server --requirepass redispass
+        image: redis/rejson:5.0.3
+        restart: always
+        volumes:
+          - /home/mohamed/.redis/data:/data
+          - /home/mohamed/.redis/redis.conf:/usr/local/etc/redis/redis.conf
+          - /var/log/redis/redis-server.log:/var/log/redis/redis-server.log
+        ports:
+          - "6379:6379"
+
+    mongo_server:
+        image: mongo:4.0.10
+        restart: always
+        volumes: 
+          - /home/mohamed/.mongodb/data/db:/data/db
+          - /home/mohamed/.mongodb/log/mongod.log:/data/configdb/mongod.log
+          - /home/mohamed/.mongodb/mongod.conf:/data/configdb/mongod.conf
+        command: >
+          mongod 
+          --config /data/configdb/mongod.conf 
+          --dbpath /data/db 
+          --logpath /data/configdb/mongod.log
+          --logappend
+        ports:
+          - "27017:27017"
 
     postgres:
         image: postgres:9.6
@@ -16,7 +70,7 @@ services:
         #     - ./pgdata:/var/lib/postgresql/data/pgdata
 
     webserver:
-        image: puckel/docker-airflow:1.10.2
+        image: puckel/docker-airflow:custom
         restart: always
         depends_on:
             - postgres
@@ -31,6 +85,8 @@ services:
             # - REDIS_PASSWORD=redispass
         volumes:
             - ./dags:/usr/local/airflow/dags
+            - FIFA:/FIFA
+            - ./requirements.txt:/requirements.txt
             # Uncomment to include custom plugins
             # - ./plugins:/usr/local/airflow/plugins
         ports:
@@ -43,7 +99,7 @@ services:
             retries: 3
 
     flower:
-        image: puckel/docker-airflow:1.10.2
+        image: puckel/docker-airflow:custom
         restart: always
         depends_on:
             - redis
@@ -55,12 +111,14 @@ services:
         command: flower
 
     scheduler:
-        image: puckel/docker-airflow:1.10.2
+        image: puckel/docker-airflow:custom
         restart: always
         depends_on:
             - webserver
         volumes:
             - ./dags:/usr/local/airflow/dags
+            - FIFA:/FIFA
+            - ./requirements.txt:/requirements.txt
             # Uncomment to include custom plugins
             # - ./plugins:/usr/local/airflow/plugins
         environment:
@@ -74,12 +132,14 @@ services:
         command: scheduler
 
     worker:
-        image: puckel/docker-airflow:1.10.2
+        image: puckel/docker-airflow:custom
         restart: always
         depends_on:
             - scheduler
         volumes:
             - ./dags:/usr/local/airflow/dags
+            - FIFA:/FIFA
+            - ./requirements.txt:/requirements.txt
             # Uncomment to include custom plugins
             # - ./plugins:/usr/local/airflow/plugins
         environment:
@@ -90,3 +150,23 @@ services:
             # - POSTGRES_DB=airflow
             # - REDIS_PASSWORD=redispass
         command: worker
+
+volumes:
+  FIFA:
+    name: FIFA
+    driver_opts:
+      type: none
+      device: /home/mohamed/Projects/FIFA
+      o: bind
+  code:
+    name: code
+    driver_opts:
+      type: none
+      device: /home/mohamed/Projects/FIFA/fifa_data
+      o: bind
+  config:
+    name: config
+    driver_opts:
+      type: none
+      device: /home/mohamed/Projects/FIFA/Docker
+      o: bind
