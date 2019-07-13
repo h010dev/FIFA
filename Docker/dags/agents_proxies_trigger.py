@@ -4,8 +4,8 @@ from datetime import datetime
 from airflow import DAG
 from airflow.operators.bash_operator import BashOperator
 from airflow.operators.dagrun_operator import TriggerDagRunOperator
-
 from airflow.utils.trigger_rule import TriggerRule
+
 
 pp = pprint.PrettyPrinter(indent=4)
 
@@ -26,6 +26,7 @@ dag = DAG(
     dag_id='initdb_controller_dag',
     default_args={
         "owner": "airflow",
+        # TODO use current date without harming dag functionality
         "start_date": datetime(2019, 6, 15),
         "depends_on_past": False
     },
@@ -40,7 +41,7 @@ trigger_useragent = TriggerDagRunOperator(
     python_callable=conditionally_trigger,
     params={'condition_param': True, 'message': 'triggering ua scraper'},
     trigger_rule=TriggerRule.ALL_SUCCESS,
-    dag=dag,
+    dag=dag
 )
 
 trigger_proxy = TriggerDagRunOperator(
@@ -49,7 +50,7 @@ trigger_proxy = TriggerDagRunOperator(
     python_callable=conditionally_trigger,
     params={'condition_param': True, 'message': 'triggering proxy scraper'},
     trigger_rule=TriggerRule.ALL_SUCCESS,
-    dag=dag,
+    dag=dag
 )
 
 trigger_sofifa = TriggerDagRunOperator(
@@ -58,7 +59,9 @@ trigger_sofifa = TriggerDagRunOperator(
     python_callable=conditionally_trigger,
     params={'condition_param': True, 'message': 'triggering sofifa scraper'},
     trigger_rule=TriggerRule.ALL_SUCCESS,
-    dag=dag,
+    # TODO add a time delay to wait for n amount of proxies/agents to be
+    # collected
+    dag=dag
 )
 
 # Custom task to start before trigger

@@ -1,13 +1,14 @@
-from airflow import DAG
 import pprint
 from datetime import datetime
 
 from airflow.models import DAG
 from airflow.operators.bash_operator import BashOperator
 
+
 pp = pprint.PrettyPrinter(indent=4)
 
 args = {
+    # TODO use current date without harming dag functionality
     'start_date': datetime(2019, 6, 15),
     'owner': 'airflow',
 }

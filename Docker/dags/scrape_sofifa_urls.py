@@ -1,4 +1,3 @@
-import pprint
 from datetime import datetime
 
 from airflow.models import DAG
@@ -6,6 +5,7 @@ from airflow.operators.bash_operator import BashOperator
 
 
 args = {
+    # TODO use current date without harming dag functionality
     'start_date': datetime(2019, 6, 15),
     'owner': 'airflow',
 }
@@ -13,6 +13,7 @@ args = {
 dag = DAG(
     dag_id='sofifascraper_dag',
     default_args=args,
+    # TODO enable backfilling
     schedule_interval='@once',
     catchup=False
 )
