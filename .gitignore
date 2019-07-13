@@ -50,3 +50,7 @@ tags
 
 *.directory
 *.log
+
+# Misc.
+
+*tree.html
