@@ -1,36 +1,39 @@
 version: '3.4'
 services:
 
+# ----------------------- SCRAPY AND RELATED SERVICES ----------------------- #
+
     scrapyd:
-        image: vimagick/scrapyd:custom2
+        image: vimagick/scrapyd:custom
         ports:
           - "6800:6800"
         volumes:
           - FIFA:/var/lib/scrapyd
-          - /usr/local/lib/python3.7/dist-packages
+          - source:/usr/local/lib/python3.7/dist-packages
         restart: always
 
     scrapy:
-        image: vimagick/scrapyd:custom2
+        image: vimagick/scrapyd:custom
         command: bash
         volumes:
           - code:/code
-          - /usr/local/lib/python3.7/dist-packages
+          - source:/usr/local/lib/python3.7/dist-packages
         working_dir: /code
         restart: always
 
     scrapyrt:
-        image: vimagick/scrapyd:custom2
+        image: vimagick/scrapyd:custom
         ports:
           - "9080:9080"
         volumes:
           - code:/code
-          - config:/config
-          - /usr/local/lib/python3.7/dist-packages
+          - source:/usr/local/lib/python3.7/dist-packages
         working_dir: /code
         command: scrapyrt -i 0.0.0.0 -p 9080
         #entrypoint: /code/entrypoint.sh
         restart: always
+
+# -------------------------------- DATABASES -------------------------------- #
 
     redis:
         image: redis/rejson:5.0.3
@@ -69,6 +72,8 @@ services:
         # volumes:
         #     - ./pgdata:/var/lib/postgresql/data/pgdata
 
+# -------------------------------- WEBSERVERS-------------------------------- #
+
     webserver:
         image: puckel/docker-airflow:custom
         restart: always
@@ -87,8 +92,9 @@ services:
             - ./dags:/usr/local/airflow/dags
             - FIFA:/FIFA
             - ./requirements.txt:/requirements.txt
+            - /home/mohamed/Project/FIFA/Docker/config/airflow.config:/usr/local/airflow/airflow.config
             # Uncomment to include custom plugins
-            # - ./plugins:/usr/local/airflow/plugins
+            - ./plugins:/usr/local/airflow/plugins
         ports:
             - "8080:8080"
         command: webserver
@@ -110,6 +116,8 @@ services:
             - "5555:5555"
         command: flower
 
+# ------------------------- SCHEDULERS AND WORKSERS ------------------------- #
+
     scheduler:
         image: puckel/docker-airflow:custom
         restart: always
@@ -120,7 +128,7 @@ services:
             - FIFA:/FIFA
             - ./requirements.txt:/requirements.txt
             # Uncomment to include custom plugins
-            # - ./plugins:/usr/local/airflow/plugins
+            - ./plugins:/usr/local/airflow/plugins
         environment:
             - LOAD_EX=n
             - FERNET_KEY=46BKJoQYlPPOexq0OhDZnIlNepKFf87WFwLbfzqDDho=
@@ -141,7 +149,7 @@ services:
             - FIFA:/FIFA
             - ./requirements.txt:/requirements.txt
             # Uncomment to include custom plugins
-            # - ./plugins:/usr/local/airflow/plugins
+            - ./plugins:/usr/local/airflow/plugins
         environment:
             - FERNET_KEY=46BKJoQYlPPOexq0OhDZnIlNepKFf87WFwLbfzqDDho=
             - EXECUTOR=Celery
@@ -150,6 +158,8 @@ services:
             # - POSTGRES_DB=airflow
             # - REDIS_PASSWORD=redispass
         command: worker
+
+# --------------------------------- VOLUMES --------------------------------- #
 
 volumes:
   FIFA:
@@ -164,9 +174,9 @@ volumes:
       type: none
       device: /home/mohamed/Projects/FIFA/fifa_data
       o: bind
-  config:
-    name: config
+  source:
+    name: source
     driver_opts:
       type: none
-      device: /home/mohamed/Projects/FIFA/Docker
+      device: /home/mohamed/Projects/FIFA/source
       o: bind
