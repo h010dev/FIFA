@@ -57,6 +57,8 @@ def get_redis_from_settings(settings):
     if isinstance(params.get('redis_cls'), six.string_types):
         params['redis_cls'] = load_object(params['redis_cls'])
 
+    params['host'] = 'localhost'
+
     return get_redis(**params)
 
 
