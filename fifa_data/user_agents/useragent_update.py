@@ -1,8 +1,10 @@
 import json
 from pprint import pprint
+
 import pymongo
 from pymongo import MongoClient
-from fifa_data.mongodb_addr import host
+
+from fifa_data.mongodb_addr import host, port
 
 
 def get_useragents(filename):
@@ -40,6 +42,7 @@ def updatedb():
                 {"user_agent": agent["user_agent"]},
         },
         upsert=True
+        # TODO find a way to use $exists here so it applies to all fields
     ) for agent in new_useragents if "version" in agent]
 
     result = collection.bulk_write(operations)
@@ -47,17 +50,21 @@ def updatedb():
     try:
         return result
     finally:
+        # TODO this may not be necessary when in production
+        # TODO look at a simpler output, maybe on number upserted
         pprint(result.bulk_api_result)
 
 
 if __name__ == '__main__':
 
+    # TODO should the import statement take place here?
     import os
 
+    # TODO ensure this is the best method to retrieve the directory name
     dirname = os.path.dirname(__file__)
     filename = os.path.join(dirname, 'useragent_storage.json')
 
-    client = MongoClient(host, 27017)
+    client = MongoClient(host, port)
     db = client.agents_proxies
     collection = db.user_agents
 

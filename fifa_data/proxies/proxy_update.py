@@ -1,8 +1,10 @@
-import pymongo
 import json
 from pprint import pprint
+
+import pymongo
 from pymongo import MongoClient
-from fifa_data.mongodb_addr import host
+
+from fifa_data.mongodb_addr import host, port
 
 
 def get_proxies(filename):
@@ -19,6 +21,8 @@ def get_proxies(filename):
     return json_array
 
 
+# TODO implement more filtering options in query (age, latency, etc.)
+# TODO get rid of this function, use updatedb instead
 def initdb():
 
     """
@@ -57,22 +61,27 @@ def updatedb():
     try:
         return result
     finally:
+        # TODO this may not be necessary when in production
+        # TODO look at a simpler output, maybe on number upserted
         pprint(result.bulk_api_result)
 
 
 if __name__ == '__main__':
 
+    # TODO should the import statement take place here?
     import os
 
+    # TODO ensure this is the best method to retrieve the directory name
     dirname = os.path.dirname(__file__)
     filename = os.path.join(dirname, 'proxy_storage.json')
 
-    client = MongoClient(host, 27017)
+    client = MongoClient(host, port)
     db = client.agents_proxies
     collection = db.proxies
 
     new_proxies = get_proxies(filename=filename)
 
+    # TODO replace this with updatedb once initdb is removed
     if db.proxies.count_documents(filter=({})) < 1:
         initdb()
     else:
