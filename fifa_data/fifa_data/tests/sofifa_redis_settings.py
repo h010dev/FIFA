@@ -6,7 +6,7 @@ def sofifa_settings(name, proxies, user_agent, validator):
     settings = {
 
         # REDIS
-        'DUPEFILTER_CLASS': 'fifa_data.scrapy_redis_dupefilter.RFPDupeFilter',
+        'DUPEFILTER_CLASS': 'fifa_data.scrapy_redis_custom.dupefilter.RFPDupeFilter',
 #        'SCHEDULER': 'fifa_data.scrapy_redis_scheduler.Scheduler',
 #        'SCHEDULER_PERSIST': False,
         'DOWNLOAD_DELAY': 1,
@@ -36,7 +36,7 @@ def sofifa_settings(name, proxies, user_agent, validator):
 
         # PIPELINES, MIDDLEWARES, AND EXTENSIONS
         'ITEM_PIPELINES': {
-            'fifa_data.scrapy_redis_pipelines.RedisPipeline': 300,
+            'fifa_data.scrapy_redis_custom.pipelines.RedisPipeline': 300,
             'fifa_data.pipelines.SpiderStats': 400,
         },
 

@@ -81,13 +81,6 @@ class SofifaClubUrlsSpider(CrawlSpider):
 
     def parse_start_url(self, response):
 
-#        for row in response.xpath(
-#                "//table[@class='table table-hover persist-area']/tbody/tr"
-#        ):
-#
-#            yield {
-#                'url': urljoin("https://sofifa.com", row.xpath(".//td[2]/div/a[2]/@href").get())
-#            }
         for row in response.xpath(
                 "//table[@class='table table-hover persist-area']/tbody/tr"
         ):

@@ -1,5 +1,6 @@
 from datetime import datetime
 
+from fifa_data.scrapy_redis_custom.spiders import RedisSpider
 import scrapy
 from scrapy.crawler import CrawlerRunner
 from scrapy.linkextractors import LinkExtractor
@@ -15,7 +16,7 @@ from proxies.proxy_generator import gen_proxy_list
 from user_agents.user_agent_generator import gen_useragent_list
 
 
-class UserAgentScraperSpider(CrawlSpider):
+class UserAgentScraperSpider(RedisSpider):
 
     """
     Collects all user-agents from whatismybrowser.com, to be used by
