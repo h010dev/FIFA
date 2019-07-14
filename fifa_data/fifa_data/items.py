@@ -1225,6 +1225,11 @@ class NationalTeamDetailedStats(DetailedTeamStatItem):
 
 class UserAgentScraperItem(scrapy.Item):
 
+    id = scrapy.Field(
+        input_processor=Identity(),
+        output_processor=TakeFirst()
+    )
+
     user_agent = scrapy.Field(
         input_processor=Identity(),
         output_processor=TakeFirst()
@@ -1251,7 +1256,7 @@ class UserAgentScraperItem(scrapy.Item):
     )
 
     last_modified = scrapy.Field(
-        input_processor=MapCompose(get_timestamp),
+        input_processor=Identity(),
         output_processor=TakeFirst()
     )
 

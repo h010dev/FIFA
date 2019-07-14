@@ -11,12 +11,12 @@ from scrapy.utils.log import configure_logging
 from twisted.internet import reactor
 
 from fifa_data.items import UserAgentScraperItem
-from fifa_data.useragent_settings import useragent_settings
+from fifa_data.tests.useragent_redis_settings import useragent_settings
 from proxies.proxy_generator import gen_proxy_list
 from user_agents.user_agent_generator import gen_useragent_list
 
 
-class UserAgentScraperSpider(RedisSpider):
+class UserAgentScraperSpider(CrawlSpider):
 
     """
     Collects all user-agents from whatismybrowser.com, to be used by
@@ -46,7 +46,7 @@ class UserAgentScraperSpider(RedisSpider):
                     r'\/legal\/'
                 ]),
                 allow=([
-                    r'^https://developers.whatismybrowser.com/useragents'\
+                    r'^https://developers.whatismybrowser.com/useragents'
                     r'/explore/'
                 ]),
             ),
@@ -92,7 +92,7 @@ class UserAgentScraperSpider(RedisSpider):
                     "//a[@class='maybe-long'][contains(text(), 'bsd')]",
                     "//a[@class='maybe-long'][contains(text(), 'Mac')]",
                     "//a[@class='maybe-long'][contains(text(), 'Crawler')]",
-                    "//a[@class='maybe-long'][contains(text(), "\
+                    "//a[@class='maybe-long'][contains(text(), "
                     "'Web Browser')]",
                     "//a[@class='maybe-long'][contains(text(), 'Trident')]",
                     "//a[@class='maybe-long'][contains(text(), 'Presto')]",
@@ -148,9 +148,13 @@ class UserAgentScraperSpider(RedisSpider):
                 response=response
             )
 
+            loader.add_xpath(
+                'id',
+                ".//td[@class='useragent']/a/text()"
+            )
             loader.add_value(
                 'last_modified',
-                datetime.utcnow()
+                datetime.utcnow().isoformat()
             )
             loader.add_xpath(
                 'user_agent',
