@@ -14,7 +14,7 @@ def gen_proxy_list():
 
     client = MongoClient(host, port)
     db = client.agents_proxies
-    collection = db.proxy_test_new
+    collection = db.proxies
 
     query = collection.find(
         {"$and": [
