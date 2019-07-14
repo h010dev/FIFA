@@ -10,7 +10,7 @@ from scrapy.utils.log import configure_logging
 from twisted.internet import reactor
 
 from fifa_data.items import TeamStatItem
-from fifa_data.sofifa_settings import sofifa_settings
+from fifa_data.tests.sofifa_redis_settings import sofifa_settings
 from proxies.proxy_generator import gen_proxy_list
 from user_agents.user_agent_generator import gen_useragent_list
 
@@ -23,15 +23,13 @@ class SofifaClubUrlsSpider(CrawlSpider):
     collection at mongodb://mongo_server:27017/sofifa
     """
 
-    name = 'club_pages'
+    name = 'sofifa_club_urls'
 
     proxies = gen_proxy_list()
     user_agent = gen_useragent_list()
 
     custom_settings = sofifa_settings(
         name=name,
-        database='sofifa',
-        collection='club_urls',
         proxies=proxies,
         user_agent=user_agent,
         validator='ClubItem'
@@ -94,7 +92,7 @@ class SofifaClubUrlsSpider(CrawlSpider):
 
             loader.add_value(
                 'last_modified',
-                datetime.utcnow()
+                datetime.utcnow().isoformat()
             )
             loader.add_xpath(
                 'id',
