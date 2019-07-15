@@ -44,7 +44,7 @@ def gen_useragent_list():
     random.shuffle(user_agent)
     # TODO implement warning / or break code if user agent list is empty
     # or less than a certain threshold
-    print(len(user_agent))
+    print("Number of user agents pulled: ", len(user_agent))
     return user_agent
 
 
