@@ -28,8 +28,7 @@ def gen_proxy_list():
     proxies = [x['ip'] for x in query]
     random.shuffle(proxies)
 
-    print(proxies)
-    print(len(proxies))
+    print("Number of proxies pulled: ", len(proxies))
     return proxies
 
 
