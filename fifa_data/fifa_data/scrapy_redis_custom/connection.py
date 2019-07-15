@@ -41,6 +41,10 @@ def get_redis_from_settings(settings):
         Server port.
     REDIS_ENCODING : str, optional
         Data encoding.
+    REDIS_ENCODER: class, optional
+        JSON Encoder.
+    REDIS_DECODER: class, optional
+        JSON Decoder.
     REDIS_PARAMS : dict, optional
         Additional client parameters.
 
@@ -75,6 +79,10 @@ def get_redis(**kwargs):
         Defaults to ``redis.StrictRedis``.
     url : str, optional
         If given, ``redis_cls.from_url`` is used to instantiate the class.
+    custom_encoder: setting, optional
+        If given, ``redis_cls`` will make use of custom encoder.
+    custom_decoder: setting, optional
+        If given, ``redis_cls`` will make use of custom decoder.
     **kwargs
         Extra parameters to be passed to the ``redis_cls`` class.
 
@@ -86,7 +94,11 @@ def get_redis(**kwargs):
     """
     redis_cls = kwargs.pop('redis_cls', defaults.REDIS_CLS)
     url = kwargs.pop('url', None)
+    custom_encoder = defaults.REDIS_ENCODER
+    custom_decoder = defaults.REDIS_DECODER
     if url:
         return redis_cls.from_url(url, **kwargs)
+    elif custom_encoder and custom_decoder:
+        return redis_cls(encoder=custom_encoder, decoder=custom_decoder)
     else:
         return redis_cls(**kwargs)

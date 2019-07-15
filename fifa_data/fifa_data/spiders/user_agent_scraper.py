@@ -154,7 +154,7 @@ class UserAgentScraperSpider(CrawlSpider):
             )
             loader.add_value(
                 'last_modified',
-                datetime.utcnow().isoformat()
+                datetime.utcnow()
             )
             loader.add_xpath(
                 'user_agent',

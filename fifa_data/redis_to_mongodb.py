@@ -22,8 +22,8 @@ def push_to_mongodb(db,
                     insert_queue,
                     client=MongoClient(host, port)):
 
-    db = client.db
-    collection = db.collection
+    db = client[db]
+    collection = db[collection]
 
     # TODO find a way to upsert results to avoid duplicate values
     # TODO look at inserting in batches
@@ -33,7 +33,7 @@ def push_to_mongodb(db,
     return result
 
 
-def flush_redis(keys, client=Client(decode_responses=True)):
+def flush_redis(keys, client=Client()):
 
     for key in client.scan_iter(keys):
         client.delete(key)

@@ -1,5 +1,7 @@
 from rejson import Client
 
+from custom_serializers import DateTimeDecoder, DateTimeEncoder
+
 
 # For standalone use.
 DUPEFILTER_KEY = 'dupefilter:%(timestamp)s'
@@ -7,6 +9,9 @@ DUPEFILTER_KEY = 'dupefilter:%(timestamp)s'
 PIPELINE_KEY = '%(spider)s:item:%(id)s'
 
 REDIS_CLS = Client
+REDIS_ENCODER = DateTimeEncoder()
+REDIS_DECODER = DateTimeDecoder()
+
 REDIS_ENCODING = 'utf-8'
 # Sane connection defaults.
 REDIS_PARAMS = {
