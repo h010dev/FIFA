@@ -42,6 +42,9 @@ def gen_useragent_list():
 
     user_agent = [x['user_agent'] for x in query]
     random.shuffle(user_agent)
+    # TODO implement warning / or break code if user agent list is empty
+    # or less than a certain threshold
+    print(len(user_agent))
     return user_agent
 
 
