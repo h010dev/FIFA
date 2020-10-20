@@ -1,5 +1,5 @@
 # FIFA
-Status: Ongoing
+Status: On-hold due to scalability costs. 
 
 ## About me: 
 
