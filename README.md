@@ -11,6 +11,4 @@ I started this project with the goal to expand my knowledge in the area of data 
 
 Another goal with this project is to make it portable and scalable. I have decided to use Docker to assist in that area. 
 
-The most up-to-date contents for this project will be found in this directory. Older commits and logs for this project can be found here: https://github.com/sn95racing/my_projects/tree/master/fifa_workspace/fifa_market_analysis/fifa_market_analysis
-
 If you are curious, or would like to offer some suggestions, feel free to contact me at mohamed.n.al.hussein@gmail.com
