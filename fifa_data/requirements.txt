@@ -13,7 +13,7 @@ scrapyd==1.2.1
 scrapyrt==0.10
 scrapy-redis==0.6.8
 scrapy-rotating-proxies==0.6.1
-scrapy-splash==0.7.2
+scrapy-splash==0.8.0
 Scrapy-UserAgents==0.0.1
 spidermon==1.10.0
 Twisted==18.9.0
