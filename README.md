@@ -10,5 +10,3 @@ My educational background is in business management, but I developed a profound 
 I started this project with the goal to expand my knowledge in the area of data science and machine learning, particularly in the areas relating to data engineering.  I chose to work with FIFA data in particular because of the vast array of options it offers for data exploration, and because I understand the data I will be working with, making it easy to derive the context behind the models I will be exploring.
 
 Another goal with this project is to make it portable and scalable. I have decided to use Docker to assist in that area. 
-
-If you are curious, or would like to offer some suggestions, feel free to contact me at mohamed.n.al.hussein@gmail.com
